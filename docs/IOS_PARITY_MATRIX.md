@@ -1,218 +1,162 @@
-# Matriz de paridad iOS vs Android — KIRU+
+# Matriz de paridad iOS → Android — KIRU+
 
-> **Updated:** 2026-05-18 · Build iOS de referencia: **18** (Build 17 rechazado, Build 18 in prep)
-> **Android commits:** 11 commits (c35e73d → 7f9c3f0 actualización legal URLs)
-> **Leyenda prioridad:** P0 (bloqueante para submit) · P1 (requerido v1.0) · P2 (nice to have v1.x) · P3 (futuro)
-> **Leyenda estado:** ⛔ no iniciado · 🟡 en progreso · ✅ implementado · ⚠️ con riesgo · n/a no aplica
+> **Auditoría Fase 0:** 2026-10-10  
+> **Fuente de verdad:** código iOS en `kiru-plus-main` (este documento no modifica ese repo).  
+> **Android auditado:** `kiru-plus-android` @ `5854421` (`feat(android): Sprint F1–F5 — medical content parity…`) en `main`.  
+> **La matriz anterior (2026-05-18, “E0–E10”)** describía un scaffolding que el código actual ya superó (Academy, Quiz, Pearls, Kapibaya, Logbook, K-Cortex, fármacos y casos existen). Quedó sustituida por esta tabla. Ante conflicto entre docs y código, gana el código iOS.
 
----
+## Cómo se califica
 
-## Resumen de progreso v0.1.0 (2026-05-18)
+| Estado | Significado |
+|---|---|
+| CONSERVAR | El comportamiento observable coincide con iOS. Se deja el código. |
+| CORREGIR | Hay pantalla o capa útil, con desviación de lógica, contrato, UI o seguridad. |
+| REESCRIBIR | La base no puede alinearse con un parche: el origen de verdad está mal. |
+| FALTA | El módulo existe en iOS y no tiene equivalente Android. |
 
-**Commits Android:**
-```
-7f9c3f0  fix legal URL slugs iOS aligned          [iOS]
-a80a6c4  fix legal URL slugs (-kiru-pro → -kiru-app)
-239fb08  docs: 404 finding on legal URLs
-b776e0c  E10.1 LocaleApplier + Settings/Account/Store VM tests
-217c88b  E10  unit tests auth + ProGuard + Privacy draft
-1a36640  E8.1 ProductDetailScreen
-76e691b  E8   Store + Stripe Custom Tabs
-ec8896c  E5.1 Bottom navigation 5 tabs (Material 3)
-d994747  E9   WebView + Disclaimer scroll-gated
-cced83e  E5   Settings + Home polish + UserPreferences
-58b8525  E1   Visual polish + KIRU+ brand
-01637f2  E3   Auth real Supabase + AuthError mapper
-c35e73d  E0   Initial scaffolding
-```
+**Paridad real** = filas CONSERVAR / filas de esta tabla. Una fila CORREGIR no cuenta como paridad: el usuario no obtiene el mismo resultado.
 
-**Métricas:**
-- **47 unit tests** (100% PASS): EmailValidator (10) + AuthErrorMapper (11) + Login (5) + Register (5) + Forgot (5) + Settings (4) + AccountDeletion (4) + Store (3).
-- **Build time:** debug `./gradlew assembleDebug` ~15-30 s incremental.
-- **APK debug:** ~30 MB.
-- **Stack:** Kotlin 2.1 · Compose BOM 2024.12 · Material 3 · Hilt 2.51 · supabase-kt 3.0.2 · DataStore 1.1 · Coil 2.7 · RevenueCat 8.10.4 (presente, no cableado).
+**Denominador:** 66 módulos de producto (Features iOS + cimientos que cambian el comportamiento: sesión, diseño, premium, monedas, notificaciones, telemetría, legales). No se cuentan carpetas de infraestructura sin flujo propio (`Features/Models`, `Features/Views`, `Features/Shared`, `Features/Navigation` como contenedores).
 
----
+## Resumen ejecutivo
 
-## 1. Onboarding y autenticación
+| Métrica | Valor |
+|---|---|
+| Módulos en la tabla | 66 |
+| CONSERVAR | 1 (1.5%) |
+| CORREGIR | 22 (33%) |
+| REESCRIBIR | 1 (1.5%) — entitlements |
+| FALTA | 42 (64%) |
+| **Paridad real** | **1/66 (1.5%)** |
+| Superficie con código (CONSERVAR + CORREGIR) | 23/66 ≈ 35% |
 
-| Funcionalidad iOS | Prioridad | Estado | Commit/notas |
-|---|---|---|---|
-| Splash + LaunchScreen | P0 | ✅ | E0 (system splash) + E1 (Compose splash con LogoKIRU PNG 160dp) |
-| Disclaimer médico bloqueante (5 secciones) | P0 | ✅ | E9 con **scroll-gate** (canScrollForward) + AnimatedVisibility hint |
-| Login email/password | P0 | ✅ | E3 con AuthError mapper localizado |
-| Registro nuevo usuario | P0 | ✅ | E3 + EmailValidator + strong password match Supabase policy |
-| Recuperación contraseña | P0 | ✅ | E3 con anti-enumeration (errores genéricos silenciados) |
-| Sign in with Apple | n/a | n/a | NO portar |
-| Google Sign-In | P1 | ⛔ | Pendiente — Supabase OAuth Google |
-| Biometric lock | P1 | ⛔ | Pendiente — `androidx.biometric` (dep ya en deps) |
-| Session persistente | P0 | ✅ | E3 supabase-kt `autoLoadFromStorage = true` |
-| Logout | P0 | ✅ | E5 (SettingsScreen → signOut → Login) |
-| Eliminación de cuenta in-app | P0 | ✅ | E3 (AccountDeletionScreen + ack + Edge Function process_account_deletions) |
-| Confirmación email post-signup | P0 | 🟡 | E3 muestra mensaje "check your email" tras signUp, pero NO bloquea login con email no-confirmado (Supabase decide) |
-| Onboarding (welcome + carrousel) | P1 | ⛔ | Pendiente — actualmente solo Disclaimer |
+**Recomendación: conservar la base actual. No reestructurar.**
 
-## 2. Home dashboard y navegación
+Justificación técnica, no de preferencia:
 
-| Funcionalidad iOS | Prioridad | Estado | Commit/notas |
-|---|---|---|---|
-| Bottom tab bar 5 tabs | P0 | ✅ | E5.1 NavigationBar M3 (Home/Academy/Logbook/Store/Profile) |
-| Tab Home (dashboard) | P0 | 🟡 | E5: WelcomeCard + Quick Actions 2×2. Dashboard rico (Hero/Arena/Pearls) pendiente |
-| Tab Academy | P1 | ⛔ | E5.1 placeholder "Coming soon"; contenido pendiente |
-| Tab K-Tools (calculadoras) | P1 | ⛔ | NO es tab separado en Android (decisión); accesible como Quick Action en Home |
-| Tab Logbook | P1 | ⛔ | E5.1 placeholder; CRUD pendiente |
-| Tab Store | P1 | ✅ | E8 catálogo Supabase + E8.1 detalle + Custom Tabs |
-| Tab Profile | P0 | 🟡 | E5.1 placeholder con links Settings/Legal/Delete; datos del médico pendientes |
-| Disclaimer banner persistente Home | P0 | ✅ | E5 (Card surfaceVariant con `disclaimer_short_banner`) |
-| 260 rutas iOS subconjunto | n/a | 🟡 | ~13 rutas en `KiruRoute.kt` (Splash, Disclaimer, Login, Register, ForgotPassword, Home, Settings, AccountDeletion, WebView, ProductDetail, Paywall stub, Store stub) |
+- El módulo único `:app` ya separa `app/` (composition root), `core/`, `domain/`, `data/` y `feature/<nombre>/` con Screen + ViewModel + Hilt. Eso es el espejo conceptual de `App/CompositionRoot/AppBootstrapper.swift` + MVVM + Repository. Partir en `:core:*` / `:feature:*` ahora no corrige ningún contrato y obliga a reescribir DI, tests y navegación antes de tener paridad.
+- El cliente usa la anon key, `alwaysAutoRefresh` y PostgREST bajo RLS. No hay service role en el cliente. `allowBackup=false`, `usesCleartextTraffic=false`, R8 activo en release.
+- RevenueCat está en el classpath y `PaywallScreen` usa `PaywallDialog`. Lo que está mal es el origen del plan (`PremiumModule` emite `Free` siempre), no la forma del proyecto.
+- Los fallos graves son de contrato (borrado de cuenta, Kapibaya, catálogo de tienda, bancos de preguntas) y de cobertura (42 módulos ausentes). Se corrigen feature por feature sobre esta base.
 
-## 3. Contenido educativo y médico
+**Propuesta de módulos Gradle (no ejecutar sin visto bueno):** cuando pasen de ~8 features con paridad real, extraer `:core:designsystem`, `:core:network`, `:core:premium` y dejar `:app` como composition root. Hasta entonces, un solo módulo compila más rápido y el CI actual ya apunta a `:app`.
 
-| Funcionalidad iOS | Prioridad | Estado | Notas |
-|---|---|---|---|
-| Perlas clínicas (200) | P1 | ⛔ | Tabla `pearls` lista — feed Compose pendiente |
-| Resúmenes (jsons) | P1 | ⛔ | Tabla `resumenes_files` |
-| Flash cards | P2 | ⛔ | |
-| KiruPardy (juegos) | P2 | ⛔ | |
-| Arena (cases) | P2 | ⛔ | |
-| Trivia rápida | P2 | ⛔ | |
-| Búsqueda global vectorial | P1 | ⛔ | Edge Function `_backfill_embeddings` ya existe |
-| Vademécum K-PHARMA | P2 | ⛔ | |
-| Video player (MUX) | P1 | ⛔ | MUX Android SDK pendiente |
-| Podcasts | P2 | ⛔ | |
-| Biblioteca de libros médicos | P2 | ⛔ | |
+### Top 5 riesgos
 
-## 4. Dr. Kapibaya (voice + AI tutor)
+1. **Dinero.** `PremiumModule` es un stub que publica `EntitlementState.Free` siempre. RevenueCat se configura en `KiruApp` si hay `goog_` key, pero nadie lee CustomerInfo. El plan nunca puede volverse Pro. Bloqueante de paridad de dinero.
+2. **Borrado de cuenta.** Android invoca la Edge Function `process_account_deletions`. En iOS el usuario llama al RPC `kiru_request_account_deletion`. Esa función es un worker solo de credencial de máquina: rechaza el JWT del usuario (`machine_credential_required`). El botón de Android no agenda la baja de 48 h que hace iOS. Tampoco existen `kiru_cancel_account_deletion` ni `kiru_account_deletion_status`.
+3. **Kapibaya.** iOS hace SSE contra `functions/v1/ask_kapibaya` con la sesión. Android llama `ask_kapibaya_stream` y manda solo `apikey`, sin `Authorization: Bearer`. El cuerpo (`message`, `conversationId`, `userId`) no está verificado contra el payload Swift. No hay TTS (`kapibaya-tts`) ni voz.
+4. **Contenido clínico no demostrado idéntico.** El quiz Android lee `content_items` con `category=question`. El banco que ve el alumno en iOS sale del bundle (`PublishedBankLoadTests`: “content_items no trae preguntas”). Fármacos y casos salen de `drugs.json` / `clinical_cases.json` embebidos, no del camino K-Pharma (`content_items` `cbm_bundle` + bundle local de 687 fármacos). No se inventó texto en esta auditoría; tampoco se comprobó que los JSON coincidan byte a byte con iOS.
+5. **Zero-crash y CI incompletos.** Hay 19 `!!` en `app/src/main`. El README declara detekt y ktlint; no están en `app/build.gradle.kts` ni en `.github/workflows/android-ci.yml`. CI puede quedar verde incumpliendo la política. El logbook Android persiste en `surgical_logs` (tabla real, RLS propio) mientras iOS guarda `surgical_logbook.json` local: cambia dónde vive un dato de salud.
 
-| Funcionalidad iOS | Prioridad | Estado | Notas |
-|---|---|---|---|
-| Chat texto con Dr. Kapibaya | P1 | ⛔ | Edge Function `ask_kapibaya` lista |
-| Streaming responses (SSE) | P1 | ⛔ | Edge Function `ask_kapibaya_stream` lista |
-| Voice mode (TTS hablado) | P2 | ⛔ | `kapibaya-tts` Edge Function lista (cloud TTS) |
-| STT (speech-to-text) | P2 | ⛔ | Android SpeechRecognizer o cloud Whisper |
-| VAD + barge-in | P3 | ⛔ | Silero VAD TF Lite |
-| Conversation memory (174 turns activos) | P2 | ⛔ | Tabla `kapibaya_conversation_turns` lista |
-| Avatar floating button | P3 | ⛔ | |
+### Hallazgos de calidad transversales
 
-## 5. Premium / Paywall / Suscripciones — **E7 BLOQUEADO por API key**
+- **Arquitectura:** MVVM + Repository + Hilt, sí. Casos de uso puros, casi no: los ViewModels llaman repositorios directo. Aceptable como espejo del iOS actual, que tampoco tiene una capa UseCase uniforme.
+- **Sesión:** `alwaysAutoRefresh = true` y `autoLoadFromStorage = true`. No hay Sign in with Apple ni Google. `AuthRepositoryImpl` registra el email en el label de Timber (`signIn $email`).
+- **Entornos:** solo `debug` y `release`. iOS tiene Debug / Staging / Release (`Config/Flags-*.xcconfig`). Debug iOS fija `SUPABASE_PROJECT_REF = tttxmupjteqpljtfgmgo` y `APP_ENVIRONMENT = production`. Android debug usa el mismo default de URL. No hay panel que muestre el project ref (iOS lo muestra en `DebugSandboxSpikeView`).
+- **Secretos:** no hay service role ni `local.properties` en git. `*.jks` está en `.gitignore`. En disco local sí existe `kiru-plus-release.jks` (no trackeado). No commitear.
+- **Design system:** hex de marca alineados con los comentarios de `KiruDesignTokens.swift` y con el asset `KiruLightBlue` (`#00004C`). Falta `KiruSurgicalSuccess` = `Color(red = 0.13f, green = 0.75f, blue = 0.42f)`. `CasesScreen` hardcodea `Color(0xFF…)`. No hay `KiruSpacing` ni `KiruShapes`. Tipografía de `Type.kt` copia tamaños iOS (40/32/24/20/19) sobre `FontFamily.SansSerif`, sin Dynamic Type equivalente.
+- **Strings:** `values/` (en) y `values-es/`. iOS tiene `es.lproj`, no `es-MX`. La primaria debe seguir a iOS: `es`. Muchas cadenas de premium y de casos están en el composable, no en recursos.
+- **Tienda:** iOS arma el checkout con la Edge Function `medsurgery-store` (WooCommerce). Android lee la tabla `store_products`, que existe en el baseline SQL pero no es el catálogo que muestra iOS.
+- **K-Cortex:** el host `https://kiru-backend.onrender.com/v1/kcortex/analyze` es el mismo `BACKEND_BASE_URL` de `Flags-Debug.xcconfig` y el mismo path que `KCortexVisionService`. Desvío: URL fija (no por entorno), solo texto (iOS manda imagen), sin `/v1/kcortex/access`, y los prompts viven copiados en Kotlin.
+- **Exportación de datos:** `process_data_export` sí es la misma Edge Function que llama `PrivacyService` en iOS. El borrado, no.
 
-| Funcionalidad iOS | Prioridad | Estado | Notas |
-|---|---|---|---|
-| Paywall RevenueCat nativo | P0 | ⛔ | Dep RevenueCat 8.10.4 ya en classpath; falta `goog_xxx` API key + offerings en Play Console |
-| Paywall fallback custom | P1 | ⛔ | |
-| Premium gating | P0 | ⛔ | `EntitlementsService` pendiente |
-| Restore purchases | P0 | ⛔ | RC `Purchases.shared.restorePurchases()` |
-| Silent restore banner | P1 | ⛔ | |
-| Apple Review premium bridge → Android equiv | P1 | ⛔ | Feature flag para reviewers Play Console |
-| Subscription management UI | P0 | ⛔ | RC Customer Center Android |
-| Webhook RevenueCat → `iap_entitlements` | P0 | ✅ | Edge Function `revenuecat_webhook` ya existe (compartido con iOS) |
+## Tabla única
 
-## 6. Store de productos físicos
+| Módulo iOS (ruta) | Equivalente Android (ruta) | Estado | Backend usado | Adaptación de plataforma | Prioridad | Notas |
+|---|---|---|---|---|---|---|
+| `App/CompositionRoot/AppBootstrapper.swift` | `app/`, `KiruApp.kt`, módulos Hilt en `core/` y `data/` | CORREGIR | Supabase anon + RevenueCat + Sentry | Hilt en lugar de composition root Swift | P0 | Un solo módulo `:app`. Sin flavors. Sin panel de project ref. |
+| `Core/DesignSystem/` (`KiruDesignTokens`, `KiruTypography`, `PremiumTheme`) | `core/designsystem/Color.kt`, `Type.kt`, `Theme.kt` | CORREGIR | — | Material 3 `ColorScheme` | P0 | Paleta de marca sí. Falta verde quirúrgico, spacing, shapes. `CasesScreen` hardcodea color. |
+| `Core/Session/` + auth email (`Data/Services/StudyContent/AuthService.swift`) | `core/auth/`, `data/repository/AuthRepositoryImpl.kt` | CORREGIR | Auth Supabase, refresh automático | DataStore de supabase-kt (Keychain en iOS) | P0 | Login, registro, reset y logout existen. Sin Apple/Google. Loguea el email. |
+| `Core/Payment/EntitlementsService.swift` (`get_premium_status` + RevenueCat) | `core/premium/PremiumModule.kt` | REESCRIBIR | Ninguno (stub) | RevenueCat Purchases está instalado y no conectado al estado | P0 | `MutableStateFlow(EntitlementState.Free)` fijo. El plan no puede ser Pro. |
+| `Features/Paywall/` | `feature/paywall/PaywallScreen.kt` | CORREGIR | RevenueCat `PaywallDialog` | Play Billing vía RevenueCat UI | P0 | El diálogo es el camino correcto. Sin offerings propios, restore, Customer Center ni gate real. |
+| `Core/Rewards/CoinsService.swift` | — | FALTA | RPC `kiru_coins_balance`, `redeem_reward`, Edge `kiru-coins-award` | — | P0 | Economía de KIRU Coins ausente. |
+| `Core/Notifications/` + `APNsSubscriptionRepository` | permiso declarado en el manifest | FALTA | RPC `kiru_push_opt_in` / `kiru_push_opt_out` | FCM aún no | P1 | Sin canales, sin deep links, sin opt-in. |
+| `Telemetry/` + Sentry iOS | `KiruApp.installSentry` | CORREGIR | Sentry DSN por BuildConfig | SDK Android | P1 | Opt-in por build, no por ajuste. Sin tags de entorno equivalentes. Sin `analytics_events`. |
+| `Core/Configuration/KiruLinks.swift` | `BuildConfig` PRIVACY/TERMS/SUBSCRIPTIONS + `core/ui/WebViewScreen.kt` | CONSERVAR | URLs `medsurgery.academy` | WebView / Custom Tabs | P0 | Las tres URLs coinciden con el contrato iOS (`politica-de-privacidad-kiru-app`, términos, suscripciones). |
+| `Features/Onboarding/MedicalDisclaimerView.swift` + splash | `feature/onboarding/` | CORREGIR | — | Compose | P0 | Splash y disclaimer con scroll-gate. Falta el onboarding de perfil (gamertag, `user_profiles`). |
+| `Features/Profile/` | `feature/profile/` | CORREGIR | Tabla `profiles` (la misma que `UserProfileViewModel`) | — | P0 | No usa `user_profiles` (gamertag, gate). Sin edición rica ni stats. Borrado de cuenta: ver riesgo 2. |
+| `Features/Settings/` | `feature/settings/` | CORREGIR | DataStore | Locale por app | P0 | Tema, idioma es/en, háptica, about, export. Sin preferencias de notificación ni bloqueo biométrico (la dependencia está, no el flujo). |
+| `Features/Dashboard/` | `feature/home/HomeScreen.kt` | CORREGIR | — | Compose | P0 | Welcome + accesos rápidos. No es el hero, arena ni perlas del dashboard iOS. |
+| `Features/Navigation/MainTabView.swift` | `feature/main/`, `app/nav/KiruRoute.kt` | CORREGIR | — | Navigation Compose tipado | P0 | 5 tabs (Home, Academy, Logbook, Store, Profile). iOS reparte más destinos. ~30 rutas vs el grafo iOS. |
+| `Features/Academy/` | `feature/academy/` | CORREGIR | `content_items` | — | P1 | Lista y detalle. No es el currículo, cursos ni `ChapterExamView` de iOS. |
+| `Features/Quiz/` | `feature/quiz/` | CORREGIR | `content_items` `category=question` | — | P1 | iOS publica el banco desde bundle. Hay que unificar la fuente antes de dar por bueno el contenido. Sin repetición de fallos ni `record_quiz_evaluation`. |
+| `Features/Exam/` + `Features/Academy/ChapterExamView.swift` | `feature/chapterexam/` | CORREGIR | Asset local de examen | — | P1 | No es `EvaluationViewModel` ni el examen de capítulo remoto. |
+| `Features/FlashCards/` | — | FALTA | Banco local / repetición espaciada | Room cuando se porte | P1 | Incluye adivina-diagnóstico. |
+| `Features/Resumenes/` | — | FALTA | RPC `kiru_resumen_payload`, vistas `vw_kiru_resumenes_*` | — | P1 | La biblioteca Android no lee esas vistas. |
+| `Features/Models/Pearls/` | `feature/pearls/`, `data/pearls/` | CORREGIR | Tabla `pearls` | — | P1 | iOS también reconstruye perlas desde `content_items`. Falta la sesión de estudio. |
+| `Features/Study/` | `feature/library/` | CORREGIR | Assets `StudyModules.json` + índice de currículo | — | P1 | No es `StudyLibraryView` ni los libros de resúmenes remotos. |
+| `Features/ClinicalCases/` | `feature/cases/` | CORREGIR | Asset `clinical_cases.json` | — | P1 | Hub y detalle. Falta el flujo serializado con resultados de iOS. |
+| `Features/Guidelines/` | — | FALTA | Contenido local / remoto | — | P2 | |
+| `Features/MedicalCatalog/` | — | FALTA | `medical_diagnoses_cie10`, `medical_procedures_cie9` | — | P2 | |
+| `Features/MedicalText/` | — | FALTA | `medical_books`, `medical_chapters` | — | P2 | |
+| `Features/Models/Podcast/` | — | FALTA | Audio de estudio | Media3 | P2 | |
+| `Features/Kapibaya/` | `feature/kapibaya/`, `data/kapibaya/` | CORREGIR | Android: `ask_kapibaya_stream`. iOS: `ask_kapibaya` | OkHttp SSE (no supabase-kt Functions) | P1 | Sin Bearer, sin TTS, sin voz, sin batalla, sin citas de resúmenes. |
+| `Features/K-Cortex/` | `feature/kcortex/`, `data/kcortex/` | CORREGIR | `POST /v1/kcortex/analyze` en `kiru-backend.onrender.com` | Multipart OkHttp, solo texto | P1 | Mismo path que iOS. Sin visión, sin `/access`, URL no configurable. Prompts duplicados en Kotlin. |
+| `Features/K-Pharma/` | `feature/drugs/` | CORREGIR | Asset `drugs.json` | — | P1 | iOS: `content_items` `cbm_bundle` con fallback local. Sin calculadora de dosis pediátrica. |
+| `Features/Dictation/` | — | FALTA | `TranscriptionRepository` | `SpeechRecognizer` | P2 | |
+| `Features/Rewards/` | — | FALTA | `reward_catalog`, `user_reward_inventory`, RPC `redeem_reward` | Play no sustituye las coins | P1 | |
+| `Features/Gamificacion/` | — | FALTA | RPC de hospital battle | — | P2 | |
+| `Features/Prestige/` | — | FALTA | Local + remoto de rangos | — | P2 | |
+| `Features/Duel/` | — | FALTA | Tiempo real | Realtime de supabase-kt | P2 | |
+| `Features/Multiplayer/` | — | FALTA | Leaderboard | — | P2 | |
+| `Features/KiruPardy/` | — | FALTA | `kirupardy_content_packages`, Edge `kirupardy-room` | — | P2 | |
+| `Features/Arena_KIRU_Plus/` | — | FALTA | RPC `get_elite_league_season`, `arena_elo` | — | P2 | |
+| `Features/Games/` | — | FALTA | `GameSessionStatsRepository` | — | P2 | |
+| `Features/Progress/` | — | FALTA | Progreso de aprendizaje | — | P1 | Readiness score ausente. |
+| `Features/VaultReader/` | — | FALTA | Edge `vault-*` | PdfRenderer + `FLAG_SECURE` | P1 | iOS lo apaga en Debug plano (`VAULT_READER_ENABLED=NO`) y lo enciende en Staging. |
+| `Features/Kiru_Video_Plus/` | — | FALTA | Edge `video-catalog`, `video-playback` | Media3 ExoPlayer HLS | P1 | |
+| `Features/Calculators/` | `feature/ktools/`, `domain/ktools/KToolsCalculator.kt` | CORREGIR | Cálculo local | — | P1 | 10 de 12: faltan ISS y Trauma Score. Fórmulas no re-verificadas contra los ViewModels Swift en esta fase. |
+| `Features/NOM004/` | — | FALTA | `NOM004ClinicalNotesRepository` | PdfDocument + firma | P2 | |
+| `Features/Logbook/` | `feature/logbook/`, `data/logbook/` | CORREGIR | Tablas `surgical_logs`, `procedures` | Remoto vs archivo local iOS | P1 | La tabla existe y tiene RLS. El comportamiento iOS es `surgical_logbook.json` en disco, con cuota por plan. |
+| `Store/` (WooCommerce) | `feature/store/`, `data/store/` | CORREGIR | Android: `store_products`. iOS: Edge `medsurgery-store` | Custom Tabs en iOS y en Android para el checkout web | P1 | Catálogo distinto. Sin carrito. |
+| `Features/QuirofanoAR/` | — | FALTA | Escenarios locales | ARCore, o degradación documentada | P3 | No marcar NO_PORTABLE hasta probar SceneView. |
+| `Features/AR/` | — | FALTA | — | ARCore | P3 | |
+| `Features/ARSimulation/` | — | FALTA | — | ARCore | P3 | |
+| `Features/KLens/` | — | FALTA | — | ML Kit / CameraX | P3 | |
+| `Features/KiruVision/` | — | FALTA | — | CameraX | P3 | |
+| `Features/KiruSimulator/` | — | FALTA | — | — | P3 | |
+| `Features/Institutional/` | — | FALTA | Cohortes, residentes | — | P3 | Producto B2B, no el flujo del alumno. |
+| `Features/KIRUControl/` | — | FALTA | RPC `get_kiru_control_dashboard`, Edge `kiru-control-demo-redeem` | — | P3 | |
+| `Features/Alerts/` | — | FALTA | `wellbeing_alerts` | — | P3 | |
+| `Features/Reports/` | — | FALTA | — | — | P3 | |
+| `Features/Surgical/` | — | FALTA | Consentimiento y seguridad quirúrgica | — | P2 | Distinto del logbook. |
+| `Features/Compliance/` | — | FALTA | Repositorio fiscal | — | P2 | Los enlaces legales sí están (fila KiruLinks). |
+| `Features/License/` | — | FALTA | Edge `issue_license_signed_url` | Photo Picker | P2 | |
+| `Features/Admin/` | — | FALTA | Instituciones | — | P3 | No es superficie del alumno. |
+| `Features/ScrubMode/` | — | FALTA | — | — | P3 | |
+| `Features/Blockchain/` | — | FALTA | Diploma | — | P3 | |
+| `Features/Avatar/` | — | FALTA | — | — | P3 | |
+| `Features/ContentModes/` | — | FALTA | — | — | P3 | |
+| `Features/Validation/` | — | FALTA | `medical_validations` | — | P2 | |
+| `Features/Analysis/` | — | FALTA | — | — | P3 | |
+| `Features/Stats/` | — | FALTA | — | Vico cuando haya series | P2 | |
 
-| Funcionalidad iOS | Prioridad | Estado | Commit/notas |
-|---|---|---|---|
-| Catálogo productos | P1 | ✅ | E8 con Supabase Postgrest + Coil |
-| Detalle de producto | P1 | ✅ | E8.1 ProductDetailScreen con hero 280dp |
-| Carrito (CartManager) | P1 | ⛔ | E8/E8.1 son single-product checkout |
-| Checkout Stripe via web | P1 | ✅ | E8 Chrome Custom Tabs con `kiru_navy_blue` toolbar |
-| Imagen prefetcher | P2 | 🟡 | Coil hace prefetch automático en LazyColumn |
-| Favoritos | P2 | ⛔ | |
-| Returns/shipping policy URL | P0 | ⛔ | URL pendiente verificación con marketing |
+## Inventario Android que no es un módulo iOS nuevo
 
-## 7. Compliance médico-legal y privacidad
+Estas rutas se conservan; no son features de más, son el lugar donde cayó un módulo iOS:
 
-| Funcionalidad iOS | Prioridad | Estado | Commit/notas |
-|---|---|---|---|
-| Disclaimer médico modal bloqueante | P0 | ✅ | E9 con scroll-gate dual (accepted + scrolledToEnd) |
-| Disclaimer banner persistente Home | P0 | ✅ | E5 |
-| Privacy policy WebView | P0 | ✅ | E9 + slug fix `7f9c3f0` (URL responde 200) |
-| Terms of service WebView | P0 | ✅ | E9 + slug fix (URL responde 200) |
-| Subscription policy WebView | P0 | ✅ | E9 + slug fix (URL responde 200) |
-| GDPR data export request | P0 | ⛔ | Edge Function `process_data_export` lista, falta UI |
-| GDPR data deletion request | P0 | ✅ | E3 AccountDeletionScreen (48h grace) |
-| Validación cédula profesional | P1 | ⛔ | Edge Function `issue_license_signed_url` lista + Photo Picker |
-| NOM-004 informed consent (4 firmas + PDF + SHA-256) | P2 | ⛔ | Compose Canvas + PdfDocument |
-| Wellbeing alerts (redacted) | P3 | ⛔ | |
-| AI consent K-CORTEX | P2 | ⛔ | |
-| **Account Deletion URL pública** | P0 | ⛔ | Google Play exige URL externa; pendiente con marketing |
+`feature/auth`, `feature/legal`, `feature/main`, `core/network/SupabaseModule.kt`, `core/prefs`, `core/assets`, `core/locale`, `core/browser`.
 
-## 8. Configuración y soporte
+## Excepciones de nombre (el concepto no se llama igual)
 
-| Funcionalidad iOS | Prioridad | Estado | Commit/notas |
-|---|---|---|---|
-| Settings screen | P0 | ✅ | E5 con 4 secciones (General/Legal/Account/About) |
-| Cambio de idioma (es/en) | P0 | ✅ | E5 + LocaleApplier (E10.1) — per-app language API |
-| Theme dark/light | P0 | ✅ | E5 dinámico via AppViewModel observando DataStore |
-| Haptic feedback toggle | P1 | ✅ | E5 (DataStore flag) |
-| Notificaciones preferences | P1 | ⛔ | DataStore + Notification channels |
-| About / version info | P0 | ✅ | E5 con `BuildConfig.VERSION_NAME + VERSION_CODE` |
-| Soporte (mailto medsurgery) | P0 | ⛔ | Intent ACTION_SENDTO |
+| iOS | Android | Motivo |
+|---|---|---|
+| `UserProfileViewModel` | `ProfileViewModel` | La pantalla se llama Profile en ambos; alinear el nombre en Fase 1. |
+| `ChapterExamView` | `ChapterExamScreen` / `ChapterExamViewModel` | Convención Compose (`Screen`). El ViewModel sí es gemelo. |
+| `KPharmaHubView` | `DrugsScreen` | El módulo iOS es K-Pharma; Android lo nombró drugs. Renombrar a `KPharma*` al corregir el contrato. |
+| `HomeDashboardView` | `HomeScreen` | Mismo destino, otro nombre. |
+| `MedSurgeryStoreService` | `StoreRepository` | Mismo destino comercial; la fuente de datos todavía no es la misma. |
+| `AppBootstrapper` | módulos Hilt (`SupabaseModule`, `PremiumModule`, bindings por repositorio) | No hay una clase `AppBootstrapper`. La DI está centralizada, repartida. |
 
-## 9. Multimedia y permisos
+## Verificación de build (2026-10-10)
 
-| Funcionalidad iOS | Prioridad | Estado | Commit/notas |
-|---|---|---|---|
-| Permiso micrófono (Kapibaya voice) | P2 | 🟡 | E0 manifest declarado; runtime permission pendiente con Kapibaya |
-| Permiso notificaciones (Android 13+) | P1 | 🟡 | E0 manifest declarado; runtime permission + canal pendiente |
-| Upload imagen cédula | P1 | ⛔ | Photo Picker (sin permiso) |
-| Background audio | P2 | ⛔ | Foreground service para Kapibaya speaking |
-| Push notifications (FCM) | P1 | ⛔ | |
+Comandos, JDK 21 de Android Studio, Gradle 8.11.1, sobre el árbol de `5854421` (antes de este documento):
 
-## 10. Manejo de errores y estados
+| Comando | Resultado |
+|---|---|
+| `./gradlew assembleDebug` | **PASS** (tarea `:app:assembleDebug` terminó; el APK debug se empaquetó) |
+| `./gradlew test` | **PASS** — `testDebugUnitTest` 318 tests, 0 fallos, 0 errores, 0 omitidos (36 clases). `testReleaseUnitTest` también pasó dentro del mismo `test`. |
+| `./gradlew lint` (`lintDebug`) | **FAIL** — 3 errores, 0 warnings. Los tres son el mismo hallazgo `RiskyLibrary`: `com.revenuecat.purchases:purchases` **10.6.1** (`gradle/libs.versions.toml:39`). Lint cita que esa versión hace llamadas de API innecesarias y **bloquea la publicación en Play Console**. No se tocó el catálogo en Fase 0. |
 
-| Funcionalidad iOS | Prioridad | Estado | Commit/notas |
-|---|---|---|---|
-| Errores Supabase con feedback amigable | P0 | ✅ | E3 AuthError mapper (8 cases + Unknown) |
-| Estados vacíos (empty states) | P0 | 🟡 | E8 Store tiene Empty; otros pendientes |
-| Estado offline (no network) | P0 | 🟡 | E9 OfflineBanner en WebView; ConnectivityManager global pendiente |
-| Loading skeletons (shimmer) | P1 | ⛔ | |
-| Recovery de crash (Sentry) | P1 | ✅ | E0 configurado opt-in via `BuildConfig.SENTRY_DSN`; falta toggle UI |
-
-## 11. Analytics y telemetría
-
-| Funcionalidad iOS | Prioridad | Estado | Commit/notas |
-|---|---|---|---|
-| Sentry crash reporting | P0 | ✅ | E0 dep + opt-in via DSN; `io.sentry.auto-init=false` |
-| analytics_events table (event bus) | P1 | ⛔ | Supabase insert |
-| MUX video analytics | P1 | ⛔ | |
-| LogRocket | P3 | ⚠️ | Skip Android por riesgo privacy con datos médicos |
-| Opt-out telemetría | P1 | ⛔ | Falta toggle en Settings (Sentry hoy es opt-in via build, no runtime) |
-
----
-
-## Resumen P0 al cierre de v0.1.0
-
-**P0 bloqueantes ✅ cubiertos:**
-1. Auth completa (login/register/forgot/logout/delete) ✅
-2. Disclaimer médico (modal scroll-gated + banner Home) ✅
-3. Legal WebViews (privacy/terms/subscriptions) con URLs live 200 ✅
-4. Settings + idioma + theme + about ✅
-5. Tab Store con catálogo + Stripe Custom Tabs ✅
-6. Sentry config + telemetría base ✅
-7. AuthError mapper localizado ✅
-
-**P0 bloqueantes ⛔ pendientes (próximo sprint):**
-1. **Paywall RevenueCat funcional** — bloqueado por `goog_xxx` API key
-2. **Premium gating** — depende del paywall
-3. **Profile mínimo con datos del médico**
-4. **Sentry opt-in toggle en Settings**
-5. **Account Deletion URL pública** — pendiente con marketing
-6. **Returns/shipping policy URL** — pendiente con marketing
-7. **GDPR data export UI** — Edge Function ya existe
-
-**P0 nice to have antes de Internal Testing:**
-- Confirmación email post-signup como UX flow explícito
-- Soporte (mailto medsurgery) en Settings
-- Sentry opt-in toggle real
-
----
-
-## Estrategia release
-
-**v0.1.0 (actual, no para Play Console):** core funcional + tests + URLs OK.
-
-**v0.2.0 (siguiente milestone):** Paywall + Profile + GDPR export UI + Sentry toggle. Internal Testing track.
-
-**v1.0.0 (Play Console submit):** v0.2.0 + Pearls + Logbook básico + Dr. Kapibaya chat texto + Closed Testing.
-
-**v1.1+:** Voice mode, K-CORTEX, NOM-004, Academy completo, etc.
+El fallo de lint no cambia la recomendación de conservar la base: es un bump de dependencia, no un rediseño. `detekt` y `ktlint` no están en el build, así que no se ejecutaron.
