@@ -87,7 +87,7 @@ fun CaseDetailScreen(
                         verticalArrangement = Arrangement.spacedBy(12.dp),
                     ) {
                         Text(
-                            text = state.errorMessage!!,
+                            text = state.errorMessage.orEmpty(),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.error,
                         )
@@ -97,7 +97,7 @@ fun CaseDetailScreen(
                     }
                 }
 
-                state.clinicalCase != null -> CaseDetailBody(clinicalCase = state.clinicalCase!!)
+                state.clinicalCase != null -> state.clinicalCase?.let { CaseDetailBody(clinicalCase = it) }
             }
         }
     }

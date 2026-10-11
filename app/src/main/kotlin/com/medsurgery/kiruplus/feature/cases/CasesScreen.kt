@@ -38,6 +38,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import com.medsurgery.kiruplus.core.designsystem.KiruColors
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -298,7 +299,7 @@ private fun CaseCard(clinicalCase: ClinicalCase, onClick: () -> Unit) {
 
 @Composable
 internal fun difficultyColor(difficulty: String): Color = when (difficulty) {
-    "Básico" -> Color(0xFF2E7D32)       // green
-    "Avanzado" -> Color(0xFFC62828)     // red
-    else -> Color(0xFFF57F17)           // amber / yellow for Intermedio
+    "Básico" -> KiruColors.surgicalSuccess
+    "Avanzado" -> KiruColors.red
+    else -> KiruColors.gold
 }

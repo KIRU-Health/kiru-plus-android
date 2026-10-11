@@ -86,7 +86,7 @@ fun DrugDetailScreen(
                         verticalArrangement = Arrangement.spacedBy(12.dp),
                     ) {
                         Text(
-                            text = state.errorMessage!!,
+                            text = state.errorMessage.orEmpty(),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.error,
                         )
@@ -96,7 +96,7 @@ fun DrugDetailScreen(
                     }
                 }
 
-                state.drug != null -> DrugDetailBody(drug = state.drug!!)
+                state.drug != null -> state.drug?.let { DrugDetailBody(drug = it) }
             }
         }
     }

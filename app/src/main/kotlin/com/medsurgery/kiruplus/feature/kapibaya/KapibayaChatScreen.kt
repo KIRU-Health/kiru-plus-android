@@ -106,7 +106,10 @@ fun KapibayaChatScreen(
                     items(state.turns, key = { it.id }) { turn -> TurnBubble(turn) }
                     when {
                         state.streamingContent?.isNotBlank() == true ->
-                            item(key = "streaming") { StreamingBubble(state.streamingContent!!) }
+                            item(key = "streaming") {
+                                val content = state.streamingContent
+                                if (!content.isNullOrBlank()) StreamingBubble(content)
+                            }
                         state.isSending ->
                             item(key = "typing") { TypingBubble() }
                     }

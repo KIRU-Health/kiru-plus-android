@@ -72,7 +72,7 @@ fun ContentDetailScreen(
                         verticalArrangement = Arrangement.spacedBy(12.dp),
                     ) {
                         Text(
-                            text = stringResource(state.errorRes!!),
+                            text = state.errorRes?.let { stringResource(it) }.orEmpty(),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.error,
                         )
@@ -81,7 +81,7 @@ fun ContentDetailScreen(
                         }
                     }
                 }
-                state.item != null -> Body(item = state.item!!)
+                state.item != null -> state.item?.let { Body(item = it) }
             }
         }
     }

@@ -96,6 +96,27 @@ android {
             isMinifyEnabled = false
             applicationIdSuffix = ".debug"
             versionNameSuffix = "-debug"
+            // Flags-Debug.xcconfig: el canal es local-debug y el project ref
+            // efectivo es producción, salvo override en local.properties.
+            buildConfigField("String", "APP_ENVIRONMENT", "\"${localProperty("APP_ENVIRONMENT", "production")}\"")
+            buildConfigField("String", "SUPABASE_PROJECT_REF", "\"${localProperty("SUPABASE_PROJECT_REF", "tttxmupjteqpljtfgmgo")}\"")
+            buildConfigField("String", "KIRU_BUILD_CHANNEL", "\"local-debug\"")
+            buildConfigField("String", "BACKEND_BASE_URL", "\"${localProperty("BACKEND_BASE_URL", "https://kiru-backend.onrender.com")}\"")
+            buildConfigField("boolean", "SHOW_ENVIRONMENT_PANEL", "true")
+        }
+        create("staging") {
+            initWith(getByName("debug"))
+            applicationIdSuffix = ".staging"
+            versionNameSuffix = "-staging"
+            matchingFallbacks += listOf("debug")
+            // Flags-Staging.xcconfig. La anon key no tiene default: vacía = fail-closed.
+            buildConfigField("String", "APP_ENVIRONMENT", "\"${localProperty("STAGING_APP_ENVIRONMENT", "staging")}\"")
+            buildConfigField("String", "SUPABASE_URL", "\"${localProperty("STAGING_SUPABASE_URL", "https://huzivubxotwvwnimasng.supabase.co")}\"")
+            buildConfigField("String", "SUPABASE_ANON_KEY", "\"${localProperty("STAGING_SUPABASE_ANON_KEY")}\"")
+            buildConfigField("String", "SUPABASE_PROJECT_REF", "\"${localProperty("STAGING_SUPABASE_PROJECT_REF", "huzivubxotwvwnimasng")}\"")
+            buildConfigField("String", "KIRU_BUILD_CHANNEL", "\"local-staging\"")
+            buildConfigField("String", "BACKEND_BASE_URL", "\"${localProperty("STAGING_BACKEND_BASE_URL", "https://kiru-backend-staging.onrender.com")}\"")
+            buildConfigField("boolean", "SHOW_ENVIRONMENT_PANEL", "true")
         }
         release {
             isMinifyEnabled = true
@@ -105,6 +126,12 @@ android {
                 "proguard-rules.pro",
             )
             signingConfig = signingConfigs.getByName("release")
+            // Flags-Release.xcconfig: K-CORTEX de producción queda vacío (fail-closed).
+            buildConfigField("String", "APP_ENVIRONMENT", "\"${localProperty("APP_ENVIRONMENT", "production")}\"")
+            buildConfigField("String", "SUPABASE_PROJECT_REF", "\"${localProperty("SUPABASE_PROJECT_REF", "tttxmupjteqpljtfgmgo")}\"")
+            buildConfigField("String", "KIRU_BUILD_CHANNEL", "\"release\"")
+            buildConfigField("String", "BACKEND_BASE_URL", "\"${localProperty("RELEASE_BACKEND_BASE_URL", "")}\"")
+            buildConfigField("boolean", "SHOW_ENVIRONMENT_PANEL", "false")
         }
     }
 

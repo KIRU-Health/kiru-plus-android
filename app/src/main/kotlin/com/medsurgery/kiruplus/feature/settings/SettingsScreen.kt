@@ -190,6 +190,25 @@ fun SettingsScreen(
                     },
                 )
                 HorizontalDivider()
+                if (BuildConfig.SHOW_ENVIRONMENT_PANEL) {
+                    Text(
+                        text = stringResource(R.string.settings_environment_title),
+                        style = MaterialTheme.typography.titleSmall,
+                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
+                    )
+                    Text(
+                        text = stringResource(
+                            R.string.settings_environment_body,
+                            BuildConfig.KIRU_BUILD_CHANNEL,
+                            BuildConfig.APP_ENVIRONMENT,
+                            BuildConfig.SUPABASE_PROJECT_REF,
+                        ),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp),
+                    )
+                    HorizontalDivider()
+                }
                 Text(
                     text = stringResource(
                         R.string.settings_version,

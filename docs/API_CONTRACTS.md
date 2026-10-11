@@ -81,18 +81,18 @@ Non-streaming Kapibaya AI chat (single response). Used as fallback.
 
 ### `process_account_deletions`
 
-Soft-deletes the authenticated user's account and all associated data.
+Worker de borrado definitivo. **No es el contrato que usa iOS para que el usuario pida la baja.**
 
 | Field | Value |
 |-------|-------|
 | URL | `{SUPABASE_URL}/functions/v1/process_account_deletions` |
 | Method | POST |
-| Auth | Session JWT (required — anon rejected) |
+| Auth | Credencial de máquina. El JWT de usuario se rechaza (`machine_credential_required`). Fuente: `supabase/functions/process_account_deletions/index.ts` |
 | Body | (none) |
 
-**Response:** HTTP 200 on success; HTTP 4xx/5xx on failure.
+**iOS:** `Core/Compliance/PrivacyService.swift` llama al RPC `kiru_request_account_deletion` (`p_reason`). Cancelar: `kiru_cancel_account_deletion`. Estado: `kiru_account_deletion_status`.
 
-**Android implementation:** `AuthRepositoryImpl.requestAccountDeletion()` via `supabase.functions.invoke(...)`.
+**Android hoy:** `AuthRepositoryImpl.requestAccountDeletion()` invoca esta Edge Function. Desviación bloqueante, registrada en la matriz. No se cambia el backend desde este repo.
 
 ---
 
@@ -151,3 +151,21 @@ Used by `StoreRepositoryImpl` to populate the Store catalog.
 - **Additive change** (new optional field): safe to deploy; both platforms ignore unknown fields.
 - **New function**: always additive; old clients unaffected.
 - **During iOS App Review**: backend is frozen. No migrations, no function deploys, no RLS changes. Coordinate with iOS owner before any action.
+
+## Contratos verificados contra Swift (2026-10-10)
+
+Si esta sección contradice una sección de arriba, gana el Swift. Android todavía no está alineado en las filas marcadas DESVIACIÓN.
+
+| Contrato | Archivo Swift | Android hoy |
+|---|---|---|
+| SSE de Kapibaya: `POST /functions/v1/ask_kapibaya` con sesión | `Data/Services/CloudKapibayaService+SSE.swift` | DESVIACIÓN: `ask_kapibaya_stream` solo con `apikey`, sin `Authorization` (`data/kapibaya/KapibayaRepositoryImpl.kt`) |
+| RPC `kiru_request_account_deletion` | `Core/Compliance/PrivacyService.swift` | DESVIACIÓN: invoca `process_account_deletions` |
+| Edge `process_data_export` | `Core/Compliance/PrivacyService.swift` | Igual (`AuthRepositoryImpl.requestDataExport`) |
+| `POST {BACKEND_BASE_URL}/v1/kcortex/analyze` | `Data/KCortex/KCortexVisionService.swift`; URL en `Config/Flags-*.xcconfig` | Mismo path. La URL sale de `BuildConfig.BACKEND_BASE_URL`. Release queda vacío (fail-closed), como iOS. |
+| Catálogo comercial: Edge `medsurgery-store` | `Store/MedStoreAPIConfig.swift` | DESVIACIÓN: tabla `store_products` |
+| Quiz publicado: bundle, no `content_items` | `Tests and UITests App/Tests/PublishedBankLoadTests.swift` | DESVIACIÓN: `content_items` `category=question` |
+| Logbook del alumno: archivo `surgical_logbook.json` | `Features/Logbook/LogbookRepository.swift` | DESVIACIÓN: tablas `surgical_logs` y `procedures` |
+| Perfil visible: tabla `profiles` | `Features/Profile/UserProfileViewModel.swift` | Igual. El onboarding de gamertag iOS usa además `user_profiles` (`ProfileOnboardingView.swift`) |
+| Perlas: tabla `pearls` | `Data/Repositories/SupabasePearlRepository.swift` | Igual |
+| RPC `get_premium_status` + RevenueCat como autoridad | `Core/Payment/EntitlementsService.swift` | DESVIACIÓN: `PremiumModule` emite Free y no llama al RPC ni a CustomerInfo |
+| Project ref debug `tttxmupjteqpljtfgmgo`, staging `huzivubxotwvwnimasng` | `Config/Flags-Debug.xcconfig`, `Config/Flags-Staging.xcconfig` | `BuildConfig.SUPABASE_PROJECT_REF`. Panel en Ajustes si `SHOW_ENVIRONMENT_PANEL` |

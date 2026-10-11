@@ -63,7 +63,7 @@ fun PearlsScreen(
         Box(modifier = Modifier.fillMaxSize().padding(padding)) {
             when {
                 state.isLoading -> CenteredSpinner()
-                state.errorRes != null -> CenteredError(state.errorRes!!, viewModel::load)
+                state.errorRes != null -> state.errorRes?.let { CenteredError(it, viewModel::load) }
                 state.pearls.isEmpty() -> CenteredEmpty()
                 else -> PearlsList(pearls = state.pearls, onClick = onOpenPearl)
             }

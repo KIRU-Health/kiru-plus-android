@@ -70,8 +70,9 @@ class ChapterExamViewModel @Inject constructor(
 
     fun selectOption(index: Int) {
         val current = _state.value
-        if (current.isAnswered || current.currentQuestion == null) return
-        val isCorrect = index == current.currentQuestion!!.correctIndex
+        val question = current.currentQuestion
+        if (current.isAnswered || question == null) return
+        val isCorrect = index == question.correctIndex
         _state.update {
             it.copy(
                 selectedOptionIndex = index,

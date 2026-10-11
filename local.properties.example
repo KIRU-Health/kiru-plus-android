@@ -15,3 +15,17 @@ REVENUECAT_API_KEY=goog_REPLACE_WITH_REAL_KEY
 
 # Sentry crash reporting (mismo DSN que iOS o uno dedicado a Android)
 SENTRY_DSN=https://REPLACE@sentry.io/PROJECT_ID
+
+# Entorno efectivo. Debug usa los defaults de Flags-Debug.xcconfig si omites estas claves.
+# APP_ENVIRONMENT=production
+# SUPABASE_PROJECT_REF=tttxmupjteqpljtfgmgo
+# BACKEND_BASE_URL=https://kiru-backend.onrender.com
+
+# Staging (build type `staging`). La anon key no se commitea y no tiene default.
+# STAGING_SUPABASE_URL=https://huzivubxotwvwnimasng.supabase.co
+# STAGING_SUPABASE_PROJECT_REF=huzivubxotwvwnimasng
+# STAGING_SUPABASE_ANON_KEY=
+# STAGING_BACKEND_BASE_URL=https://kiru-backend-staging.onrender.com
+
+# Release deja K-CORTEX vacío (fail-closed), igual que Flags-Release.xcconfig.
+# RELEASE_BACKEND_BASE_URL=
