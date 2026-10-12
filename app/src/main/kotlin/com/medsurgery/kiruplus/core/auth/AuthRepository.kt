@@ -1,5 +1,7 @@
 package com.medsurgery.kiruplus.core.auth
 
+import com.medsurgery.kiruplus.domain.privacy.AccountDeletionReceipt
+import com.medsurgery.kiruplus.domain.privacy.AccountDeletionStatus
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -22,11 +24,21 @@ interface AuthRepository {
     suspend fun resetPassword(email: String): Result<Unit>
 
     /**
-     * Solicita eliminación de cuenta con 48h de grace period.
-     * Llama a Edge Function `process_account_deletions`.
-     * Requerido por Google Play (Account Deletion policy) y GDPR Art. 17.
+     * Agenda la baja con el RPC `kiru_request_account_deletion` (gracia 48 h).
+     * No llama a `process_account_deletions`: esa función solo acepta
+     * credencial de máquina.
      */
-    suspend fun requestAccountDeletion(): Result<Unit>
+    suspend fun requestAccountDeletion(reason: String? = null): Result<AccountDeletionReceipt>
+
+    /** Revoca una baja programada. RPC `kiru_cancel_account_deletion`. */
+    suspend fun cancelAccountDeletion(): Result<String>
+
+    /**
+     * Lee el estado. RPC `kiru_account_deletion_status`.
+     * Sin sesión devuelve [com.medsurgery.kiruplus.domain.privacy.PrivacyError.NotAuthenticated],
+     * nunca un estado "sin solicitud".
+     */
+    suspend fun accountDeletionStatus(): Result<AccountDeletionStatus>
 
     /**
      * Solicita exportación de datos personales del usuario (GDPR Art. 15 /

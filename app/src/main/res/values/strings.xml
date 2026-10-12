@@ -76,6 +76,19 @@
     <string name="delete_account_acknowledge">I understand my data will be permanently deleted.</string>
     <string name="delete_account_confirm">Confirm deletion</string>
     <string name="delete_account_cancel">Cancel</string>
+    <string name="delete_account_status_loading">Checking status…</string>
+    <string name="delete_account_status_none">You have no active deletion request.</string>
+    <string name="delete_account_status_scheduled_title">Deletion scheduled</string>
+    <string name="delete_account_status_scheduled_body">Your account is scheduled to be deleted on %1$s. It stays active until then.</string>
+    <string name="delete_account_status_grace">Grace period: %1$d hours.</string>
+    <string name="delete_account_status_cancelable">Cancellation is available during this period.</string>
+    <string name="delete_account_status_cancel_action">Cancel deletion</string>
+    <string name="delete_account_status_cancelled">Your previous deletion request was cancelled. Your account remains active.</string>
+    <string name="delete_account_status_failed">We couldn\'t complete your previous request. Your account remains active.</string>
+    <string name="delete_account_status_unknown">We couldn\'t determine the current status.</string>
+    <string name="delete_account_status_error">We couldn\'t check the status right now.</string>
+    <string name="delete_account_not_authenticated">Sign in to manage your privacy.</string>
+    <string name="delete_account_understood">Done</string>
 
     <!-- Generic UI -->
     <string name="action_back">Back</string>

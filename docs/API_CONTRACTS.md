@@ -92,7 +92,9 @@ Worker de borrado definitivo. **No es el contrato que usa iOS para que el usuari
 
 **iOS:** `Core/Compliance/PrivacyService.swift` llama al RPC `kiru_request_account_deletion` (`p_reason`). Cancelar: `kiru_cancel_account_deletion`. Estado: `kiru_account_deletion_status`.
 
-**Android hoy:** `AuthRepositoryImpl.requestAccountDeletion()` invoca esta Edge Function. Desviación bloqueante, registrada en la matriz. No se cambia el backend desde este repo.
+**Android:** ya no llama esta función. La baja de cuenta usa los RPC de `PrivacyService.swift`.
+
+`executeImmediateDeletion` existe en el protocolo Swift y en el fallback sin Supabase, pero no tiene caller de producción. La Edge Function rechaza el JWT de usuario (`machine_credential_required`). No se porta.
 
 ---
 
@@ -159,7 +161,7 @@ Si esta sección contradice una sección de arriba, gana el Swift. Android todav
 | Contrato | Archivo Swift | Android hoy |
 |---|---|---|
 | SSE de Kapibaya: `POST /functions/v1/ask_kapibaya` con sesión | `Data/Services/CloudKapibayaService+SSE.swift` | DESVIACIÓN: `ask_kapibaya_stream` solo con `apikey`, sin `Authorization` (`data/kapibaya/KapibayaRepositoryImpl.kt`) |
-| RPC `kiru_request_account_deletion` | `Core/Compliance/PrivacyService.swift` | DESVIACIÓN: invoca `process_account_deletions` |
+| RPC `kiru_request_account_deletion`, `kiru_cancel_account_deletion`, `kiru_account_deletion_status` | `Core/Compliance/PrivacyService.swift` | `AuthRepositoryImpl` |
 | Edge `process_data_export` | `Core/Compliance/PrivacyService.swift` | Igual (`AuthRepositoryImpl.requestDataExport`) |
 | `POST {BACKEND_BASE_URL}/v1/kcortex/analyze` | `Data/KCortex/KCortexVisionService.swift`; URL en `Config/Flags-*.xcconfig` | Mismo path. La URL sale de `BuildConfig.BACKEND_BASE_URL`. Release queda vacío (fail-closed), como iOS. |
 | Catálogo comercial: Edge `medsurgery-store` | `Store/MedStoreAPIConfig.swift` | DESVIACIÓN: tabla `store_products` |
