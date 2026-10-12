@@ -71,10 +71,10 @@ class ChapterExamRepositoryTest {
         val result = repo.getChapterExam("Chapter-001").first()
         assertTrue(result.isSuccess)
         val exam = result.getOrThrow()
-        assertNotNull(exam)
-        assertEquals("Chapter-001", exam!!.id)
-        assertEquals("Historia y fundamentos", exam.title)
-        assertEquals(1, exam.questions.size)
+        val loaded = exam ?: error("expected chapter exam")
+        assertEquals("Chapter-001", loaded.id)
+        assertEquals("Historia y fundamentos", loaded.title)
+        assertEquals(1, loaded.questions.size)
     }
 
     @Test
@@ -119,7 +119,8 @@ class ChapterExamRepositoryTest {
     @Test
     fun `question fields are mapped correctly`() = runTest {
         val repo = makeRepo()
-        val exam = repo.getChapterExam("Chapter-001").first().getOrThrow()!!
+        val exam = repo.getChapterExam("Chapter-001").first().getOrThrow()
+            ?: error("expected chapter exam")
         val question = exam.questions.first()
         assertEquals("q001", question.id)
         assertEquals("¿Cuál es el principio del método científico?", question.prompt)

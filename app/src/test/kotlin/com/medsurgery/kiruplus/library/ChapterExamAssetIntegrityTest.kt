@@ -15,7 +15,7 @@ import java.io.File
 class ChapterExamAssetIntegrityTest {
 
     private val appRoot = File(
-        javaClass.classLoader!!.getResource(".")?.path ?: "",
+        javaClass.classLoader?.getResource(".")?.path.orEmpty(),
     ).let { testOutputDir ->
         generateSequence(testOutputDir.parentFile) { it.parentFile }
             .firstOrNull { File(it, "src/main/AndroidManifest.xml").exists() }
@@ -68,7 +68,7 @@ class ChapterExamAssetIntegrityTest {
         exams.forEach { element ->
             val exam = element.jsonObject
             val id = exam["id"]?.jsonPrimitive?.content ?: "?"
-            exam["questions"]!!.jsonArray.forEachIndexed { qIdx, q ->
+            (exam["questions"]?.jsonArray ?: error("Exam $id missing questions")).forEachIndexed { qIdx, q ->
                 val prompt = q.jsonObject["prompt"]?.jsonPrimitive?.content ?: ""
                 assertTrue("Exam $id question[$qIdx] has empty prompt", prompt.isNotBlank())
             }
@@ -81,7 +81,7 @@ class ChapterExamAssetIntegrityTest {
         exams.forEach { element ->
             val exam = element.jsonObject
             val id = exam["id"]?.jsonPrimitive?.content ?: "?"
-            exam["questions"]!!.jsonArray.forEachIndexed { qIdx, q ->
+            (exam["questions"]?.jsonArray ?: error("Exam $id missing questions")).forEachIndexed { qIdx, q ->
                 val options = q.jsonObject["options"]?.jsonArray
                     ?: error("Exam $id question[$qIdx] missing 'options'")
                 assertEquals("Exam $id question[$qIdx] has ${options.size()} options, expected 4", 4, options.size())
@@ -95,7 +95,7 @@ class ChapterExamAssetIntegrityTest {
         exams.forEach { element ->
             val exam = element.jsonObject
             val id = exam["id"]?.jsonPrimitive?.content ?: "?"
-            exam["questions"]!!.jsonArray.forEachIndexed { qIdx, q ->
+            (exam["questions"]?.jsonArray ?: error("Exam $id missing questions")).forEachIndexed { qIdx, q ->
                 val correctIndex = q.jsonObject["correctIndex"]?.jsonPrimitive?.int
                     ?: error("Exam $id question[$qIdx] missing 'correctIndex'")
                 assertTrue(

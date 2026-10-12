@@ -56,7 +56,7 @@ class StoreRepositoryContractTest {
         val result = repo.fetchProduct("prod-atlas")
         assertTrue(result.isSuccess)
         assertEquals("prod-atlas", result.getOrThrow()?.id)
-        assertTrue(result.getOrThrow()!!.isInStock)
+        assertTrue(result.getOrThrow()?.isInStock == true)
     }
 
     @Test
@@ -70,7 +70,8 @@ class StoreRepositoryContractTest {
     @Test
     fun `fetchProduct reflects stock status`() = runTest {
         val repo = FakeStoreRepository(products = catalog)
-        val product = repo.fetchProduct("prod-kiru-pro").getOrThrow()!!
+        val product = repo.fetchProduct("prod-kiru-pro").getOrThrow()
+            ?: error("expected product")
         assertTrue(!product.isInStock)
     }
 

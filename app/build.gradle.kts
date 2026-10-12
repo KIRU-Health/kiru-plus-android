@@ -7,6 +7,27 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.detekt)
+    alias(libs.plugins.ktlint)
+}
+
+detekt {
+    buildUponDefaultConfig = true
+    allRules = false
+    config.setFrom(files("$rootDir/config/detekt/detekt.yml"))
+    baseline = file("$rootDir/config/detekt/baseline.xml")
+}
+
+dependencies {
+    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.23.8")
+}
+
+ktlint {
+    android.set(true)
+    baseline.set(file("$rootDir/config/ktlint/baseline.xml"))
+    filter {
+        exclude("**/*.kts")
+    }
 }
 
 val localProperties = Properties().apply {

@@ -21,7 +21,7 @@ class LibraryAssetIntegrityTest {
     // Project root: src/test/kotlin is 5 levels deep from the app module root.
     // app/src/test/kotlin/com/medsurgery/kiruplus/library → ../../../../.. = app/
     private val appRoot = File(
-        javaClass.classLoader!!.getResource(".")?.path ?: ""
+        javaClass.classLoader?.getResource(".")?.path.orEmpty()
     ).let { testOutputDir ->
         // Gradle test output: app/build/intermediates/unit_test_classes/... or similar.
         // Walk up to find the app module root (contains AndroidManifest.xml).

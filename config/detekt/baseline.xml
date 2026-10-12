@@ -1,0 +1,547 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>ArgumentListWrapping:CalculatorScreen.kt$("110–130", "90–109 ó 131–170", "≤89 ó &gt;170", "&lt;90 inestable")</ID>
+    <ID>ArgumentListWrapping:CalculatorScreen.kt$("13–16", "11.5–12.9 ó 16.1–17", "10–11.4 ó 17.1–18", "&lt;10 ó &gt;18")</ID>
+    <ID>ArgumentListWrapping:CalculatorScreen.kt$("3.5–5.0", "3.2–3.4 ó 5.1–5.3", "2.9–3.1 ó 5.4–5.9", "&lt;2.9 ó &gt;6")</ID>
+    <ID>ArgumentListWrapping:CalculatorScreen.kt$("ASA I", RiskLevel.LOW, "Paciente sano, sin alteraciones orgánicas, fisiológicas o psiquiátricas. Mortalidad anestésica &lt;0.1%.")</ID>
+    <ID>ArgumentListWrapping:CalculatorScreen.kt$("ASA II", RiskLevel.LOW, "Enfermedad sistémica leve sin limitación funcional (HTA controlada, DM sin complicaciones). Mortalidad ~0.1–0.2%.")</ID>
+    <ID>ArgumentListWrapping:CalculatorScreen.kt$("ASA III", RiskLevel.MODERATE, "Enfermedad sistémica grave con limitación funcional (EPOC, angina estable). Mortalidad ~0.4–1.8%. Optimización preoperatoria intensa.")</ID>
+    <ID>ArgumentListWrapping:CalculatorScreen.kt$("ASA IV", RiskLevel.HIGH, "Enfermedad sistémica grave con amenaza constante para la vida (IAM reciente, insuficiencia cardíaca). Mortalidad ~7.8–23%. UCI postoperatoria requerida.")</ID>
+    <ID>ArgumentListWrapping:CalculatorScreen.kt$("ASA V", RiskLevel.HIGH, "Paciente moribundo que no se espera sobreviva sin cirugía (ruptura de aneurisma). Mortalidad ~9.4–57.8%. Cirugía de salvamento vital únicamente.")</ID>
+    <ID>ArgumentListWrapping:CalculatorScreen.kt$("ASA VI", RiskLevel.HIGH, "Paciente con muerte cerebral declarada, candidato a donación de órganos.")</ID>
+    <ID>ArgumentListWrapping:CalculatorScreen.kt$("Clase A", RiskLevel.LOW, "Child-Pugh Clase A ($score pts). Cirrosis bien compensada. Supervivencia 1 año: ~100%.")</ID>
+    <ID>ArgumentListWrapping:CalculatorScreen.kt$("Clase B", RiskLevel.MODERATE, "Child-Pugh Clase B ($score pts). Compromiso funcional significativo. Supervivencia 1 año: ~80%.")</ID>
+    <ID>ArgumentListWrapping:CalculatorScreen.kt$("Clase C", RiskLevel.HIGH, "Child-Pugh Clase C ($score pts). Cirrosis descompensada. Supervivencia 1 año: ~45%. Evaluar trasplante hepático.")</ID>
+    <ID>ArgumentListWrapping:CalculatorScreen.kt$("Contaminación Peritoneal", listOf("Ninguna", "Mínima", "Pus local", "Pus/heces libre"), periton)</ID>
+    <ID>ArgumentListWrapping:CalculatorScreen.kt$("ECG", listOf("Normal", "Fibrilación Auricular", "Cambios ST-T", "&gt;4 extrasístoles/min"), ecg)</ID>
+    <ID>ArgumentListWrapping:CalculatorScreen.kt$("Estado Cardíaco", listOf("Normal", "CCF/meds", "Edema periférico", "Cardiomegalia"), card)</ID>
+    <ID>ArgumentListWrapping:CalculatorScreen.kt$("Estado Respiratorio", listOf("Sin disnea", "Disnea esfuerzo", "Disnea escaleras", "Disnea reposo"), resp)</ID>
+    <ID>ArgumentListWrapping:CalculatorScreen.kt$("Hemoglobina (g/dL)", listOf("13–16", "11.5–12.9 ó 16.1–17", "10–11.4 ó 17.1–18", "&lt;10 ó &gt;18"), hgb)</ID>
+    <ID>ArgumentListWrapping:CalculatorScreen.kt$("Malignidad", listOf("Sin cáncer", "Solo primario", "Linfonodos", "Metástasis distantes"), malign)</ID>
+    <ID>ArgumentListWrapping:CalculatorScreen.kt$("Menor", "Moderada", "Mayor", "Mayor+")</ID>
+    <ID>ArgumentListWrapping:CalculatorScreen.kt$("Ninguna", "Mínima", "Pus local", "Pus/heces libre")</ID>
+    <ID>ArgumentListWrapping:CalculatorScreen.kt$("Normal", "CCF/meds", "Edema periférico", "Cardiomegalia")</ID>
+    <ID>ArgumentListWrapping:CalculatorScreen.kt$("Normal", "Fibrilación Auricular", "Cambios ST-T", "&gt;4 extrasístoles/min")</ID>
+    <ID>ArgumentListWrapping:CalculatorScreen.kt$("PAS", listOf("110–130", "90–109 ó 131–170", "≤89 ó &gt;170", "&lt;90 inestable"), sbp)</ID>
+    <ID>ArgumentListWrapping:CalculatorScreen.kt$("Potasio (mEq/L)", listOf("3.5–5.0", "3.2–3.4 ó 5.1–5.3", "2.9–3.1 ó 5.4–5.9", "&lt;2.9 ó &gt;6"), k)</ID>
+    <ID>ArgumentListWrapping:CalculatorScreen.kt$("Severidad de la Cirugía", listOf("Menor", "Moderada", "Mayor", "Mayor+"), opSev)</ID>
+    <ID>ArgumentListWrapping:CalculatorScreen.kt$("Sin cáncer", "Solo primario", "Linfonodos", "Metástasis distantes")</ID>
+    <ID>ArgumentListWrapping:CalculatorScreen.kt$("Sin disnea", "Disnea esfuerzo", "Disnea escaleras", "Disnea reposo")</ID>
+    <ID>ArgumentListWrapping:CalculatorScreen.kt$(morbidity)</ID>
+    <ID>ArgumentListWrapping:CalculatorScreen.kt$(mortality)</ID>
+    <ID>ArgumentListWrapping:KCortexViewModelTest.kt$KCortexViewModelTest$("Error should mention connection", msg.contains("Internet") || msg.contains("conexión") || msg.contains("red"))</ID>
+    <ID>ArgumentListWrapping:KCortexViewModelTest.kt$KCortexViewModelTest$(vm.uiState.value.errorMessage?.contains("429") == true || vm.uiState.value.errorMessage?.contains("muchas solicitudes") == true)</ID>
+    <ID>ArgumentListWrapping:KToolsCalculator.kt$KToolsCalculator.Companion$("air", "Escala AIR", "Appendicitis Inflammatory Response Score", CalculatorCategory.GENERAL)</ID>
+    <ID>ArgumentListWrapping:KToolsCalculator.kt$KToolsCalculator.Companion$("alvarado", "Escala de Alvarado", "Diagnóstico de Apendicitis Aguda", CalculatorCategory.GENERAL)</ID>
+    <ID>ArgumentListWrapping:KToolsCalculator.kt$KToolsCalculator.Companion$("ripasa", "RIPASA Score", "Apendicitis — Poblaciones No Occidentales", CalculatorCategory.GENERAL)</ID>
+    <ID>ArgumentListWrapping:LibraryScreen.kt$(R.plurals.library_module_points_count, block.chapterCount, block.chapterCount)</ID>
+    <ID>ArgumentListWrapping:LibraryScreen.kt$(R.plurals.library_module_points_count, module.pointCount, module.pointCount)</ID>
+    <ID>ArgumentListWrapping:LibraryViewModelTest.kt$LibraryViewModelTest$( id = "U01", unitNumber = 1, title = "Unidad 1", chapters = listOf( CurriculumChapter("C01", 1, "Historia", isAvailable = true), ), )</ID>
+    <ID>ArgumentListWrapping:PearlsRepositoryContractTest.kt$PearlsRepositoryContractTest$(id = 2, title = "Hipertensión intraabdominal", description = "Medir presión vesical.", category = "cuidados_criticos")</ID>
+    <ID>ArgumentListWrapping:QuizSpecialtiesScreen.kt$(R.plurals.quiz_question_count, specialty.questionCount, specialty.questionCount)</ID>
+    <ID>CyclomaticComplexMethod:AuthError.kt$fun Throwable.toAuthError(): AuthError</ID>
+    <ID>CyclomaticComplexMethod:CalculatorScreen.kt$@Composable private fun Apache2Calculator(onBack: () -&gt; Unit)</ID>
+    <ID>CyclomaticComplexMethod:CalculatorScreen.kt$@Composable private fun MarshallCalculator(onBack: () -&gt; Unit)</ID>
+    <ID>CyclomaticComplexMethod:CalculatorScreen.kt$@Composable private fun PossumCalculator(onBack: () -&gt; Unit)</ID>
+    <ID>CyclomaticComplexMethod:CalculatorScreen.kt$private fun apachePhysScore( temp: Double, map: Double, hr: Double, rr: Double, pH: Double, na: Double, k: Double, cr: Double, hasARF: Boolean, hct: Double, wbc: Double, gcs: Int, fiO2: Double, paO2: Double, paCO2: Double, ): Int</ID>
+    <ID>CyclomaticComplexMethod:CalculatorScreen.kt$private fun ripasaScore( genderMale: Boolean, ageUnder40: Boolean, rifPain: Boolean, migration: Boolean, anorexia: Boolean, nausea: Boolean, durIdx: Int, rifTender: Boolean, rebound: Boolean, guarding: Boolean, rovsing: Boolean, fever: Boolean, elevatedWBC: Boolean, negUrine: Boolean, ): Double</ID>
+    <ID>CyclomaticComplexMethod:CalculatorScreen.kt$private fun sofaScore(pf: Double, plat: Double, bili: Double, map: Double, vaso: Int, gcs: Int, cr: Double): Int</ID>
+    <ID>CyclomaticComplexMethod:ChapterExamScreen.kt$@Composable private fun ChapterExamQuestionPage( state: ChapterExamUiState, onSelectOption: (Int) -&gt; Unit, onNext: () -&gt; Unit, )</ID>
+    <ID>CyclomaticComplexMethod:KapibayaRepositoryImpl.kt$KapibayaRepositoryImpl$override fun sendMessageStream(conversationId: String, message: String): Flow&lt;String&gt;</ID>
+    <ID>EmptyElseBlock:CalculatorScreen.kt$if (anorexia) s += 1</ID>
+    <ID>EmptyElseBlock:CalculatorScreen.kt$if (leukocytosis) s += 2</ID>
+    <ID>EmptyElseBlock:CalculatorScreen.kt$if (migration) s += 1</ID>
+    <ID>EmptyElseBlock:CalculatorScreen.kt$if (rebound) s += 1</ID>
+    <ID>EmptyElseBlock:CalculatorScreen.kt$if (rlqTender) s += 2</ID>
+    <ID>FunctionNaming:AcademyScreen.kt$@Composable private fun CategoryChip(category: String)</ID>
+    <ID>FunctionNaming:AcademyScreen.kt$@Composable private fun LessonCard(lesson: ContentItem, onClick: () -&gt; Unit)</ID>
+    <ID>FunctionNaming:AcademyScreen.kt$@Composable private fun LessonsList(lessons: List&lt;ContentItem&gt;, onClick: (String) -&gt; Unit)</ID>
+    <ID>FunctionNaming:AcademyScreen.kt$@Composable private fun LessonsTab( state: AcademyUiState, onOpenLesson: (String) -&gt; Unit, onRetry: () -&gt; Unit, )</ID>
+    <ID>FunctionNaming:AcademyScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun AcademyScreen( onOpenLesson: (String) -&gt; Unit = {}, onOpenQuiz: (String) -&gt; Unit = {}, viewModel: AcademyViewModel = hiltViewModel(), )</ID>
+    <ID>FunctionNaming:AccountDeletionScreen.kt$@Composable private fun RequestForm(state: AccountDeletionUiState, viewModel: AccountDeletionViewModel)</ID>
+    <ID>FunctionNaming:AccountDeletionScreen.kt$@Composable private fun ScheduledBody( phase: AccountDeletionPhase.Scheduled, isSubmitting: Boolean, viewModel: AccountDeletionViewModel, )</ID>
+    <ID>FunctionNaming:AccountDeletionScreen.kt$@Composable private fun StatusText(@androidx.annotation.StringRes textRes: Int)</ID>
+    <ID>FunctionNaming:AccountDeletionScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun AccountDeletionScreen( onBack: () -&gt; Unit, onCompleted: () -&gt; Unit, viewModel: AccountDeletionViewModel = hiltViewModel(), )</ID>
+    <ID>FunctionNaming:App.kt$@Composable fun App(viewModel: AppViewModel = hiltViewModel())</ID>
+    <ID>FunctionNaming:CalculatorScreen.kt$@Composable fun CalculatorScreen(calculatorId: String, onBack: () -&gt; Unit)</ID>
+    <ID>FunctionNaming:CalculatorScreen.kt$@Composable private fun AirCalculator(onBack: () -&gt; Unit)</ID>
+    <ID>FunctionNaming:CalculatorScreen.kt$@Composable private fun AlvaradoCalculator(onBack: () -&gt; Unit)</ID>
+    <ID>FunctionNaming:CalculatorScreen.kt$@Composable private fun Apache2Calculator(onBack: () -&gt; Unit)</ID>
+    <ID>FunctionNaming:CalculatorScreen.kt$@Composable private fun AsaCalculator(onBack: () -&gt; Unit)</ID>
+    <ID>FunctionNaming:CalculatorScreen.kt$@Composable private fun BisapCalculator(onBack: () -&gt; Unit)</ID>
+    <ID>FunctionNaming:CalculatorScreen.kt$@Composable private fun ChildPughCalculator(onBack: () -&gt; Unit)</ID>
+    <ID>FunctionNaming:CalculatorScreen.kt$@Composable private fun CriterionRow(label: String, pts: Int, checked: Boolean, onCheckedChange: (Boolean) -&gt; Unit)</ID>
+    <ID>FunctionNaming:CalculatorScreen.kt$@Composable private fun DisclaimerRow()</ID>
+    <ID>FunctionNaming:CalculatorScreen.kt$@Composable private fun MarshallCalculator(onBack: () -&gt; Unit)</ID>
+    <ID>FunctionNaming:CalculatorScreen.kt$@Composable private fun NumericField( label: String, value: String, unit: String = "", onValueChange: (String) -&gt; Unit, )</ID>
+    <ID>FunctionNaming:CalculatorScreen.kt$@Composable private fun OrdinalSelector( label: String, options: List&lt;String&gt;, selected: Int, onSelect: (Int) -&gt; Unit, )</ID>
+    <ID>FunctionNaming:CalculatorScreen.kt$@Composable private fun PossumCalculator(onBack: () -&gt; Unit)</ID>
+    <ID>FunctionNaming:CalculatorScreen.kt$@Composable private fun ResultCard( scoreText: String, interpretation: String, level: RiskLevel, )</ID>
+    <ID>FunctionNaming:CalculatorScreen.kt$@Composable private fun RipasaCalculator(onBack: () -&gt; Unit)</ID>
+    <ID>FunctionNaming:CalculatorScreen.kt$@Composable private fun SectionHeader(text: String)</ID>
+    <ID>FunctionNaming:CalculatorScreen.kt$@Composable private fun SofaCalculator(onBack: () -&gt; Unit)</ID>
+    <ID>FunctionNaming:CalculatorScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable private fun CalculatorScaffold( name: String, onBack: () -&gt; Unit, content: LazyListScope.() -&gt; Unit, )</ID>
+    <ID>FunctionNaming:CaseDetailScreen.kt$@Composable private fun CaseSection( emoji: String, title: String, content: String, containerColor: androidx.compose.ui.graphics.Color = MaterialTheme.colorScheme.surfaceVariant, contentColor: androidx.compose.ui.graphics.Color = MaterialTheme.colorScheme.onSurface, titleFontWeight: FontWeight = FontWeight.SemiBold, )</ID>
+    <ID>FunctionNaming:CaseDetailScreen.kt$@OptIn(ExperimentalLayoutApi::class) @Composable private fun CaseDetailBody(clinicalCase: ClinicalCase)</ID>
+    <ID>FunctionNaming:CaseDetailScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun CaseDetailScreen( onBack: () -&gt; Unit, viewModel: CaseDetailViewModel = hiltViewModel(), )</ID>
+    <ID>FunctionNaming:CasesScreen.kt$@OptIn(ExperimentalLayoutApi::class) @Composable private fun CaseCard(clinicalCase: ClinicalCase, onClick: () -&gt; Unit)</ID>
+    <ID>FunctionNaming:CasesScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun CasesScreen( onBack: () -&gt; Unit, onOpenCase: (String) -&gt; Unit, viewModel: CasesViewModel = hiltViewModel(), )</ID>
+    <ID>FunctionNaming:ChapterExamScreen.kt$@Composable fun ChapterExamScreen( onBack: () -&gt; Unit, viewModel: ChapterExamViewModel = hiltViewModel(), )</ID>
+    <ID>FunctionNaming:ChapterExamScreen.kt$@Composable private fun ChapterExamEmptyState(onBack: () -&gt; Unit)</ID>
+    <ID>FunctionNaming:ChapterExamScreen.kt$@Composable private fun ChapterExamErrorState(onRetry: () -&gt; Unit)</ID>
+    <ID>FunctionNaming:ChapterExamScreen.kt$@Composable private fun ChapterExamLoadingState()</ID>
+    <ID>FunctionNaming:ChapterExamScreen.kt$@Composable private fun ChapterExamQuestionPage( state: ChapterExamUiState, onSelectOption: (Int) -&gt; Unit, onNext: () -&gt; Unit, )</ID>
+    <ID>FunctionNaming:ChapterExamScreen.kt$@Composable private fun ChapterExamScoreScreen( correct: Int, total: Int, scorePct: Int, onRestart: () -&gt; Unit, onBack: () -&gt; Unit, )</ID>
+    <ID>FunctionNaming:ChapterExamScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable internal fun ChapterExamContent( state: ChapterExamUiState, onSelectOption: (Int) -&gt; Unit, onNext: () -&gt; Unit, onRestart: () -&gt; Unit, onRetry: () -&gt; Unit, onBack: () -&gt; Unit, )</ID>
+    <ID>FunctionNaming:ContentDetailScreen.kt$@Composable private fun Body(item: ContentItem)</ID>
+    <ID>FunctionNaming:ContentDetailScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun ContentDetailScreen( onBack: () -&gt; Unit, viewModel: ContentDetailViewModel = hiltViewModel(), )</ID>
+    <ID>FunctionNaming:DataExportScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun DataExportScreen( onBack: () -&gt; Unit, viewModel: DataExportViewModel = hiltViewModel(), )</ID>
+    <ID>FunctionNaming:DrugDetailScreen.kt$@Composable private fun DrugSection( emoji: String, title: String, content: String, containerColor: androidx.compose.ui.graphics.Color = MaterialTheme.colorScheme.surfaceVariant, contentColor: androidx.compose.ui.graphics.Color = MaterialTheme.colorScheme.onSurface, )</ID>
+    <ID>FunctionNaming:DrugDetailScreen.kt$@OptIn(ExperimentalLayoutApi::class) @Composable private fun DrugDetailBody(drug: Drug)</ID>
+    <ID>FunctionNaming:DrugDetailScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun DrugDetailScreen( onBack: () -&gt; Unit, viewModel: DrugDetailViewModel = hiltViewModel(), )</ID>
+    <ID>FunctionNaming:DrugsScreen.kt$@Composable private fun DrugCard(drug: Drug, onClick: () -&gt; Unit)</ID>
+    <ID>FunctionNaming:DrugsScreen.kt$@Composable private fun DrugsList( drugs: List&lt;Drug&gt;, groupByCategory: Boolean, onClick: (Drug) -&gt; Unit, )</ID>
+    <ID>FunctionNaming:DrugsScreen.kt$@Composable private fun RouteBadge(label: String)</ID>
+    <ID>FunctionNaming:DrugsScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun DrugsScreen( onBack: () -&gt; Unit, onOpenDrug: (String) -&gt; Unit, viewModel: DrugsViewModel = hiltViewModel(), )</ID>
+    <ID>FunctionNaming:ForgotPasswordScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun ForgotPasswordScreen( onBack: () -&gt; Unit, viewModel: ForgotPasswordViewModel = hiltViewModel(), )</ID>
+    <ID>FunctionNaming:HomeScreen.kt$@Composable private fun CasesCard(onClick: () -&gt; Unit)</ID>
+    <ID>FunctionNaming:HomeScreen.kt$@Composable private fun DisclaimerBanner()</ID>
+    <ID>FunctionNaming:HomeScreen.kt$@Composable private fun DrugsCard(onClick: () -&gt; Unit)</ID>
+    <ID>FunctionNaming:HomeScreen.kt$@Composable private fun KCortexCard(onClick: () -&gt; Unit)</ID>
+    <ID>FunctionNaming:HomeScreen.kt$@Composable private fun KapibayaCard(onClick: () -&gt; Unit)</ID>
+    <ID>FunctionNaming:HomeScreen.kt$@Composable private fun LibraryCard(onClick: () -&gt; Unit)</ID>
+    <ID>FunctionNaming:HomeScreen.kt$@Composable private fun QuickActionCard( title: String, body: String, modifier: Modifier = Modifier, onClick: () -&gt; Unit, )</ID>
+    <ID>FunctionNaming:HomeScreen.kt$@Composable private fun QuickActionsGrid( onAcademyClick: () -&gt; Unit, onLogbookClick: () -&gt; Unit, onStoreClick: () -&gt; Unit, onKToolsClick: () -&gt; Unit, )</ID>
+    <ID>FunctionNaming:HomeScreen.kt$@Composable private fun WelcomeCard()</ID>
+    <ID>FunctionNaming:HomeScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun HomeScreen( onOpenSettings: () -&gt; Unit, onOpenAcademy: () -&gt; Unit, onOpenLogbook: () -&gt; Unit, onOpenStore: () -&gt; Unit, onOpenKapibaya: () -&gt; Unit, onOpenKTools: () -&gt; Unit, onOpenLibrary: () -&gt; Unit, onOpenDrugs: () -&gt; Unit, onOpenCases: () -&gt; Unit, onOpenKCortex: () -&gt; Unit, )</ID>
+    <ID>FunctionNaming:KCortexScreen.kt$@Composable private fun ClinicalDataRowItem(row: ClinicalDataRow)</ID>
+    <ID>FunctionNaming:KCortexScreen.kt$@Composable private fun KCortexAnalyzingContent()</ID>
+    <ID>FunctionNaming:KCortexScreen.kt$@Composable private fun KCortexInputContent( selectedType: KCortexAnalysisType, clinicalInput: String, onTypeSelected: (KCortexAnalysisType) -&gt; Unit, onInputChanged: (String) -&gt; Unit, onSubmit: () -&gt; Unit, )</ID>
+    <ID>FunctionNaming:KCortexScreen.kt$@Composable private fun KCortexQualityBadge(analysis: KCortexAnalysis)</ID>
+    <ID>FunctionNaming:KCortexScreen.kt$@Composable private fun KCortexResultContent( analysis: KCortexAnalysis, onReset: () -&gt; Unit, )</ID>
+    <ID>FunctionNaming:KCortexScreen.kt$@Composable private fun KCortexSectionCard( title: String, containerColor: androidx.compose.ui.graphics.Color = MaterialTheme.colorScheme.surface, content: @Composable () -&gt; Unit, )</ID>
+    <ID>FunctionNaming:KCortexScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun KCortexScreen( onBack: () -&gt; Unit, viewModel: KCortexViewModel = hiltViewModel(), )</ID>
+    <ID>FunctionNaming:KCortexScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable private fun KCortexTypeSelector( selectedType: KCortexAnalysisType, onTypeSelected: (KCortexAnalysisType) -&gt; Unit, )</ID>
+    <ID>FunctionNaming:KToolsMenuScreen.kt$@Composable private fun CalculatorRow( calculator: KToolsCalculator, onClick: () -&gt; Unit, )</ID>
+    <ID>FunctionNaming:KToolsMenuScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun KToolsMenuScreen( onBack: () -&gt; Unit, onOpenCalculator: (String) -&gt; Unit, )</ID>
+    <ID>FunctionNaming:KapibayaChatScreen.kt$@Composable private fun InputBar( value: String, isSending: Boolean, onChange: (String) -&gt; Unit, onSend: () -&gt; Unit, )</ID>
+    <ID>FunctionNaming:KapibayaChatScreen.kt$@Composable private fun StreamingBubble(text: String)</ID>
+    <ID>FunctionNaming:KapibayaChatScreen.kt$@Composable private fun TurnBubble(turn: KapibayaTurn)</ID>
+    <ID>FunctionNaming:KapibayaChatScreen.kt$@Composable private fun TypingBubble()</ID>
+    <ID>FunctionNaming:KapibayaChatScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun KapibayaChatScreen( onBack: () -&gt; Unit, viewModel: KapibayaChatViewModel = hiltViewModel(), )</ID>
+    <ID>FunctionNaming:KiruNavHost.kt$@Composable fun KiruNavHost(navController: NavHostController)</ID>
+    <ID>FunctionNaming:LibraryScreen.kt$@Composable private fun CurriculumBlockCard( block: CurriculumBlock, onStartChapterQuiz: (String) -&gt; Unit, )</ID>
+    <ID>FunctionNaming:LibraryScreen.kt$@Composable private fun CurriculumContent( blocks: List&lt;CurriculumBlock&gt;, onStartChapterQuiz: (String) -&gt; Unit, )</ID>
+    <ID>FunctionNaming:LibraryScreen.kt$@Composable private fun CurriculumUnitSection( unit: CurriculumUnit, blockNumber: Int, onStartChapterQuiz: (String) -&gt; Unit, )</ID>
+    <ID>FunctionNaming:LibraryScreen.kt$@Composable private fun LibraryEmptyState()</ID>
+    <ID>FunctionNaming:LibraryScreen.kt$@Composable private fun LibraryErrorState(onRetry: () -&gt; Unit)</ID>
+    <ID>FunctionNaming:LibraryScreen.kt$@Composable private fun LibraryLoadingState()</ID>
+    <ID>FunctionNaming:LibraryScreen.kt$@Composable private fun ModuleCard(module: LibraryModule, onClick: () -&gt; Unit)</ID>
+    <ID>FunctionNaming:LibraryScreen.kt$@Composable private fun ModulesContent( modules: List&lt;LibraryModule&gt;, onOpenModule: (String) -&gt; Unit, )</ID>
+    <ID>FunctionNaming:LibraryScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun LibraryScreen( onBack: () -&gt; Unit, onOpenModule: (String) -&gt; Unit, onStartChapterQuiz: (String) -&gt; Unit = {}, viewModel: LibraryViewModel = hiltViewModel(), )</ID>
+    <ID>FunctionNaming:LibraryScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable internal fun LibraryContent( state: LibraryUiState, onBack: () -&gt; Unit, onOpenModule: (String) -&gt; Unit, onStartChapterQuiz: (String) -&gt; Unit, onRetry: () -&gt; Unit, onSelectTab: (Int) -&gt; Unit, )</ID>
+    <ID>FunctionNaming:LogbookScreen.kt$@Composable private fun LogCard(log: SurgicalLog, procedure: Procedure?)</ID>
+    <ID>FunctionNaming:LogbookScreen.kt$@Composable private fun OutcomeChip(outcome: String, modifier: Modifier = Modifier)</ID>
+    <ID>FunctionNaming:LogbookScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun LogbookScreen( onAddLog: () -&gt; Unit, viewModel: LogbookViewModel = hiltViewModel(), )</ID>
+    <ID>FunctionNaming:LogbookScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable private fun LogsList( logs: List&lt;SurgicalLog&gt;, procedureLookup: Map&lt;String, Procedure&gt;, onDelete: (String) -&gt; Unit, )</ID>
+    <ID>FunctionNaming:LoginScreen.kt$@Composable fun LoginScreen( onAuthenticated: () -&gt; Unit, onForgotPassword: () -&gt; Unit, onRegister: () -&gt; Unit, onPrivacyPolicy: () -&gt; Unit, onTerms: () -&gt; Unit, viewModel: LoginViewModel = hiltViewModel(), )</ID>
+    <ID>FunctionNaming:MainScreen.kt$@Composable fun MainScreen( onOpenSettings: () -&gt; Unit, onOpenAccountDeletion: () -&gt; Unit, onOpenPrivacyPolicy: () -&gt; Unit, onOpenTerms: () -&gt; Unit, onOpenSubscriptions: () -&gt; Unit, onOpenProductDetail: (String) -&gt; Unit, onOpenLesson: (String) -&gt; Unit, onOpenQuiz: (String) -&gt; Unit, onOpenNewSurgicalLog: () -&gt; Unit, onOpenKapibaya: () -&gt; Unit, onOpenKTools: () -&gt; Unit, onOpenLibrary: () -&gt; Unit, onOpenDrugs: () -&gt; Unit, onOpenCases: () -&gt; Unit, onOpenKCortex: () -&gt; Unit, )</ID>
+    <ID>FunctionNaming:MedicalDisclaimerScreen.kt$@Composable fun MedicalDisclaimerScreen( onAccepted: () -&gt; Unit, onPrivacyPolicy: () -&gt; Unit, onTerms: () -&gt; Unit, viewModel: OnboardingViewModel = hiltViewModel(), )</ID>
+    <ID>FunctionNaming:MedicalDisclaimerScreen.kt$@Composable private fun AcceptanceRow( accepted: Boolean, onAcceptedChange: (Boolean) -&gt; Unit, )</ID>
+    <ID>FunctionNaming:ModuleDetailScreen.kt$@Composable private fun StudyPointCard(point: StudyPoint)</ID>
+    <ID>FunctionNaming:ModuleDetailScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun ModuleDetailScreen( onBack: () -&gt; Unit, viewModel: ModuleDetailViewModel = hiltViewModel(), )</ID>
+    <ID>FunctionNaming:NewSurgicalLogScreen.kt$@Composable private fun ProcedureDropdown( procedures: List&lt;Procedure&gt;, isLoading: Boolean, selected: Procedure?, onSelect: (Procedure) -&gt; Unit, )</ID>
+    <ID>FunctionNaming:NewSurgicalLogScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun NewSurgicalLogScreen( onBack: () -&gt; Unit, onSaved: () -&gt; Unit, viewModel: NewSurgicalLogViewModel = hiltViewModel(), )</ID>
+    <ID>FunctionNaming:NewSurgicalLogScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable private fun DateField(date: LocalDate, onChange: (LocalDate) -&gt; Unit)</ID>
+    <ID>FunctionNaming:PaywallScreen.kt$@Composable fun PaywallScreen(onDismiss: () -&gt; Unit)</ID>
+    <ID>FunctionNaming:PearlDetailScreen.kt$@Composable private fun CategoryChip(category: String)</ID>
+    <ID>FunctionNaming:PearlDetailScreen.kt$@Composable private fun PearlBody(pearl: Pearl)</ID>
+    <ID>FunctionNaming:PearlDetailScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun PearlDetailScreen( onBack: () -&gt; Unit, viewModel: PearlDetailViewModel = hiltViewModel(), )</ID>
+    <ID>FunctionNaming:PearlsScreen.kt$@Composable private fun CategoryChip(category: String)</ID>
+    <ID>FunctionNaming:PearlsScreen.kt$@Composable private fun CenteredEmpty()</ID>
+    <ID>FunctionNaming:PearlsScreen.kt$@Composable private fun CenteredError(messageRes: Int, onRetry: () -&gt; Unit)</ID>
+    <ID>FunctionNaming:PearlsScreen.kt$@Composable private fun CenteredSpinner()</ID>
+    <ID>FunctionNaming:PearlsScreen.kt$@Composable private fun PearlCard(pearl: Pearl, onClick: () -&gt; Unit)</ID>
+    <ID>FunctionNaming:PearlsScreen.kt$@Composable private fun PearlsList(pearls: List&lt;Pearl&gt;, onClick: (Int) -&gt; Unit)</ID>
+    <ID>FunctionNaming:PearlsScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun PearlsScreen( onBack: () -&gt; Unit, onOpenPearl: (Int) -&gt; Unit, viewModel: PearlsViewModel = hiltViewModel(), )</ID>
+    <ID>FunctionNaming:PremiumGate.kt$@Composable fun PremiumGate( entitlementFlow: StateFlow&lt;EntitlementState&gt;, onUpgrade: () -&gt; Unit, modifier: Modifier = Modifier, content: @Composable () -&gt; Unit, )</ID>
+    <ID>FunctionNaming:PremiumGate.kt$@Composable private fun PremiumUpgradePrompt( onUpgrade: () -&gt; Unit, modifier: Modifier = Modifier, )</ID>
+    <ID>FunctionNaming:ProductDetailScreen.kt$@Composable private fun CategoryChip(category: String)</ID>
+    <ID>FunctionNaming:ProductDetailScreen.kt$@Composable private fun CenteredError(messageRes: Int, onRetry: () -&gt; Unit)</ID>
+    <ID>FunctionNaming:ProductDetailScreen.kt$@Composable private fun CenteredSpinner()</ID>
+    <ID>FunctionNaming:ProductDetailScreen.kt$@Composable private fun ProductBody(product: StoreProduct, onBuy: () -&gt; Unit)</ID>
+    <ID>FunctionNaming:ProductDetailScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun ProductDetailScreen( onBack: () -&gt; Unit, viewModel: ProductDetailViewModel = hiltViewModel(), )</ID>
+    <ID>FunctionNaming:ProfileScreen.kt$@Composable private fun ProfileBody(profile: Profile)</ID>
+    <ID>FunctionNaming:ProfileScreen.kt$@Composable private fun ProfileHeader( isLoading: Boolean, profile: Profile?, errorRes: Int?, onRetry: () -&gt; Unit, )</ID>
+    <ID>FunctionNaming:ProfileScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun ProfileScreen( onOpenSettings: () -&gt; Unit, onDeleteAccount: () -&gt; Unit, onPrivacyPolicy: () -&gt; Unit, onTerms: () -&gt; Unit, onSubscriptions: () -&gt; Unit, viewModel: ProfileViewModel = hiltViewModel(), )</ID>
+    <ID>FunctionNaming:QuizPlayerScreen.kt$@Composable private fun ExplanationCard(explanation: String, modifier: Modifier = Modifier)</ID>
+    <ID>FunctionNaming:QuizPlayerScreen.kt$@Composable private fun OptionButton( text: String, selectedAnswer: String?, correctAnswer: String, onClick: () -&gt; Unit, )</ID>
+    <ID>FunctionNaming:QuizPlayerScreen.kt$@Composable private fun QuestionPage( state: QuizPlayerUiState, onSelectAnswer: (String) -&gt; Unit, onNext: () -&gt; Unit, )</ID>
+    <ID>FunctionNaming:QuizPlayerScreen.kt$@Composable private fun ScoreScreen( correct: Int, total: Int, onRestart: () -&gt; Unit, onBack: () -&gt; Unit, )</ID>
+    <ID>FunctionNaming:QuizPlayerScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun QuizPlayerScreen( onBack: () -&gt; Unit, viewModel: QuizPlayerViewModel = hiltViewModel(), )</ID>
+    <ID>FunctionNaming:QuizSpecialtiesScreen.kt$@Composable fun QuizSpecialtiesScreen( onOpenQuiz: (String) -&gt; Unit, viewModel: QuizSpecialtiesViewModel = hiltViewModel(), )</ID>
+    <ID>FunctionNaming:QuizSpecialtiesScreen.kt$@Composable private fun SpecialtyCard(specialty: QuizSpecialty, onClick: () -&gt; Unit)</ID>
+    <ID>FunctionNaming:RegisterScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun RegisterScreen( onBackToLogin: () -&gt; Unit, viewModel: RegisterViewModel = hiltViewModel(), )</ID>
+    <ID>FunctionNaming:SettingsScreen.kt$@Composable private fun HapticsRow(enabled: Boolean, onToggle: (Boolean) -&gt; Unit)</ID>
+    <ID>FunctionNaming:SettingsScreen.kt$@Composable private fun LanguageRow( selected: AppLanguage, onSelect: (AppLanguage) -&gt; Unit, )</ID>
+    <ID>FunctionNaming:SettingsScreen.kt$@Composable private fun SentryRow(enabled: Boolean, onToggle: (Boolean) -&gt; Unit)</ID>
+    <ID>FunctionNaming:SettingsScreen.kt$@Composable private fun SettingsSection( title: String, content: @Composable () -&gt; Unit, )</ID>
+    <ID>FunctionNaming:SettingsScreen.kt$@Composable private fun TextRow( title: String, color: androidx.compose.ui.graphics.Color = MaterialTheme.colorScheme.onSurface, onClick: () -&gt; Unit, )</ID>
+    <ID>FunctionNaming:SettingsScreen.kt$@Composable private fun ThemeRow( selected: AppTheme, onSelect: (AppTheme) -&gt; Unit, )</ID>
+    <ID>FunctionNaming:SettingsScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun SettingsScreen( onBack: () -&gt; Unit, onSignedOut: () -&gt; Unit, onDeleteAccount: () -&gt; Unit, onDataExport: () -&gt; Unit, onPrivacyPolicy: () -&gt; Unit, onTerms: () -&gt; Unit, onSubscriptions: () -&gt; Unit, viewModel: SettingsViewModel = hiltViewModel(), )</ID>
+    <ID>FunctionNaming:SplashScreen.kt$@Composable fun SplashScreen( onContinueToDisclaimer: () -&gt; Unit, onContinueToLogin: () -&gt; Unit, onContinueToHome: () -&gt; Unit, viewModel: SplashViewModel = hiltViewModel(), )</ID>
+    <ID>FunctionNaming:StoreScreen.kt$@Composable private fun ProductCard( product: StoreProduct, onClick: () -&gt; Unit, onBuy: () -&gt; Unit, )</ID>
+    <ID>FunctionNaming:StoreScreen.kt$@Composable private fun StoreEmpty()</ID>
+    <ID>FunctionNaming:StoreScreen.kt$@Composable private fun StoreError(messageRes: Int, onRetry: () -&gt; Unit)</ID>
+    <ID>FunctionNaming:StoreScreen.kt$@Composable private fun StoreList( products: List&lt;StoreProduct&gt;, onClickProduct: (StoreProduct) -&gt; Unit, onBuy: (StoreProduct) -&gt; Unit, )</ID>
+    <ID>FunctionNaming:StoreScreen.kt$@Composable private fun StoreLoading()</ID>
+    <ID>FunctionNaming:StoreScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun StoreScreen( onOpenProduct: (String) -&gt; Unit = {}, viewModel: StoreViewModel = hiltViewModel(), )</ID>
+    <ID>FunctionNaming:Theme.kt$@Composable fun KiruTheme( appTheme: AppTheme = AppTheme.System, content: @Composable () -&gt; Unit, )</ID>
+    <ID>FunctionNaming:WebViewScreen.kt$@Composable private fun ErrorState(onRetry: () -&gt; Unit)</ID>
+    <ID>FunctionNaming:WebViewScreen.kt$@Composable private fun OfflineBanner()</ID>
+    <ID>FunctionNaming:WebViewScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun WebViewScreen( title: String, url: String, onBack: () -&gt; Unit, )</ID>
+    <ID>ImportOrdering:CasesScreen.kt$import androidx.compose.foundation.layout.Arrangement import androidx.compose.foundation.layout.Box import androidx.compose.foundation.layout.Column import androidx.compose.foundation.layout.ExperimentalLayoutApi import androidx.compose.foundation.layout.FlowRow import androidx.compose.foundation.layout.PaddingValues import androidx.compose.foundation.layout.Row import androidx.compose.foundation.layout.Spacer import androidx.compose.foundation.layout.fillMaxSize import androidx.compose.foundation.layout.fillMaxWidth import androidx.compose.foundation.layout.height import androidx.compose.foundation.layout.padding import androidx.compose.foundation.lazy.LazyColumn import androidx.compose.foundation.lazy.LazyRow import androidx.compose.foundation.lazy.items import androidx.compose.foundation.shape.RoundedCornerShape import androidx.compose.material.icons.Icons import androidx.compose.material.icons.automirrored.filled.ArrowBack import androidx.compose.material.icons.filled.Search import androidx.compose.material3.Card import androidx.compose.material3.CardDefaults import androidx.compose.material3.CircularProgressIndicator import androidx.compose.material3.ExperimentalMaterial3Api import androidx.compose.material3.FilterChip import androidx.compose.material3.FilterChipDefaults import androidx.compose.material3.Icon import androidx.compose.material3.IconButton import androidx.compose.material3.MaterialTheme import androidx.compose.material3.OutlinedTextField import androidx.compose.material3.Scaffold import androidx.compose.material3.Surface import androidx.compose.material3.Text import androidx.compose.material3.TopAppBar import androidx.compose.runtime.Composable import androidx.compose.runtime.getValue import androidx.compose.ui.Alignment import androidx.compose.ui.Modifier import androidx.compose.ui.graphics.Color import com.medsurgery.kiruplus.core.designsystem.KiruColors import androidx.compose.ui.text.font.FontWeight import androidx.compose.ui.text.style.TextOverflow import androidx.compose.ui.unit.dp import androidx.hilt.navigation.compose.hiltViewModel import androidx.lifecycle.compose.collectAsStateWithLifecycle import com.medsurgery.kiruplus.domain.cases.ClinicalCase</ID>
+    <ID>ImportOrdering:KCortexScreen.kt$import androidx.compose.animation.AnimatedContent import androidx.compose.animation.fadeIn import androidx.compose.animation.fadeOut import androidx.compose.animation.togetherWith import androidx.compose.foundation.layout.Arrangement import androidx.compose.foundation.layout.Box import androidx.compose.foundation.layout.Column import androidx.compose.foundation.layout.Row import androidx.compose.foundation.layout.Spacer import androidx.compose.foundation.layout.fillMaxSize import androidx.compose.foundation.layout.fillMaxWidth import androidx.compose.foundation.layout.height import androidx.compose.foundation.layout.padding import androidx.compose.foundation.layout.size import androidx.compose.foundation.lazy.LazyColumn import androidx.compose.foundation.shape.RoundedCornerShape import androidx.compose.material.icons.Icons import androidx.compose.material.icons.automirrored.filled.ArrowBack import androidx.compose.material.icons.filled.ErrorOutline import androidx.compose.material.icons.filled.Psychology import androidx.compose.material.icons.filled.Refresh import androidx.compose.material.icons.filled.Science import androidx.compose.material.icons.filled.Warning import androidx.compose.material3.Button import androidx.compose.material3.Card import androidx.compose.material3.CardDefaults import androidx.compose.material3.CenterAlignedTopAppBar import androidx.compose.material3.CircularProgressIndicator import androidx.compose.material3.ElevatedCard import androidx.compose.material3.HorizontalDivider import androidx.compose.material3.ExperimentalMaterial3Api import androidx.compose.material3.FilterChip import androidx.compose.material3.Icon import androidx.compose.material3.IconButton import androidx.compose.material3.MaterialTheme import androidx.compose.material3.OutlinedButton import androidx.compose.material3.OutlinedTextField import androidx.compose.material3.Scaffold import androidx.compose.material3.SnackbarHost import androidx.compose.material3.SnackbarHostState import androidx.compose.material3.Text import androidx.compose.runtime.Composable import androidx.compose.runtime.LaunchedEffect import androidx.compose.runtime.collectAsState import androidx.compose.runtime.getValue import androidx.compose.runtime.remember import androidx.compose.ui.Alignment import androidx.compose.ui.Modifier import androidx.compose.ui.text.font.FontWeight import androidx.compose.ui.unit.dp import androidx.hilt.navigation.compose.hiltViewModel import com.medsurgery.kiruplus.domain.kcortex.ClinicalDataRow import com.medsurgery.kiruplus.domain.kcortex.KCortexAnalysis import com.medsurgery.kiruplus.domain.kcortex.KCortexAnalysisType</ID>
+    <ID>ImportOrdering:KiruNavHost.kt$import androidx.compose.runtime.Composable import androidx.navigation.NavHostController import androidx.navigation.compose.NavHost import androidx.navigation.compose.composable import androidx.navigation.toRoute import com.medsurgery.kiruplus.BuildConfig import com.medsurgery.kiruplus.core.ui.WebViewScreen import com.medsurgery.kiruplus.feature.auth.AccountDeletionScreen import com.medsurgery.kiruplus.feature.auth.ForgotPasswordScreen import com.medsurgery.kiruplus.feature.auth.LoginScreen import com.medsurgery.kiruplus.feature.auth.RegisterScreen import com.medsurgery.kiruplus.feature.academy.ContentDetailScreen import com.medsurgery.kiruplus.feature.quiz.QuizPlayerScreen import com.medsurgery.kiruplus.feature.kapibaya.KapibayaChatScreen import com.medsurgery.kiruplus.feature.ktools.CalculatorScreen import com.medsurgery.kiruplus.feature.ktools.KToolsMenuScreen import com.medsurgery.kiruplus.feature.chapterexam.ChapterExamScreen import com.medsurgery.kiruplus.feature.library.LibraryScreen import com.medsurgery.kiruplus.feature.library.ModuleDetailScreen import com.medsurgery.kiruplus.feature.paywall.PaywallScreen import com.medsurgery.kiruplus.feature.logbook.NewSurgicalLogScreen import com.medsurgery.kiruplus.feature.main.MainScreen import com.medsurgery.kiruplus.feature.onboarding.MedicalDisclaimerScreen import com.medsurgery.kiruplus.feature.onboarding.SplashScreen import com.medsurgery.kiruplus.feature.cases.CaseDetailScreen import com.medsurgery.kiruplus.feature.cases.CasesScreen import com.medsurgery.kiruplus.feature.drugs.DrugDetailScreen import com.medsurgery.kiruplus.feature.drugs.DrugsScreen import com.medsurgery.kiruplus.feature.kcortex.KCortexScreen import com.medsurgery.kiruplus.feature.pearls.PearlDetailScreen import com.medsurgery.kiruplus.feature.pearls.PearlsScreen import com.medsurgery.kiruplus.feature.settings.DataExportScreen import com.medsurgery.kiruplus.feature.settings.SettingsScreen import com.medsurgery.kiruplus.feature.store.ProductDetailScreen</ID>
+    <ID>ImportOrdering:LibraryScreen.kt$import androidx.compose.foundation.layout.Arrangement import androidx.compose.foundation.layout.Box import androidx.compose.foundation.layout.Column import androidx.compose.foundation.layout.PaddingValues import androidx.compose.foundation.layout.Row import androidx.compose.foundation.layout.Spacer import androidx.compose.foundation.layout.fillMaxSize import androidx.compose.foundation.layout.fillMaxWidth import androidx.compose.foundation.layout.height import androidx.compose.foundation.layout.padding import androidx.compose.foundation.layout.size import androidx.compose.foundation.lazy.LazyColumn import androidx.compose.foundation.lazy.items import androidx.compose.foundation.shape.RoundedCornerShape import androidx.compose.material.icons.Icons import androidx.compose.material.icons.automirrored.filled.ArrowBack import androidx.compose.material.icons.automirrored.filled.ArrowForwardIos import androidx.compose.material.icons.filled.AutoStories import androidx.compose.material.icons.filled.ExpandLess import androidx.compose.material.icons.filled.ExpandMore import androidx.compose.material.icons.automirrored.filled.LibraryBooks import androidx.compose.material.icons.filled.Lock import androidx.compose.material.icons.automirrored.filled.MenuBook import androidx.compose.material3.Card import androidx.compose.material3.CardDefaults import androidx.compose.material3.CenterAlignedTopAppBar import androidx.compose.material3.CircularProgressIndicator import androidx.compose.material3.ExperimentalMaterial3Api import androidx.compose.material3.HorizontalDivider import androidx.compose.material3.Icon import androidx.compose.material3.IconButton import androidx.compose.material3.MaterialTheme import androidx.compose.material3.Scaffold import androidx.compose.material3.Tab import androidx.compose.material3.TabRow import androidx.compose.material3.Text import androidx.compose.material3.TextButton import androidx.compose.runtime.Composable import androidx.compose.runtime.getValue import androidx.compose.runtime.mutableStateOf import androidx.compose.runtime.saveable.rememberSaveable import androidx.compose.runtime.setValue import androidx.compose.ui.Alignment import androidx.compose.ui.Modifier import androidx.compose.ui.res.pluralStringResource import androidx.compose.ui.res.stringResource import androidx.compose.ui.semantics.heading import androidx.compose.ui.semantics.semantics import androidx.compose.ui.text.font.FontWeight import androidx.compose.ui.text.style.TextOverflow import androidx.compose.ui.unit.dp import androidx.hilt.navigation.compose.hiltViewModel import androidx.lifecycle.compose.collectAsStateWithLifecycle import com.medsurgery.kiruplus.R import com.medsurgery.kiruplus.domain.chapterexam.examIdForChapter import com.medsurgery.kiruplus.domain.library.CurriculumBlock import com.medsurgery.kiruplus.domain.library.CurriculumUnit import com.medsurgery.kiruplus.domain.library.LibraryModule</ID>
+    <ID>ImportOrdering:LogbookViewModelTest.kt$import com.medsurgery.kiruplus.MainDispatcherRule import com.medsurgery.kiruplus.R import com.medsurgery.kiruplus.domain.logbook.LogbookRepository import com.medsurgery.kiruplus.domain.logbook.Procedure import com.medsurgery.kiruplus.domain.logbook.SurgicalLog import io.mockk.coEvery import io.mockk.mockk import io.mockk.coVerify import kotlinx.coroutines.test.runTest import org.junit.Assert.assertEquals import org.junit.Assert.assertFalse import org.junit.Assert.assertNull import org.junit.Assert.assertTrue import org.junit.Rule import org.junit.Test</ID>
+    <ID>ImportOrdering:MainActivity.kt$import android.os.Bundle import androidx.activity.ComponentActivity import androidx.activity.compose.setContent import androidx.activity.enableEdgeToEdge import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen import com.medsurgery.kiruplus.app.App import com.medsurgery.kiruplus.core.premium.PremiumEntryPoint import dagger.hilt.android.EntryPointAccessors import dagger.hilt.android.AndroidEntryPoint</ID>
+    <ID>ImportOrdering:SettingsScreen.kt$import android.content.Intent import androidx.compose.foundation.layout.Arrangement import androidx.compose.foundation.layout.Box import androidx.compose.foundation.layout.Column import androidx.compose.foundation.layout.Row import androidx.compose.foundation.layout.fillMaxSize import androidx.compose.foundation.layout.fillMaxWidth import androidx.compose.foundation.layout.padding import androidx.compose.foundation.rememberScrollState import androidx.compose.foundation.shape.RoundedCornerShape import androidx.compose.foundation.verticalScroll import androidx.compose.material.icons.Icons import androidx.compose.material.icons.automirrored.filled.ArrowBack import androidx.compose.material.icons.filled.ArrowDropDown import androidx.compose.material3.Card import androidx.compose.material3.CardDefaults import androidx.compose.material3.DropdownMenu import androidx.compose.material3.DropdownMenuItem import androidx.compose.material3.ExperimentalMaterial3Api import androidx.compose.material3.HorizontalDivider import androidx.compose.material3.Icon import androidx.compose.material3.IconButton import androidx.compose.material3.MaterialTheme import androidx.compose.material3.OutlinedButton import androidx.compose.material3.Scaffold import androidx.compose.material3.Switch import androidx.compose.material3.Text import androidx.compose.material3.TextButton import androidx.compose.material3.TopAppBar import androidx.compose.runtime.Composable import androidx.compose.runtime.getValue import androidx.compose.runtime.mutableStateOf import androidx.compose.runtime.remember import androidx.compose.runtime.setValue import androidx.compose.ui.Alignment import androidx.compose.ui.Modifier import androidx.compose.ui.platform.LocalContext import androidx.compose.ui.res.stringResource import androidx.core.net.toUri import androidx.compose.ui.unit.dp import androidx.hilt.navigation.compose.hiltViewModel import androidx.lifecycle.compose.collectAsStateWithLifecycle import com.medsurgery.kiruplus.BuildConfig import com.medsurgery.kiruplus.R import com.medsurgery.kiruplus.core.prefs.AppLanguage import com.medsurgery.kiruplus.core.prefs.AppTheme</ID>
+    <ID>ImportOrdering:SplashScreen.kt$import androidx.compose.animation.core.Animatable import androidx.compose.animation.core.tween import androidx.compose.foundation.Image import androidx.compose.foundation.background import androidx.compose.foundation.layout.Arrangement import androidx.compose.foundation.layout.Box import androidx.compose.foundation.layout.Column import androidx.compose.foundation.layout.fillMaxSize import androidx.compose.foundation.layout.padding import androidx.compose.foundation.layout.size import androidx.compose.material3.CircularProgressIndicator import androidx.compose.runtime.Composable import androidx.compose.runtime.LaunchedEffect import androidx.compose.runtime.getValue import androidx.compose.runtime.remember import androidx.compose.ui.Alignment import androidx.compose.ui.Modifier import androidx.compose.ui.draw.alpha import androidx.compose.ui.draw.scale import androidx.compose.ui.layout.ContentScale import com.medsurgery.kiruplus.core.designsystem.KiruCyanBlue import com.medsurgery.kiruplus.core.designsystem.KiruNavyBlue import androidx.compose.ui.res.painterResource import androidx.compose.ui.res.stringResource import androidx.compose.ui.unit.dp import androidx.hilt.navigation.compose.hiltViewModel import androidx.lifecycle.compose.collectAsStateWithLifecycle import com.medsurgery.kiruplus.R</ID>
+    <ID>Indentation:AssetChapterExamRepositoryImpl.kt$AssetChapterExamRepositoryImpl$ </ID>
+    <ID>Indentation:CalculatorScreen.kt$ </ID>
+    <ID>Indentation:ClinicalCasesRepositoryImpl.kt$ClinicalCasesRepositoryImpl$ </ID>
+    <ID>Indentation:DrugsRepositoryImpl.kt$DrugsRepositoryImpl$ </ID>
+    <ID>Indentation:KCortexViewModelTest.kt$KCortexViewModelTest$ </ID>
+    <ID>Indentation:KapibayaChatScreen.kt$ </ID>
+    <ID>LongMethod:AccountDeletionScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun AccountDeletionScreen( onBack: () -&gt; Unit, onCompleted: () -&gt; Unit, viewModel: AccountDeletionViewModel = hiltViewModel(), )</ID>
+    <ID>LongMethod:CalculatorScreen.kt$@Composable private fun Apache2Calculator(onBack: () -&gt; Unit)</ID>
+    <ID>LongMethod:CalculatorScreen.kt$@Composable private fun PossumCalculator(onBack: () -&gt; Unit)</ID>
+    <ID>LongMethod:CalculatorScreen.kt$private fun apachePhysScore( temp: Double, map: Double, hr: Double, rr: Double, pH: Double, na: Double, k: Double, cr: Double, hasARF: Boolean, hct: Double, wbc: Double, gcs: Int, fiO2: Double, paO2: Double, paCO2: Double, ): Int</ID>
+    <ID>LongMethod:CaseDetailScreen.kt$@OptIn(ExperimentalLayoutApi::class) @Composable private fun CaseDetailBody(clinicalCase: ClinicalCase)</ID>
+    <ID>LongMethod:CasesScreen.kt$@OptIn(ExperimentalLayoutApi::class) @Composable private fun CaseCard(clinicalCase: ClinicalCase, onClick: () -&gt; Unit)</ID>
+    <ID>LongMethod:CasesScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun CasesScreen( onBack: () -&gt; Unit, onOpenCase: (String) -&gt; Unit, viewModel: CasesViewModel = hiltViewModel(), )</ID>
+    <ID>LongMethod:ChapterExamScreen.kt$@Composable private fun ChapterExamQuestionPage( state: ChapterExamUiState, onSelectOption: (Int) -&gt; Unit, onNext: () -&gt; Unit, )</ID>
+    <ID>LongMethod:DataExportScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun DataExportScreen( onBack: () -&gt; Unit, viewModel: DataExportViewModel = hiltViewModel(), )</ID>
+    <ID>LongMethod:DrugDetailScreen.kt$@OptIn(ExperimentalLayoutApi::class) @Composable private fun DrugDetailBody(drug: Drug)</ID>
+    <ID>LongMethod:DrugsScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun DrugsScreen( onBack: () -&gt; Unit, onOpenDrug: (String) -&gt; Unit, viewModel: DrugsViewModel = hiltViewModel(), )</ID>
+    <ID>LongMethod:ForgotPasswordScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun ForgotPasswordScreen( onBack: () -&gt; Unit, viewModel: ForgotPasswordViewModel = hiltViewModel(), )</ID>
+    <ID>LongMethod:KCortexScreen.kt$@Composable private fun KCortexInputContent( selectedType: KCortexAnalysisType, clinicalInput: String, onTypeSelected: (KCortexAnalysisType) -&gt; Unit, onInputChanged: (String) -&gt; Unit, onSubmit: () -&gt; Unit, )</ID>
+    <ID>LongMethod:KCortexScreen.kt$@Composable private fun KCortexResultContent( analysis: KCortexAnalysis, onReset: () -&gt; Unit, )</ID>
+    <ID>LongMethod:KCortexScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun KCortexScreen( onBack: () -&gt; Unit, viewModel: KCortexViewModel = hiltViewModel(), )</ID>
+    <ID>LongMethod:KapibayaChatScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun KapibayaChatScreen( onBack: () -&gt; Unit, viewModel: KapibayaChatViewModel = hiltViewModel(), )</ID>
+    <ID>LongMethod:KiruNavHost.kt$@Composable fun KiruNavHost(navController: NavHostController)</ID>
+    <ID>LongMethod:LibraryScreen.kt$@Composable private fun CurriculumBlockCard( block: CurriculumBlock, onStartChapterQuiz: (String) -&gt; Unit, )</ID>
+    <ID>LongMethod:LibraryScreen.kt$@Composable private fun CurriculumUnitSection( unit: CurriculumUnit, blockNumber: Int, onStartChapterQuiz: (String) -&gt; Unit, )</ID>
+    <ID>LongMethod:LogbookScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun LogbookScreen( onAddLog: () -&gt; Unit, viewModel: LogbookViewModel = hiltViewModel(), )</ID>
+    <ID>LongMethod:LoginScreen.kt$@Composable fun LoginScreen( onAuthenticated: () -&gt; Unit, onForgotPassword: () -&gt; Unit, onRegister: () -&gt; Unit, onPrivacyPolicy: () -&gt; Unit, onTerms: () -&gt; Unit, viewModel: LoginViewModel = hiltViewModel(), )</ID>
+    <ID>LongMethod:MedicalDisclaimerScreen.kt$@Composable fun MedicalDisclaimerScreen( onAccepted: () -&gt; Unit, onPrivacyPolicy: () -&gt; Unit, onTerms: () -&gt; Unit, viewModel: OnboardingViewModel = hiltViewModel(), )</ID>
+    <ID>LongMethod:ModuleDetailScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun ModuleDetailScreen( onBack: () -&gt; Unit, viewModel: ModuleDetailViewModel = hiltViewModel(), )</ID>
+    <ID>LongMethod:NewSurgicalLogScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun NewSurgicalLogScreen( onBack: () -&gt; Unit, onSaved: () -&gt; Unit, viewModel: NewSurgicalLogViewModel = hiltViewModel(), )</ID>
+    <ID>LongMethod:ProductDetailScreen.kt$@Composable private fun ProductBody(product: StoreProduct, onBuy: () -&gt; Unit)</ID>
+    <ID>LongMethod:QuizPlayerScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun QuizPlayerScreen( onBack: () -&gt; Unit, viewModel: QuizPlayerViewModel = hiltViewModel(), )</ID>
+    <ID>LongMethod:RegisterScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun RegisterScreen( onBackToLogin: () -&gt; Unit, viewModel: RegisterViewModel = hiltViewModel(), )</ID>
+    <ID>LongMethod:SettingsScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun SettingsScreen( onBack: () -&gt; Unit, onSignedOut: () -&gt; Unit, onDeleteAccount: () -&gt; Unit, onDataExport: () -&gt; Unit, onPrivacyPolicy: () -&gt; Unit, onTerms: () -&gt; Unit, onSubscriptions: () -&gt; Unit, viewModel: SettingsViewModel = hiltViewModel(), )</ID>
+    <ID>LongMethod:StoreScreen.kt$@Composable private fun ProductCard( product: StoreProduct, onClick: () -&gt; Unit, onBuy: () -&gt; Unit, )</ID>
+    <ID>LongMethod:WebViewScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun WebViewScreen( title: String, url: String, onBack: () -&gt; Unit, )</ID>
+    <ID>LongParameterList:CalculatorScreen.kt$( genderMale: Boolean, ageUnder40: Boolean, rifPain: Boolean, migration: Boolean, anorexia: Boolean, nausea: Boolean, durIdx: Int, rifTender: Boolean, rebound: Boolean, guarding: Boolean, rovsing: Boolean, fever: Boolean, elevatedWBC: Boolean, negUrine: Boolean, )</ID>
+    <ID>LongParameterList:CalculatorScreen.kt$( migration: Boolean, anorexia: Boolean, nausea: Boolean, rlqTender: Boolean, rebound: Boolean, fever: Boolean, leukocytosis: Boolean, shiftLeft: Boolean, )</ID>
+    <ID>LongParameterList:CalculatorScreen.kt$( temp: Double, map: Double, hr: Double, rr: Double, pH: Double, na: Double, k: Double, cr: Double, hasARF: Boolean, hct: Double, wbc: Double, gcs: Int, fiO2: Double, paO2: Double, paCO2: Double, )</ID>
+    <ID>LongParameterList:CalculatorScreen.kt$( vomiting: Boolean, painRIF: Boolean, reboundIdx: Int, temp: Double, wbc: Double, neut: Int, crp: Double, )</ID>
+    <ID>LongParameterList:CalculatorScreen.kt$(pf: Double, plat: Double, bili: Double, map: Double, vaso: Int, gcs: Int, cr: Double)</ID>
+    <ID>LongParameterList:CaseDetailScreen.kt$( emoji: String, title: String, content: String, containerColor: androidx.compose.ui.graphics.Color = MaterialTheme.colorScheme.surfaceVariant, contentColor: androidx.compose.ui.graphics.Color = MaterialTheme.colorScheme.onSurface, titleFontWeight: FontWeight = FontWeight.SemiBold, )</ID>
+    <ID>LongParameterList:CasesViewModelTest.kt$CasesViewModelTest$( id: String, title: String, category: String, difficulty: String, diagnosis: String = "diagnosis_$id", tags: List&lt;String&gt; = emptyList(), )</ID>
+    <ID>LongParameterList:ChapterExamScreen.kt$( state: ChapterExamUiState, onSelectOption: (Int) -&gt; Unit, onNext: () -&gt; Unit, onRestart: () -&gt; Unit, onRetry: () -&gt; Unit, onBack: () -&gt; Unit, )</ID>
+    <ID>LongParameterList:HomeScreen.kt$( onOpenSettings: () -&gt; Unit, onOpenAcademy: () -&gt; Unit, onOpenLogbook: () -&gt; Unit, onOpenStore: () -&gt; Unit, onOpenKapibaya: () -&gt; Unit, onOpenKTools: () -&gt; Unit, onOpenLibrary: () -&gt; Unit, onOpenDrugs: () -&gt; Unit, onOpenCases: () -&gt; Unit, onOpenKCortex: () -&gt; Unit, )</ID>
+    <ID>LongParameterList:KapibayaRepositoryImpl.kt$( supabaseUrl: String, anonKey: String, accessToken: String, userId: String, conversationId: String, message: String, )</ID>
+    <ID>LongParameterList:LibraryScreen.kt$( state: LibraryUiState, onBack: () -&gt; Unit, onOpenModule: (String) -&gt; Unit, onStartChapterQuiz: (String) -&gt; Unit, onRetry: () -&gt; Unit, onSelectTab: (Int) -&gt; Unit, )</ID>
+    <ID>LongParameterList:LoginScreen.kt$( onAuthenticated: () -&gt; Unit, onForgotPassword: () -&gt; Unit, onRegister: () -&gt; Unit, onPrivacyPolicy: () -&gt; Unit, onTerms: () -&gt; Unit, viewModel: LoginViewModel = hiltViewModel(), )</ID>
+    <ID>LongParameterList:MainScreen.kt$( onOpenSettings: () -&gt; Unit, onOpenAccountDeletion: () -&gt; Unit, onOpenPrivacyPolicy: () -&gt; Unit, onOpenTerms: () -&gt; Unit, onOpenSubscriptions: () -&gt; Unit, onOpenProductDetail: (String) -&gt; Unit, onOpenLesson: (String) -&gt; Unit, onOpenQuiz: (String) -&gt; Unit, onOpenNewSurgicalLog: () -&gt; Unit, onOpenKapibaya: () -&gt; Unit, onOpenKTools: () -&gt; Unit, onOpenLibrary: () -&gt; Unit, onOpenDrugs: () -&gt; Unit, onOpenCases: () -&gt; Unit, onOpenKCortex: () -&gt; Unit, )</ID>
+    <ID>LongParameterList:ProfileScreen.kt$( onOpenSettings: () -&gt; Unit, onDeleteAccount: () -&gt; Unit, onPrivacyPolicy: () -&gt; Unit, onTerms: () -&gt; Unit, onSubscriptions: () -&gt; Unit, viewModel: ProfileViewModel = hiltViewModel(), )</ID>
+    <ID>LongParameterList:SettingsScreen.kt$( onBack: () -&gt; Unit, onSignedOut: () -&gt; Unit, onDeleteAccount: () -&gt; Unit, onDataExport: () -&gt; Unit, onPrivacyPolicy: () -&gt; Unit, onTerms: () -&gt; Unit, onSubscriptions: () -&gt; Unit, viewModel: SettingsViewModel = hiltViewModel(), )</ID>
+    <ID>MagicNumber:AcademyScreen.kt$50</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$0.13</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$0.16</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$0.19</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$0.5</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$0.6</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$0.8</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$1.2</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$1.4</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$1.5</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$1.7</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$1.9</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$10</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$10.0</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$100</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$11.5</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$110</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$111</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$12</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$12.0</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$120</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$120.0</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$13</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$130</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$14</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$140</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$15</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$15.0</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$150</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$155</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$160</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$180</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$19</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$2.3</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$2.5</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$2.8</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$20</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$200</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$200.0</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$24</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$25</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$29</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$29.9</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$3</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$3.0</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$3.5</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$3.6</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$30</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$300</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$31.9</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$32.0</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$34</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$34.0</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$35</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$350</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$36.0</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$37.0</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$38.5</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$39.0</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$4</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$40</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$400</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$41.0</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$45</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$450.0</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$46</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$5</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$5.0</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$5.5</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$5.91</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$50</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$50.0</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$500</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$500.0</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$55</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$6</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$6.0</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$60</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$61</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$65</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$7</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$7.0</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$7.04</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$7.15</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$7.25</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$7.33</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$7.5</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$7.6</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$7.7</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$70</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$713.0</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$75</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$8</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$8.0</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$80</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$85</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$85.0</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$9</ID>
+    <ID>MagicNumber:CalculatorScreen.kt$90</ID>
+    <ID>MagicNumber:CaseDetailScreen.kt$50</ID>
+    <ID>MagicNumber:CasesScreen.kt$4</ID>
+    <ID>MagicNumber:CasesScreen.kt$50</ID>
+    <ID>MagicNumber:ChapterExam.kt$25</ID>
+    <ID>MagicNumber:ChapterExam.kt$3</ID>
+    <ID>MagicNumber:ChapterExam.kt$5</ID>
+    <ID>MagicNumber:ChapterExamScreen.kt$60</ID>
+    <ID>MagicNumber:ChapterExamScreen.kt$80</ID>
+    <ID>MagicNumber:ChapterExamViewModel.kt$ChapterExamUiState$100</ID>
+    <ID>MagicNumber:Color.kt$0xFF00004C</ID>
+    <ID>MagicNumber:Color.kt$0xFF00BFFF</ID>
+    <ID>MagicNumber:Color.kt$0xFF04CE03</ID>
+    <ID>MagicNumber:Color.kt$0xFF0D9488</ID>
+    <ID>MagicNumber:Color.kt$0xFF0F172A</ID>
+    <ID>MagicNumber:Color.kt$0xFF191919</ID>
+    <ID>MagicNumber:Color.kt$0xFF1E293B</ID>
+    <ID>MagicNumber:Color.kt$0xFF475569</ID>
+    <ID>MagicNumber:Color.kt$0xFFD2042D</ID>
+    <ID>MagicNumber:Color.kt$0xFFDAA520</ID>
+    <ID>MagicNumber:Color.kt$0xFFE2E8F0</ID>
+    <ID>MagicNumber:Color.kt$0xFFF8FAFC</ID>
+    <ID>MagicNumber:ContentRepositoryImpl.kt$ContentRepositoryImpl$100</ID>
+    <ID>MagicNumber:DrugDetailScreen.kt$50</ID>
+    <ID>MagicNumber:DrugsScreen.kt$3</ID>
+    <ID>MagicNumber:DrugsScreen.kt$50</ID>
+    <ID>MagicNumber:KCortexRepositoryImpl.kt$KCortexRepositoryImpl$200</ID>
+    <ID>MagicNumber:KCortexRepositoryImpl.kt$KCortexRepositoryImpl$4000</ID>
+    <ID>MagicNumber:KCortexScreen.kt$1.5f</ID>
+    <ID>MagicNumber:KCortexScreen.kt$3</ID>
+    <ID>MagicNumber:KiruApp.kt$KiruApp$0.2</ID>
+    <ID>MagicNumber:KiruApp.kt$KiruApp$50</ID>
+    <ID>MagicNumber:KiruCustomerInfo.kt$3</ID>
+    <ID>MagicNumber:LogbookScreen.kt$200</ID>
+    <ID>MagicNumber:LogbookScreen.kt$50</ID>
+    <ID>MagicNumber:NetworkModule.kt$NetworkModule$90</ID>
+    <ID>MagicNumber:PearlDetailScreen.kt$50</ID>
+    <ID>MagicNumber:PearlsScreen.kt$50</ID>
+    <ID>MagicNumber:ProductDetailScreen.kt$50</ID>
+    <ID>MagicNumber:QuizPlayerScreen.kt$100f</ID>
+    <ID>MagicNumber:SplashScreen.kt$0.5f</ID>
+    <ID>MagicNumber:SplashScreen.kt$0.8f</ID>
+    <ID>MagicNumber:SplashScreen.kt$1.1f</ID>
+    <ID>MagicNumber:WebViewScreen.kt$99</ID>
+    <ID>MaxLineLength:CalculatorScreen.kt$"p-POSSUM: Phys $physScore + Op $opScore. Morbilidad esperada: ${"%.1f".format(morbidity)}%. Mortalidad esperada: ${"%.1f".format(mortality)}%."</ID>
+    <ID>MaxLineLength:CalculatorScreen.kt$OrdinalSelector("Contaminación Peritoneal", listOf("Ninguna", "Mínima", "Pus local", "Pus/heces libre"), periton) { periton = it }</ID>
+    <ID>MaxLineLength:CalculatorScreen.kt$OrdinalSelector("ECG", listOf("Normal", "Fibrilación Auricular", "Cambios ST-T", "&gt;4 extrasístoles/min"), ecg) { ecg = it }</ID>
+    <ID>MaxLineLength:CalculatorScreen.kt$OrdinalSelector("Estado Cardíaco", listOf("Normal", "CCF/meds", "Edema periférico", "Cardiomegalia"), card) { card = it }</ID>
+    <ID>MaxLineLength:CalculatorScreen.kt$OrdinalSelector("Estado Respiratorio", listOf("Sin disnea", "Disnea esfuerzo", "Disnea escaleras", "Disnea reposo"), resp) { resp = it }</ID>
+    <ID>MaxLineLength:CalculatorScreen.kt$OrdinalSelector("Hemoglobina (g/dL)", listOf("13–16", "11.5–12.9 ó 16.1–17", "10–11.4 ó 17.1–18", "&lt;10 ó &gt;18"), hgb) { hgb = it }</ID>
+    <ID>MaxLineLength:CalculatorScreen.kt$OrdinalSelector("Malignidad", listOf("Sin cáncer", "Solo primario", "Linfonodos", "Metástasis distantes"), malign) { malign = it }</ID>
+    <ID>MaxLineLength:CalculatorScreen.kt$OrdinalSelector("PAS", listOf("110–130", "90–109 ó 131–170", "≤89 ó &gt;170", "&lt;90 inestable"), sbp) { sbp = it }</ID>
+    <ID>MaxLineLength:CalculatorScreen.kt$OrdinalSelector("Potasio (mEq/L)", listOf("3.5–5.0", "3.2–3.4 ó 5.1–5.3", "2.9–3.1 ó 5.4–5.9", "&lt;2.9 ó &gt;6"), k) { k = it }</ID>
+    <ID>MaxLineLength:CalculatorScreen.kt$OrdinalSelector("Severidad de la Cirugía", listOf("Menor", "Moderada", "Mayor", "Mayor+"), opSev) { opSev = it }</ID>
+    <ID>MaxLineLength:CalculatorScreen.kt$Triple("ASA I", RiskLevel.LOW, "Paciente sano, sin alteraciones orgánicas, fisiológicas o psiquiátricas. Mortalidad anestésica &lt;0.1%.")</ID>
+    <ID>MaxLineLength:CalculatorScreen.kt$Triple("ASA II", RiskLevel.LOW, "Enfermedad sistémica leve sin limitación funcional (HTA controlada, DM sin complicaciones). Mortalidad ~0.1–0.2%.")</ID>
+    <ID>MaxLineLength:CalculatorScreen.kt$Triple("ASA III", RiskLevel.MODERATE, "Enfermedad sistémica grave con limitación funcional (EPOC, angina estable). Mortalidad ~0.4–1.8%. Optimización preoperatoria intensa.")</ID>
+    <ID>MaxLineLength:CalculatorScreen.kt$Triple("ASA IV", RiskLevel.HIGH, "Enfermedad sistémica grave con amenaza constante para la vida (IAM reciente, insuficiencia cardíaca). Mortalidad ~7.8–23%. UCI postoperatoria requerida.")</ID>
+    <ID>MaxLineLength:CalculatorScreen.kt$Triple("ASA V", RiskLevel.HIGH, "Paciente moribundo que no se espera sobreviva sin cirugía (ruptura de aneurisma). Mortalidad ~9.4–57.8%. Cirugía de salvamento vital únicamente.")</ID>
+    <ID>MaxLineLength:CalculatorScreen.kt$Triple("ASA VI", RiskLevel.HIGH, "Paciente con muerte cerebral declarada, candidato a donación de órganos.")</ID>
+    <ID>MaxLineLength:CalculatorScreen.kt$else -&gt; RiskLevel.HIGH to "Riesgo alto (score $score/10). Probabilidad &gt;75%. Apendicectomía indicada. Preparación preoperatoria urgente."</ID>
+    <ID>MaxLineLength:CalculatorScreen.kt$else -&gt; RiskLevel.HIGH to "Riesgo alto (score $score/12). Alta probabilidad de apendicitis. Valoración quirúrgica urgente."</ID>
+    <ID>MaxLineLength:CalculatorScreen.kt$else -&gt; RiskLevel.HIGH to "Score RIPASA: ${"%.1f".format(score)}. Apendicitis definitiva. Intervención quirúrgica indicada."</ID>
+    <ID>MaxLineLength:CalculatorScreen.kt$else -&gt; Triple("Clase C", RiskLevel.HIGH, "Child-Pugh Clase C ($score pts). Cirrosis descompensada. Supervivencia 1 año: ~45%. Evaluar trasplante hepático.")</ID>
+    <ID>MaxLineLength:CalculatorScreen.kt$score &lt; 11.5 -&gt; RiskLevel.MODERATE to "Score RIPASA: ${"%.1f".format(score)}. Alta probabilidad de apendicitis. Valoración quirúrgica indicada."</ID>
+    <ID>MaxLineLength:CalculatorScreen.kt$score &lt; 5.0 -&gt; RiskLevel.LOW to "Score RIPASA: ${"%.1f".format(score)}. Apendicitis improbable. Alta con seguimiento en 24h."</ID>
+    <ID>MaxLineLength:CalculatorScreen.kt$score &lt; 7.5 -&gt; RiskLevel.LOW to "Score RIPASA: ${"%.1f".format(score)}. Probabilidad baja. Observación e investigación adicional."</ID>
+    <ID>MaxLineLength:CalculatorScreen.kt$score &lt;= 4 -&gt; RiskLevel.LOW to "Riesgo bajo (score $score/10). Probabilidad de apendicitis &lt;25%. Considerar diagnósticos alternativos. Alta con indicaciones de alarma."</ID>
+    <ID>MaxLineLength:CalculatorScreen.kt$score &lt;= 4 -&gt; RiskLevel.LOW to "Riesgo bajo (score $score/12). Probabilidad de apendicitis baja. Alta con seguimiento."</ID>
+    <ID>MaxLineLength:CalculatorScreen.kt$score &lt;= 6 -&gt; RiskLevel.MODERATE to "Riesgo intermedio (score $score/10). Probabilidad 25–75%. Observación + USG/TAC. Valoración quirúrgica recomendada."</ID>
+    <ID>MaxLineLength:CalculatorScreen.kt$score &lt;= 6 -&gt; Triple("Clase A", RiskLevel.LOW, "Child-Pugh Clase A ($score pts). Cirrosis bien compensada. Supervivencia 1 año: ~100%.")</ID>
+    <ID>MaxLineLength:CalculatorScreen.kt$score &lt;= 8 -&gt; RiskLevel.MODERATE to "Riesgo intermedio (score $score/12). Investigación y observación. USG / TAC indicados."</ID>
+    <ID>MaxLineLength:CalculatorScreen.kt$score &lt;= 9 -&gt; Triple("Clase B", RiskLevel.MODERATE, "Child-Pugh Clase B ($score pts). Compromiso funcional significativo. Supervivencia 1 año: ~80%.")</ID>
+    <ID>MaxLineLength:CalculatorScreen.kt$val score = ripasaScore(genderMale, ageUnder40, rifPain, migration, anorexia, nausea, durIdx, rifTender, rebound, guarding, rovsing, fever, elevatedWBC, negUrine)</ID>
+    <ID>MaxLineLength:KCortexScreen.kt$"Parcialmente analizable" -&gt; MaterialTheme.colorScheme.secondaryContainer to MaterialTheme.colorScheme.onSecondaryContainer</ID>
+    <ID>MaxLineLength:KCortexScreen.kt$text = "⚠️ Resultado educativo. No constituye diagnóstico ni tratamiento. Confirma con el médico tratante."</ID>
+    <ID>MaxLineLength:KToolsCalculator.kt$KToolsCalculator.Companion$KToolsCalculator("air", "Escala AIR", "Appendicitis Inflammatory Response Score", CalculatorCategory.GENERAL)</ID>
+    <ID>MaxLineLength:KToolsCalculator.kt$KToolsCalculator.Companion$KToolsCalculator("alvarado", "Escala de Alvarado", "Diagnóstico de Apendicitis Aguda", CalculatorCategory.GENERAL)</ID>
+    <ID>MaxLineLength:KToolsCalculator.kt$KToolsCalculator.Companion$KToolsCalculator("ripasa", "RIPASA Score", "Apendicitis — Poblaciones No Occidentales", CalculatorCategory.GENERAL)</ID>
+    <ID>MaxLineLength:LibraryScreen.kt$text = pluralStringResource(R.plurals.library_module_points_count, block.chapterCount, block.chapterCount)</ID>
+    <ID>MaxLineLength:LibraryScreen.kt$text = pluralStringResource(R.plurals.library_module_points_count, module.pointCount, module.pointCount)</ID>
+    <ID>MaxLineLength:PearlsRepositoryContractTest.kt$PearlsRepositoryContractTest$Pearl(id = 2, title = "Hipertensión intraabdominal", description = "Medir presión vesical.", category = "cuidados_criticos")</ID>
+    <ID>MaxLineLength:QuizSpecialtiesScreen.kt$text = pluralStringResource(R.plurals.quiz_question_count, specialty.questionCount, specialty.questionCount)</ID>
+    <ID>MaximumLineLength:CalculatorScreen.kt$ </ID>
+    <ID>MaximumLineLength:KCortexScreen.kt$ </ID>
+    <ID>MaximumLineLength:KToolsCalculator.kt$KToolsCalculator.Companion$ </ID>
+    <ID>MaximumLineLength:LibraryScreen.kt$ </ID>
+    <ID>MaximumLineLength:PearlsRepositoryContractTest.kt$PearlsRepositoryContractTest$ </ID>
+    <ID>MaximumLineLength:QuizSpecialtiesScreen.kt$ </ID>
+    <ID>MultiLineIfElse:CalculatorScreen.kt$MaterialTheme.colorScheme.primaryContainer</ID>
+    <ID>MultiLineIfElse:CalculatorScreen.kt$MaterialTheme.colorScheme.surfaceVariant</ID>
+    <ID>MultiLineIfElse:CasesViewModelTest.kt$CasesViewModelTest$list</ID>
+    <ID>MultiLineIfElse:CasesViewModelTest.kt$CasesViewModelTest$list.filter { it.title.lowercase().contains(query.trim().lowercase()) }</ID>
+    <ID>MultiLineIfElse:ChapterExamScreen.kt$(state.currentIndex + 1).toFloat() / state.totalQuestions</ID>
+    <ID>MultiLineIfElse:ChapterExamScreen.kt$0f</ID>
+    <ID>MultiLineIfElse:ChapterExamScreen.kt$stringResource(R.string.chapter_exam_next)</ID>
+    <ID>MultiLineIfElse:ChapterExamScreen.kt$stringResource(R.string.chapter_exam_see_results)</ID>
+    <ID>MultiLineIfElse:DrugsViewModelTest.kt$DrugsViewModelTest$list</ID>
+    <ID>MultiLineIfElse:DrugsViewModelTest.kt$DrugsViewModelTest$list.filter { it.nameEs.lowercase().contains(query.lowercase()) }</ID>
+    <ID>MultiLineIfElse:DrugsViewModelTest.kt$DrugsViewModelTest$list.filter { it.nameEs.lowercase().contains(query.trim().lowercase()) }</ID>
+    <ID>MultiLineIfElse:KapibayaChatScreen.kt$MaterialTheme.colorScheme.onPrimary</ID>
+    <ID>MultiLineIfElse:KapibayaChatScreen.kt$MaterialTheme.colorScheme.onSurfaceVariant</ID>
+    <ID>MultiLineIfElse:KapibayaChatScreen.kt$MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.4f)</ID>
+    <ID>MultiLineIfElse:KapibayaChatScreen.kt$MaterialTheme.colorScheme.primary</ID>
+    <ID>MultiLineIfElse:KapibayaChatScreen.kt$MaterialTheme.colorScheme.surfaceVariant</ID>
+    <ID>MultiLineIfElse:LibraryScreen.kt$MaterialTheme.colorScheme.onSurface</ID>
+    <ID>MultiLineIfElse:LibraryScreen.kt$MaterialTheme.colorScheme.onSurfaceVariant</ID>
+    <ID>MultiLineIfElse:LibraryScreen.kt$stringResource(R.string.library_block_collapse)</ID>
+    <ID>MultiLineIfElse:LibraryScreen.kt$stringResource(R.string.library_block_expand)</ID>
+    <ID>MultiLineIfElse:LibraryScreen.kt$stringResource(R.string.library_chapter_available)</ID>
+    <ID>MultiLineIfElse:LibraryScreen.kt$stringResource(R.string.library_chapter_locked)</ID>
+    <ID>MultiLineIfElse:LogbookRepositoryContractTest.kt$FakeLogbookRepository$Result.failure(RuntimeException("network error"))</ID>
+    <ID>MultiLineIfElse:LogbookRepositoryContractTest.kt$FakeLogbookRepository$Result.success(procedures)</ID>
+    <ID>MultiLineIfElse:LogbookRepositoryContractTest.kt$FakeLogbookRepository$Result.success(store.toList())</ID>
+    <ID>MultiLineIfElse:LogbookScreen.kt$false</ID>
+    <ID>MultiLineIfElse:PearlsRepositoryContractTest.kt$FakePearlsRepository$Result.failure(RuntimeException("network error"))</ID>
+    <ID>MultiLineIfElse:PearlsRepositoryContractTest.kt$FakePearlsRepository$Result.success(pearls)</ID>
+    <ID>MultiLineIfElse:PearlsRepositoryContractTest.kt$FakePearlsRepository$Result.success(pearls.firstOrNull { it.id == id })</ID>
+    <ID>MultiLineIfElse:ProfileRepositoryContractTest.kt$FakeProfileRepository$Result.failure(RuntimeException("network error"))</ID>
+    <ID>MultiLineIfElse:ProfileRepositoryContractTest.kt$FakeProfileRepository$Result.success(profile)</ID>
+    <ID>MultiLineIfElse:QuizRepositoryContractTest.kt$FakeQuizRepository$Result.failure(RuntimeException("network error"))</ID>
+    <ID>MultiLineIfElse:QuizRepositoryContractTest.kt$FakeQuizRepository$Result.success(questions.filter { it.specialty == specialty })</ID>
+    <ID>MultiLineIfElse:QuizRepositoryContractTest.kt$FakeQuizRepository$Result.success(specialties)</ID>
+    <ID>MultiLineIfElse:StoreRepositoryContractTest.kt$FakeStoreRepository$Result.failure(RuntimeException("network error"))</ID>
+    <ID>MultiLineIfElse:StoreRepositoryContractTest.kt$FakeStoreRepository$Result.success(products.filter { it.isVisible })</ID>
+    <ID>MultiLineIfElse:StoreRepositoryContractTest.kt$FakeStoreRepository$Result.success(products.firstOrNull { it.id == id })</ID>
+    <ID>NoMultipleSpaces:CalculatorScreen.kt$ </ID>
+    <ID>NoMultipleSpaces:Color.kt$ </ID>
+    <ID>NoMultipleSpaces:KCortexAnalysis.kt$ClinicalDataRow$ </ID>
+    <ID>NoMultipleSpaces:KCortexAnalysis.kt$KCortexAnalysis$ </ID>
+    <ID>NoMultipleSpaces:KCortexRequest.kt$KCortexRequest$ </ID>
+    <ID>NoMultipleSpaces:KiruNavHost.kt$ </ID>
+    <ID>NoUnusedImports:CasesViewModelTest.kt$com.medsurgery.kiruplus.feature.cases.CasesViewModelTest.kt</ID>
+    <ID>NoUnusedImports:ChapterExamRepositoryTest.kt$com.medsurgery.kiruplus.library.ChapterExamRepositoryTest.kt</ID>
+    <ID>NoUnusedImports:KCortexDomainTest.kt$com.medsurgery.kiruplus.domain.kcortex.KCortexDomainTest.kt</ID>
+    <ID>NoUnusedImports:KCortexRepositoryImpl.kt$com.medsurgery.kiruplus.data.kcortex.KCortexRepositoryImpl.kt</ID>
+    <ID>NoUnusedImports:KCortexViewModelTest.kt$com.medsurgery.kiruplus.feature.kcortex.KCortexViewModelTest.kt</ID>
+    <ID>NoUnusedImports:KToolsMenuScreen.kt$com.medsurgery.kiruplus.feature.ktools.KToolsMenuScreen.kt</ID>
+    <ID>NoUnusedImports:LibraryRepositoryImplTest.kt$com.medsurgery.kiruplus.library.LibraryRepositoryImplTest.kt</ID>
+    <ID>NoUnusedImports:MainScreen.kt$com.medsurgery.kiruplus.feature.main.MainScreen.kt</ID>
+    <ID>NoUnusedImports:ProductDetailScreen.kt$com.medsurgery.kiruplus.feature.store.ProductDetailScreen.kt</ID>
+    <ID>ParameterListWrapping:CalculatorScreen.kt$( genderMale: Boolean, ageUnder40: Boolean, rifPain: Boolean, migration: Boolean, anorexia: Boolean, nausea: Boolean, durIdx: Int, rifTender: Boolean, rebound: Boolean, guarding: Boolean, rovsing: Boolean, fever: Boolean, elevatedWBC: Boolean, negUrine: Boolean, )</ID>
+    <ID>ParameterListWrapping:CalculatorScreen.kt$( migration: Boolean, anorexia: Boolean, nausea: Boolean, rlqTender: Boolean, rebound: Boolean, fever: Boolean, leukocytosis: Boolean, shiftLeft: Boolean, )</ID>
+    <ID>ParameterListWrapping:CalculatorScreen.kt$( temp: Double, map: Double, hr: Double, rr: Double, pH: Double, na: Double, k: Double, cr: Double, hasARF: Boolean, hct: Double, wbc: Double, gcs: Int, fiO2: Double, paO2: Double, paCO2: Double, )</ID>
+    <ID>ParameterListWrapping:CalculatorScreen.kt$( vomiting: Boolean, painRIF: Boolean, reboundIdx: Int, temp: Double, wbc: Double, neut: Int, crp: Double, )</ID>
+    <ID>PropertyWrapping:CalculatorScreen.kt$val score = ripasaScore(genderMale, ageUnder40, rifPain, migration, anorexia, nausea, durIdx, rifTender, rebound, guarding, rovsing, fever, elevatedWBC, negUrine)</ID>
+    <ID>ReturnCount:AccountDeletion.kt$fun validateAccountDeletionStatus( kind: AccountDeletionStatusKind, scheduledForIso: String?, canCancel: Boolean, graceHours: Int, ): AccountDeletionStatus?</ID>
+    <ID>ReturnCount:AssetChapterExamRepositoryImpl.kt$AssetChapterExamRepositoryImpl$private fun loadAll(): Result&lt;Map&lt;String, ChapterExam&gt;&gt;</ID>
+    <ID>ReturnCount:ChapterExamAssetIntegrityTest.kt$ChapterExamAssetIntegrityTest$private fun loadExams(): JsonArray?</ID>
+    <ID>ReturnCount:KiruCustomerInfo.kt$fun resolveCustomerInfo(facts: List&lt;EntitlementFact&gt;): EntitlementState</ID>
+    <ID>ReturnCount:RegisterViewModel.kt$RegisterViewModel$fun submit()</ID>
+    <ID>ReturnCount:RegisterViewModel.kt$RegisterViewModel$private fun isStrongPassword(pw: String): Boolean</ID>
+    <ID>ReturnCount:WebViewScreen.kt$private fun isConnected(context: Context): Boolean</ID>
+    <ID>SpacingBetweenDeclarationsWithAnnotations:KiruRoute.kt$KiruRoute$CaseDetail : KiruRoute</ID>
+    <ID>SpacingBetweenDeclarationsWithAnnotations:KiruRoute.kt$KiruRoute$ChapterExam : KiruRoute</ID>
+    <ID>SpacingBetweenDeclarationsWithAnnotations:KiruRoute.kt$KiruRoute$DataExport : KiruRoute</ID>
+    <ID>SpacingBetweenDeclarationsWithAnnotations:KiruRoute.kt$KiruRoute$DrugDetail : KiruRoute</ID>
+    <ID>SpacingBetweenDeclarationsWithAnnotations:KiruRoute.kt$KiruRoute$ForgotPassword : KiruRoute</ID>
+    <ID>SpacingBetweenDeclarationsWithAnnotations:KiruRoute.kt$KiruRoute$KToolsCalculator : KiruRoute</ID>
+    <ID>SpacingBetweenDeclarationsWithAnnotations:KiruRoute.kt$KiruRoute$LibraryModuleDetail : KiruRoute</ID>
+    <ID>SpacingBetweenDeclarationsWithAnnotations:KiruRoute.kt$KiruRoute$MedicalDisclaimer : KiruRoute</ID>
+    <ID>SpacingBetweenDeclarationsWithAnnotations:KiruRoute.kt$KiruRoute$PearlDetail : KiruRoute</ID>
+    <ID>SpacingBetweenDeclarationsWithAnnotations:KiruRoute.kt$KiruRoute$Profile : KiruRoute</ID>
+    <ID>SpacingBetweenDeclarationsWithAnnotations:KiruRoute.kt$KiruRoute$Register : KiruRoute</ID>
+    <ID>SpacingBetweenDeclarationsWithAnnotations:KiruRoute.kt$KiruRoute$Settings : KiruRoute</ID>
+    <ID>SpacingBetweenDeclarationsWithAnnotations:LibraryRepositoryImpl.kt$LibraryRepositoryImpl$@Volatile private var cachedCurriculum: List&lt;CurriculumBlock&gt;? = null</ID>
+    <ID>SpacingBetweenDeclarationsWithComments:Color.kt$/** Verde quirúrgico MedSurgery. Mismo sRGB que `KiruDesignTokens.KiruSurgicalSuccess` en iOS. */</ID>
+    <ID>SpacingBetweenDeclarationsWithComments:KiruTokens.kt$KiruShapes$/** Radio de `kiruPremiumCard()` en iOS. */</ID>
+    <ID>TooGenericExceptionCaught:AuthRepositoryImpl.kt$AuthRepositoryImpl$error: Throwable</ID>
+    <ID>TooGenericExceptionCaught:AuthRepositoryImpl.kt$AuthRepositoryImpl$t: Throwable</ID>
+    <ID>TooGenericExceptionThrown:KapibayaChatViewModelTest.kt$KapibayaChatViewModelTest$throw RuntimeException("boom")</ID>
+    <ID>TooManyFunctions:CalculatorScreen.kt$com.medsurgery.kiruplus.feature.ktools.CalculatorScreen.kt</ID>
+    <ID>Wrapping:CalculatorScreen.kt$;</ID>
+    <ID>Wrapping:CalculatorScreen.kt$card = it</ID>
+    <ID>Wrapping:CalculatorScreen.kt$ecg = it</ID>
+    <ID>Wrapping:CalculatorScreen.kt$hgb = it</ID>
+    <ID>Wrapping:CalculatorScreen.kt$k = it</ID>
+    <ID>Wrapping:CalculatorScreen.kt$malign = it</ID>
+    <ID>Wrapping:CalculatorScreen.kt$periton = it</ID>
+    <ID>Wrapping:CalculatorScreen.kt$resp = it</ID>
+    <ID>Wrapping:ChapterExamViewModelTest.kt$ChapterExamViewModelTest$;</ID>
+    <ID>Wrapping:KCortexViewModelTest.kt$KCortexViewModelTest$(</ID>
+    <ID>Wrapping:LibraryRepositoryImpl.kt$LibraryRepositoryImpl$;</ID>
+    <ID>Wrapping:ProductDetailScreen.kt$-&gt;</ID>
+  </CurrentIssues>
+</SmellBaseline>
