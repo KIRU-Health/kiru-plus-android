@@ -18,8 +18,14 @@ sealed interface EntitlementState {
     /** No active subscription. Show upgrade prompts for premium content. */
     data object Free : EntitlementState
 
-    /** Active premium subscription. Full access to all content. */
-    data object Premium : EntitlementState
+    /**
+     * Plan de pago activo. El nivel sale del CustomerInfo, con el mismo
+     * orden que iOS: resident < mega < pro. Max y Pro comparten nivel.
+     */
+    data class Premium(
+        val tier: KiruAccessTier,
+        val productId: String?,
+    ) : EntitlementState
 
     /**
      * RevenueCat SDK has not yet returned a result (e.g., first launch before
