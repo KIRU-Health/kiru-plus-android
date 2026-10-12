@@ -75,6 +75,19 @@
     <string name="delete_account_acknowledge">Entiendo que mis datos serán eliminados permanentemente.</string>
     <string name="delete_account_confirm">Confirmar eliminación</string>
     <string name="delete_account_cancel">Cancelar</string>
+    <string name="delete_account_status_loading">Consultando el estado…</string>
+    <string name="delete_account_status_none">No tienes ninguna solicitud de eliminación activa.</string>
+    <string name="delete_account_status_scheduled_title">Eliminación programada</string>
+    <string name="delete_account_status_scheduled_body">Tu cuenta está programada para eliminarse el %1$s. Permanece activa hasta ese momento.</string>
+    <string name="delete_account_status_grace">Periodo de gracia: %1$d horas.</string>
+    <string name="delete_account_status_cancelable">La cancelación está disponible durante este periodo.</string>
+    <string name="delete_account_status_cancel_action">Cancelar eliminación</string>
+    <string name="delete_account_status_cancelled">Tu solicitud anterior de eliminación fue cancelada. Tu cuenta permanece activa.</string>
+    <string name="delete_account_status_failed">No pudimos completar tu solicitud anterior. Tu cuenta permanece activa.</string>
+    <string name="delete_account_status_unknown">No fue posible determinar el estado actual.</string>
+    <string name="delete_account_status_error">No pudimos consultar el estado en este momento.</string>
+    <string name="delete_account_not_authenticated">Inicia sesión para gestionar tu privacidad.</string>
+    <string name="delete_account_understood">Entendido</string>
 
     <!-- UI genérica -->
     <string name="action_back">Atrás</string>

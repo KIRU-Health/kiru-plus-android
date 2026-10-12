@@ -37,8 +37,9 @@ import com.medsurgery.kiruplus.R
  * Pantalla de eliminación de cuenta.
  *
  * Obligatoria por política de Google Play (Account Deletion policy)
- * y GDPR Art. 17 (derecho al olvido). El backend la procesa via Edge Function
- * `process_account_deletions` con grace period de 48h.
+ * y GDPR Art. 17. El estado sale de los RPC de iOS
+ * (`kiru_account_deletion_status`, `kiru_request_account_deletion`,
+ * `kiru_cancel_account_deletion`), con gracia de 48 h.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -49,8 +50,8 @@ fun AccountDeletionScreen(
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
-    LaunchedEffect(state.submitted) {
-        if (state.submitted) onCompleted()
+    LaunchedEffect(state.completed) {
+        if (state.completed) onCompleted()
     }
 
     Scaffold(
@@ -76,79 +77,136 @@ fun AccountDeletionScreen(
                 .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.Top,
         ) {
-            Text(
-                text = stringResource(R.string.delete_account_body),
-                style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.padding(top = 16.dp),
-            )
-
-            Text(
-                text = stringResource(R.string.delete_account_warning),
-                color = MaterialTheme.colorScheme.error,
-                style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.padding(top = 16.dp),
-            )
-
-            Text(
-                text = stringResource(R.string.delete_account_legal),
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                style = MaterialTheme.typography.bodySmall,
-                modifier = Modifier.padding(top = 16.dp),
-            )
-
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 24.dp),
-            ) {
-                Checkbox(
-                    checked = state.acknowledged,
-                    onCheckedChange = viewModel::onAcknowledgeChange,
-                )
-                Text(
-                    text = stringResource(R.string.delete_account_acknowledge),
-                    style = MaterialTheme.typography.bodyMedium,
-                )
+            when (val phase = state.phase) {
+                AccountDeletionPhase.Loading -> {
+                    CircularProgressIndicator(modifier = Modifier.padding(top = 24.dp))
+                    Text(
+                        text = stringResource(R.string.delete_account_status_loading),
+                        modifier = Modifier.padding(top = 12.dp),
+                    )
+                }
+                AccountDeletionPhase.NotAuthenticated -> {
+                    Text(
+                        text = stringResource(R.string.delete_account_not_authenticated),
+                        color = MaterialTheme.colorScheme.error,
+                        modifier = Modifier.padding(top = 16.dp),
+                    )
+                }
+                AccountDeletionPhase.None -> RequestForm(state, viewModel)
+                is AccountDeletionPhase.Scheduled -> ScheduledBody(phase, state.isSubmitting, viewModel)
+                AccountDeletionPhase.Cancelled -> StatusText(R.string.delete_account_status_cancelled)
+                AccountDeletionPhase.FailedStatus -> StatusText(R.string.delete_account_status_failed)
+                AccountDeletionPhase.Unknown -> StatusText(R.string.delete_account_status_unknown)
+                AccountDeletionPhase.TransportError -> {
+                    StatusText(R.string.delete_account_status_error)
+                    TextButton(onClick = viewModel::loadStatus) {
+                        Text(stringResource(R.string.action_retry))
+                    }
+                }
             }
-
             state.errorRes?.let { res ->
                 Text(
                     text = stringResource(res),
                     color = MaterialTheme.colorScheme.error,
                     style = MaterialTheme.typography.bodySmall,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 8.dp),
+                    modifier = Modifier.padding(top = 8.dp),
                 )
             }
-
-            Button(
-                onClick = viewModel::submit,
-                enabled = state.acknowledged && !state.isSubmitting,
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.error,
-                    contentColor = MaterialTheme.colorScheme.onError,
-                ),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 24.dp),
-            ) {
-                if (state.isSubmitting) {
-                    CircularProgressIndicator(strokeWidth = 2.dp)
-                } else {
-                    Text(stringResource(R.string.delete_account_confirm))
-                }
-            }
-
-            TextButton(
-                onClick = onBack,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 8.dp),
-            ) {
-                Text(stringResource(R.string.delete_account_cancel))
-            }
         }
+    }
+}
+
+@Composable
+private fun StatusText(@androidx.annotation.StringRes textRes: Int) {
+    Text(
+        text = stringResource(textRes),
+        style = MaterialTheme.typography.bodyMedium,
+        modifier = Modifier.padding(top = 16.dp),
+    )
+}
+
+@Composable
+private fun RequestForm(state: AccountDeletionUiState, viewModel: AccountDeletionViewModel) {
+    Text(
+        text = stringResource(R.string.delete_account_body),
+        style = MaterialTheme.typography.bodyMedium,
+        modifier = Modifier.padding(top = 16.dp),
+    )
+    Text(
+        text = stringResource(R.string.delete_account_warning),
+        color = MaterialTheme.colorScheme.error,
+        style = MaterialTheme.typography.bodyMedium,
+        modifier = Modifier.padding(top = 16.dp),
+    )
+    Text(
+        text = stringResource(R.string.delete_account_legal),
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
+        style = MaterialTheme.typography.bodySmall,
+        modifier = Modifier.padding(top = 16.dp),
+    )
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.fillMaxWidth().padding(top = 24.dp),
+    ) {
+        Checkbox(checked = state.acknowledged, onCheckedChange = viewModel::onAcknowledgeChange)
+        Text(text = stringResource(R.string.delete_account_acknowledge), style = MaterialTheme.typography.bodyMedium)
+    }
+    Button(
+        onClick = viewModel::submit,
+        enabled = state.acknowledged && !state.isSubmitting,
+        colors = ButtonDefaults.buttonColors(
+            containerColor = MaterialTheme.colorScheme.error,
+            contentColor = MaterialTheme.colorScheme.onError,
+        ),
+        modifier = Modifier.fillMaxWidth().padding(top = 24.dp),
+    ) {
+        if (state.isSubmitting) {
+            CircularProgressIndicator(strokeWidth = 2.dp)
+        } else {
+            Text(stringResource(R.string.delete_account_confirm))
+        }
+    }
+}
+
+@Composable
+private fun ScheduledBody(
+    phase: AccountDeletionPhase.Scheduled,
+    isSubmitting: Boolean,
+    viewModel: AccountDeletionViewModel,
+) {
+    Text(
+        text = stringResource(R.string.delete_account_status_scheduled_title),
+        style = MaterialTheme.typography.titleMedium,
+        modifier = Modifier.padding(top = 16.dp),
+    )
+    Text(
+        text = stringResource(R.string.delete_account_status_scheduled_body, phase.dateText),
+        style = MaterialTheme.typography.bodyMedium,
+        modifier = Modifier.padding(top = 8.dp),
+    )
+    Text(
+        text = stringResource(R.string.delete_account_status_grace, phase.graceHours),
+        style = MaterialTheme.typography.bodyMedium,
+        modifier = Modifier.padding(top = 8.dp),
+    )
+    if (phase.canCancel) {
+        Text(
+            text = stringResource(R.string.delete_account_status_cancelable),
+            style = MaterialTheme.typography.bodyMedium,
+            modifier = Modifier.padding(top = 8.dp),
+        )
+        Button(
+            onClick = viewModel::cancelScheduledDeletion,
+            enabled = !isSubmitting,
+            modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
+        ) {
+            Text(stringResource(R.string.delete_account_status_cancel_action))
+        }
+    }
+    TextButton(
+        onClick = viewModel::confirmTeardown,
+        modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
+    ) {
+        Text(stringResource(R.string.delete_account_understood))
     }
 }
