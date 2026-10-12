@@ -3,6 +3,8 @@
 agp = "8.7.3"
 kotlin = "2.1.0"
 ksp = "2.1.0-1.0.29"
+detekt = "1.23.8"
+ktlint = "12.1.2"
 
 # Android
 minSdk = "26"
@@ -144,6 +146,8 @@ kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "ko
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
 
 [bundles]
 compose-ui = ["androidx-compose-ui", "androidx-compose-ui-graphics", "androidx-compose-ui-tooling-preview", "androidx-compose-material3", "androidx-compose-material-icons-extended"]

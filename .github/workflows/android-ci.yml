@@ -42,6 +42,9 @@ jobs:
       # local.properties. Si los secrets no están configurados todavía, el
       # build compila igual (los BuildConfig strings quedan vacíos) — los
       # tests y assembleDebug NO requieren keys reales.
+      - name: detekt and ktlint
+        run: ./gradlew detekt ktlintCheck --stacktrace
+
       - name: Run unit tests
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
