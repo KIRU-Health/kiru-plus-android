@@ -18,15 +18,15 @@ Public endpoints (e.g., anon read-only) use the publishable anon key via header 
 
 ## Edge Functions
 
-### `ask_kapibaya_stream`
+### `ask_kapibaya` (SSE)
 
-Streaming Kapibaya AI chat response (Server-Sent Events).
+Streaming chat. Same endpoint as `Data/Services/CloudKapibayaService+SSE.swift`. `ask_kapibaya_stream` is not called.
 
 | Field | Value |
 |-------|-------|
-| URL | `{SUPABASE_URL}/functions/v1/ask_kapibaya_stream` |
+| URL | `{SUPABASE_URL}/functions/v1/ask_kapibaya` |
 | Method | POST |
-| Auth | `apikey: SUPABASE_ANON_KEY` (no JWT required) |
+| Auth | `apikey` anon key AND `Authorization: Bearer <session JWT>` |
 | Content-Type | `application/json` |
 | Accept | `text/event-stream` |
 
@@ -160,7 +160,7 @@ Si esta sección contradice una sección de arriba, gana el Swift. Android todav
 
 | Contrato | Archivo Swift | Android hoy |
 |---|---|---|
-| SSE de Kapibaya: `POST /functions/v1/ask_kapibaya` con sesión | `Data/Services/CloudKapibayaService+SSE.swift` | DESVIACIÓN: `ask_kapibaya_stream` solo con `apikey`, sin `Authorization` (`data/kapibaya/KapibayaRepositoryImpl.kt`) |
+| SSE de Kapibaya: `POST /functions/v1/ask_kapibaya` con sesión | `Data/Services/CloudKapibayaService+SSE.swift` | `KapibayaRepositoryImpl` manda Bearer + apikey y `stream: true` |
 | RPC `kiru_request_account_deletion`, `kiru_cancel_account_deletion`, `kiru_account_deletion_status` | `Core/Compliance/PrivacyService.swift` | `AuthRepositoryImpl` |
 | Edge `process_data_export` | `Core/Compliance/PrivacyService.swift` | Igual (`AuthRepositoryImpl.requestDataExport`) |
 | `POST {BACKEND_BASE_URL}/v1/kcortex/analyze` | `Data/KCortex/KCortexVisionService.swift`; URL en `Config/Flags-*.xcconfig` | Mismo path. La URL sale de `BuildConfig.BACKEND_BASE_URL`. Release queda vacío (fail-closed), como iOS. |

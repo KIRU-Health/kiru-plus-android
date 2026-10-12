@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface KapibayaRepository {
     /**
-     * Streams partial text chunks from `ask_kapibaya_stream` via SSE.
+     * Streams partial text chunks from `ask_kapibaya` via SSE.
      * Completes normally on `event: done`, throws on `event: error`.
      * The Edge Function (service_role) persists turns in Supabase — the
      * client only receives the text stream.
