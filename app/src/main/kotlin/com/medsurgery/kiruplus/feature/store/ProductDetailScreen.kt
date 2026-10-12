@@ -74,15 +74,16 @@ fun ProductDetailScreen(
         Box(modifier = Modifier.fillMaxSize().padding(padding)) {
             when {
                 state.isLoading -> CenteredSpinner()
-                state.errorRes != null -> CenteredError(state.errorRes!!, viewModel::load)
-                state.product != null -> ProductBody(
-                    product = state.product!!,
+                state.errorRes != null -> state.errorRes?.let { CenteredError(it, viewModel::load) }
+                state.product != null -> state.product?.let { product -> ProductBody(
+                    product = product,
                     onBuy = {
                         state.product?.permalink?.takeIf { it.isNotBlank() }?.let {
                             CustomTabsLauncher.launch(context, it)
                         }
                     },
                 )
+                }
             }
         }
     }

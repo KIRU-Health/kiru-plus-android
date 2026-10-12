@@ -60,10 +60,9 @@ fun StoreScreen(
         ) {
             when {
                 state.isLoading -> StoreLoading()
-                state.errorRes != null -> StoreError(
-                    messageRes = state.errorRes!!,
-                    onRetry = viewModel::load,
-                )
+                state.errorRes != null -> state.errorRes?.let {
+                    StoreError(messageRes = it, onRetry = viewModel::load)
+                }
                 state.products.isEmpty() -> StoreEmpty()
                 else -> StoreList(
                     products = state.products,

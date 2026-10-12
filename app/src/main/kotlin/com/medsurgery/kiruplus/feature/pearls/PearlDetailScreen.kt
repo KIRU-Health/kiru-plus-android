@@ -77,7 +77,7 @@ fun PearlDetailScreen(
                         verticalArrangement = Arrangement.spacedBy(12.dp),
                     ) {
                         Text(
-                            text = stringResource(state.errorRes!!),
+                            text = state.errorRes?.let { stringResource(it) }.orEmpty(),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.error,
                         )
@@ -86,7 +86,7 @@ fun PearlDetailScreen(
                         }
                     }
                 }
-                state.pearl != null -> PearlBody(pearl = state.pearl!!)
+                state.pearl != null -> state.pearl?.let { PearlBody(pearl = it) }
             }
         }
     }

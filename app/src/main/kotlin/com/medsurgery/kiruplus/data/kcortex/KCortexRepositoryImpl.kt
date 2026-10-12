@@ -24,7 +24,6 @@ import java.util.UUID
 import javax.inject.Inject
 import javax.inject.Singleton
 
-private const val BACKEND_BASE_URL = "https://kiru-backend.onrender.com"
 private const val ANALYZE_PATH = "/v1/kcortex/analyze"
 
 @Singleton
@@ -42,6 +41,10 @@ class KCortexRepositoryImpl @Inject constructor(
     override suspend fun analyze(request: KCortexRequest): Result<KCortexAnalysis> =
         withContext(Dispatchers.IO) {
             runCatching {
+                val baseUrl = BuildConfig.BACKEND_BASE_URL.trim().trimEnd('/')
+                if (baseUrl.isEmpty()) {
+                    error("K-CORTEX backend is not configured for this environment")
+                }
                 // Resolve auth session (best-effort – backend may not require it for text-only)
                 val uid = runCatching { supabase.auth.currentUserOrNull()?.id }.getOrNull()
 
@@ -60,7 +63,7 @@ class KCortexRepositoryImpl @Inject constructor(
                     .build()
 
                 val httpRequest = Request.Builder()
-                    .url("$BACKEND_BASE_URL$ANALYZE_PATH")
+                    .url("$baseUrl$ANALYZE_PATH")
                     .post(body)
                     // Include Supabase anon key so the backend can validate the caller
                     .addHeader("apikey", BuildConfig.SUPABASE_ANON_KEY)

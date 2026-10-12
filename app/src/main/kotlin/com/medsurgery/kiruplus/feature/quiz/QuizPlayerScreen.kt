@@ -92,7 +92,7 @@ fun QuizPlayerScreen(
                         verticalArrangement = Arrangement.spacedBy(12.dp),
                     ) {
                         Text(
-                            stringResource(state.errorRes!!),
+                            state.errorRes?.let { stringResource(it) }.orEmpty(),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.error,
                         )

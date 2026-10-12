@@ -15,6 +15,8 @@ internal val KiruCyanBlue = Color(0xFF00BFFF)
 internal val KiruSlateGray = Color(0xFF1E293B)
 internal val KiruGold = Color(0xFFDAA520)
 internal val KiruGreen = Color(0xFF04CE03)
+/** Verde quirúrgico MedSurgery. Mismo sRGB que `KiruDesignTokens.KiruSurgicalSuccess` en iOS. */
+internal val KiruSurgicalSuccess = Color(red = 0.13f, green = 0.75f, blue = 0.42f)
 internal val KiruRed = Color(0xFFD2042D)
 internal val KiruLightBlue = Color(0xFF00004C)
 

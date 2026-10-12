@@ -126,7 +126,7 @@ fun ModuleDetailScreen(
                     }
                 }
                 else -> {
-                    val module = state.module!!
+                    val module = state.module ?: return@Box
                     LazyColumn(
                         contentPadding = PaddingValues(16.dp),
                         verticalArrangement = Arrangement.spacedBy(12.dp),
