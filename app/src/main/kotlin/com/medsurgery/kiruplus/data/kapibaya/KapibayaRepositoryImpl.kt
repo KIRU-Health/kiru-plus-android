@@ -32,21 +32,21 @@ class KapibayaRepositoryImpl @Inject constructor(
 ) : KapibayaRepository {
 
     override fun sendMessageStream(conversationId: String, message: String): Flow<String> = flow {
-        val uid = supabase.auth.currentUserOrNull()?.id
-            ?: error("No active session — login required to chat with Dr. Kapibaya.")
+        val session = supabase.auth.currentSessionOrNull()
+        val accessToken = session?.accessToken
+        val userId = session?.user?.id?.lowercase()
+        if (accessToken.isNullOrBlank() || userId.isNullOrBlank()) {
+            error("No active session — login required to chat with Dr. Kapibaya.")
+        }
 
-        val bodyJson = buildJsonObject {
-            put("message", message)
-            put("conversationId", conversationId)
-            put("userId", uid)
-        }.toString()
-
-        val request = Request.Builder()
-            .url("${BuildConfig.SUPABASE_URL}/functions/v1/ask_kapibaya_stream")
-            .post(bodyJson.toRequestBody("application/json".toMediaType()))
-            .addHeader("apikey", BuildConfig.SUPABASE_ANON_KEY)
-            .addHeader("Accept", "text/event-stream")
-            .build()
+        val request = kapibayaStreamRequest(
+            supabaseUrl = BuildConfig.SUPABASE_URL,
+            anonKey = BuildConfig.SUPABASE_ANON_KEY,
+            accessToken = accessToken,
+            userId = userId,
+            conversationId = conversationId,
+            message = message,
+        )
 
         okHttpClient.newCall(request).execute().use { response ->
             if (!response.isSuccessful) error("HTTP ${response.code}")
@@ -92,6 +92,30 @@ class KapibayaRepositoryImpl @Inject constructor(
             }
         }
     }.flowOn(Dispatchers.IO)
+}
+
+internal fun kapibayaStreamRequest(
+    supabaseUrl: String,
+    anonKey: String,
+    accessToken: String,
+    userId: String,
+    conversationId: String,
+    message: String,
+): Request {
+    val bodyJson = buildJsonObject {
+        put("message", message)
+        put("conversationId", conversationId)
+        put("userId", userId.lowercase())
+        put("stream", true)
+    }.toString()
+    return Request.Builder()
+        .url("${supabaseUrl.trimEnd('/')}/functions/v1/ask_kapibaya")
+        .post(bodyJson.toRequestBody("application/json".toMediaType()))
+        .addHeader("apikey", anonKey)
+        .addHeader("Authorization", "Bearer $accessToken")
+        .addHeader("Accept", "text/event-stream")
+        .addHeader("Content-Type", "application/json")
+        .build()
 }
 
 @Module
