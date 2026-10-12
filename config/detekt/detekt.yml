@@ -4,3 +4,7 @@ build:
 potential-bugs:
   UnsafeCallOnNullableType:
     active: true
+
+formatting:
+  Indentation:
+    active: false

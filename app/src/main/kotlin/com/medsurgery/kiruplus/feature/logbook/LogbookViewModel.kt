@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.medsurgery.kiruplus.R
 import com.medsurgery.kiruplus.domain.logbook.LogbookRepository
-import com.medsurgery.kiruplus.domain.logbook.Procedure
 import com.medsurgery.kiruplus.domain.logbook.SurgicalLog
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,10 +15,11 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LogbookViewModel @Inject constructor(
-    private val repository: LogbookRepository,
-) : ViewModel() {
-
+class LogbookViewModel
+    @Inject
+    constructor(
+        private val repository: LogbookRepository,
+    ) : ViewModel() {
     private val _state = MutableStateFlow(LogbookUiState())
     val state: StateFlow<LogbookUiState> = _state.asStateFlow()
 
@@ -30,28 +30,13 @@ class LogbookViewModel @Inject constructor(
     fun load() {
         _state.update { it.copy(isLoading = true, errorRes = null) }
         viewModelScope.launch {
-            val logsResult = repository.fetchLogs()
-            val proceduresResult = repository.fetchProcedures()
-
-            val procedures = proceduresResult.getOrDefault(emptyList())
-            val lookup = procedures.associateBy { it.id }
-
-            logsResult
+            repository.fetchLogs()
                 .onSuccess { logs ->
-                    _state.update {
-                        it.copy(
-                            isLoading = false,
-                            logs = logs,
-                            procedureLookup = lookup,
-                        )
-                    }
+                    _state.update { it.copy(isLoading = false, logs = logs) }
                 }
                 .onFailure {
                     _state.update {
-                        it.copy(
-                            isLoading = false,
-                            errorRes = R.string.logbook_error_load,
-                        )
+                        it.copy(isLoading = false, errorRes = R.string.logbook_error_load)
                     }
                 }
         }
@@ -59,13 +44,15 @@ class LogbookViewModel @Inject constructor(
 
     fun deleteLog(id: String) {
         val snapshot = _state.value.logs
-        // Optimistic remove
-        _state.update { it.copy(logs = it.logs.filter { log -> log.id != id }, deleteErrorRes = null) }
+        _state.update {
+            it.copy(logs = it.logs.filter { log -> log.id != id }, deleteErrorRes = null)
+        }
         viewModelScope.launch {
             repository.deleteLog(id)
                 .onFailure {
-                    // Revert
-                    _state.update { it.copy(logs = snapshot, deleteErrorRes = R.string.logbook_error_delete) }
+                    _state.update {
+                        it.copy(logs = snapshot, deleteErrorRes = R.string.logbook_error_delete)
+                    }
                 }
         }
     }
@@ -78,7 +65,6 @@ class LogbookViewModel @Inject constructor(
 data class LogbookUiState(
     val isLoading: Boolean = true,
     val logs: List<SurgicalLog> = emptyList(),
-    val procedureLookup: Map<String, Procedure> = emptyMap(),
     @StringRes val errorRes: Int? = null,
     @StringRes val deleteErrorRes: Int? = null,
 )

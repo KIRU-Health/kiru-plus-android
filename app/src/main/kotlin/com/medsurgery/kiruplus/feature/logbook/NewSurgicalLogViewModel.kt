@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.medsurgery.kiruplus.R
 import com.medsurgery.kiruplus.domain.logbook.LogbookRepository
 import com.medsurgery.kiruplus.domain.logbook.NewLogInput
-import com.medsurgery.kiruplus.domain.logbook.Procedure
+import com.medsurgery.kiruplus.domain.logbook.SurgicalRole
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -32,89 +32,83 @@ class NewSurgicalLogViewModel @Inject constructor(
     )
     val state: StateFlow<NewLogUiState> = _state.asStateFlow()
 
-    init {
-        loadProcedures()
-    }
-
-    fun loadProcedures() {
-        _state.update { it.copy(isLoadingProcedures = true) }
-        viewModelScope.launch {
-            repository.fetchProcedures()
-                .onSuccess { list ->
-                    _state.update { it.copy(isLoadingProcedures = false, procedures = list) }
-                }
-                .onFailure {
-                    _state.update {
-                        it.copy(
-                            isLoadingProcedures = false,
-                            errorRes = R.string.logbook_error_procedures,
-                        )
-                    }
-                }
-        }
-    }
-
-    fun selectProcedure(p: Procedure) {
-        _state.update { it.copy(selectedProcedure = p, errorRes = null) }
+    fun setProcedureName(value: String) {
+        _state.update { it.copy(procedureName = value, errorRes = null) }
     }
 
     fun setProcedureDate(date: LocalDate) {
         _state.update { it.copy(procedureDate = date) }
     }
 
-    fun setComplexity(value: String) {
-        _state.update { it.copy(complexity = value) }
+    fun setPatientInitials(value: String) {
+        _state.update { it.copy(patientInitials = value, errorRes = null) }
     }
 
-    fun setOutcome(value: String) {
-        _state.update { it.copy(outcome = value) }
+    fun setMedicalRecordNumber(value: String) {
+        _state.update { it.copy(medicalRecordNumber = value) }
+    }
+
+    fun setRole(role: SurgicalRole) {
+        _state.update { it.copy(role = role) }
+    }
+
+    fun setSupervisorName(value: String) {
+        _state.update { it.copy(supervisorName = value, errorRes = null) }
     }
 
     fun setNotes(value: String) {
         _state.update { it.copy(notes = value) }
     }
 
+    fun setDurationMinutes(value: String) {
+        _state.update { it.copy(durationMinutes = value.filter { it.isDigit() }, errorRes = null) }
+    }
+
     fun submit() {
-        val s = _state.value
-        val procedure = s.selectedProcedure ?: run {
-            _state.update { it.copy(errorRes = R.string.logbook_error_pick_procedure) }
+        val current = _state.value
+        if (current.isSubmitting || current.saved) return
+        val duration = current.durationMinutes.toIntOrNull() ?: 0
+        val textMissing =
+            listOf(
+                current.procedureName,
+                current.patientInitials,
+                current.supervisorName,
+            ).any { it.isBlank() }
+        if (textMissing || duration <= 0) {
+            _state.update { it.copy(errorRes = R.string.logbook_error_incomplete) }
             return
         }
-        if (s.isSubmitting || s.saved) return
-
         _state.update { it.copy(isSubmitting = true, errorRes = null) }
         viewModelScope.launch {
-            val input = NewLogInput(
-                procedureId = procedure.id,
-                procedureDate = s.procedureDate,
-                complexity = s.complexity,
-                outcome = s.outcome,
-                notes = s.notes,
+            val input =
+                NewLogInput(
+                procedureName = current.procedureName,
+                procedureDate = current.procedureDate,
+                patientInitials = current.patientInitials,
+                medicalRecordNumber = current.medicalRecordNumber.ifBlank { null },
+                role = current.role,
+                supervisorName = current.supervisorName,
+                notes = current.notes,
+                durationMinutes = duration,
             )
             repository.createLog(input)
-                .onSuccess {
-                    _state.update { it.copy(isSubmitting = false, saved = true) }
-                }
+                .onSuccess { _state.update { it.copy(isSubmitting = false, saved = true) } }
                 .onFailure {
-                    _state.update {
-                        it.copy(
-                            isSubmitting = false,
-                            errorRes = R.string.logbook_error_save,
-                        )
-                    }
+                    _state.update { it.copy(isSubmitting = false, errorRes = R.string.logbook_error_save) }
                 }
         }
     }
 }
 
 data class NewLogUiState(
-    val isLoadingProcedures: Boolean = true,
-    val procedures: List<Procedure> = emptyList(),
-    val selectedProcedure: Procedure? = null,
+    val procedureName: String = "",
     val procedureDate: LocalDate,
-    val complexity: String = "",
-    val outcome: String = "",
+    val patientInitials: String = "",
+    val medicalRecordNumber: String = "",
+    val role: SurgicalRole = SurgicalRole.Cirujano,
+    val supervisorName: String = "",
     val notes: String = "",
+    val durationMinutes: String = "",
     val isSubmitting: Boolean = false,
     val saved: Boolean = false,
     @StringRes val errorRes: Int? = null,

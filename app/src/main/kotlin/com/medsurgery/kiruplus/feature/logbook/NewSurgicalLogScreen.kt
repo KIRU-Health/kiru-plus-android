@@ -40,7 +40,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.medsurgery.kiruplus.R
-import com.medsurgery.kiruplus.domain.logbook.Procedure
+import com.medsurgery.kiruplus.domain.logbook.SurgicalRole
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
@@ -76,37 +76,57 @@ fun NewSurgicalLogScreen(
         },
     ) { padding ->
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-                .padding(horizontal = 24.dp)
-                .verticalScroll(rememberScrollState()),
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(padding)
+                    .padding(horizontal = 24.dp)
+                    .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            ProcedureDropdown(
-                procedures = state.procedures,
-                isLoading = state.isLoadingProcedures,
-                selected = state.selectedProcedure,
-                onSelect = viewModel::selectProcedure,
+            OutlinedTextField(
+                value = state.procedureName,
+                onValueChange = viewModel::setProcedureName,
+                label = { Text(stringResource(R.string.logbook_field_procedure)) },
+                singleLine = true,
+                modifier = Modifier.fillMaxWidth(),
             )
 
-            DateField(
+            dateField(
                 date = state.procedureDate,
                 onChange = viewModel::setProcedureDate,
             )
 
             OutlinedTextField(
-                value = state.complexity,
-                onValueChange = viewModel::setComplexity,
-                label = { Text(stringResource(R.string.logbook_field_complexity)) },
+                value = state.patientInitials,
+                onValueChange = viewModel::setPatientInitials,
+                label = { Text(stringResource(R.string.logbook_field_initials)) },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth(),
             )
 
             OutlinedTextField(
-                value = state.outcome,
-                onValueChange = viewModel::setOutcome,
-                label = { Text(stringResource(R.string.logbook_field_outcome)) },
+                value = state.medicalRecordNumber,
+                onValueChange = viewModel::setMedicalRecordNumber,
+                label = { Text(stringResource(R.string.logbook_field_record)) },
+                singleLine = true,
+                modifier = Modifier.fillMaxWidth(),
+            )
+
+            roleDropdown(selected = state.role, onSelect = viewModel::setRole)
+
+            OutlinedTextField(
+                value = state.supervisorName,
+                onValueChange = viewModel::setSupervisorName,
+                label = { Text(stringResource(R.string.logbook_field_supervisor)) },
+                singleLine = true,
+                modifier = Modifier.fillMaxWidth(),
+            )
+
+            OutlinedTextField(
+                value = state.durationMinutes,
+                onValueChange = viewModel::setDurationMinutes,
+                label = { Text(stringResource(R.string.logbook_field_duration)) },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth(),
             )
@@ -130,7 +150,7 @@ fun NewSurgicalLogScreen(
 
             Button(
                 onClick = viewModel::submit,
-                enabled = !state.isSubmitting && state.selectedProcedure != null,
+                enabled = !state.isSubmitting,
                 modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
             ) {
                 if (state.isSubmitting) {
@@ -144,43 +164,49 @@ fun NewSurgicalLogScreen(
 }
 
 @Composable
-private fun ProcedureDropdown(
-    procedures: List<Procedure>,
-    isLoading: Boolean,
-    selected: Procedure?,
-    onSelect: (Procedure) -> Unit,
+private fun roleDropdown(
+    selected: SurgicalRole,
+    onSelect: (SurgicalRole) -> Unit,
 ) {
     var expanded by remember { mutableStateOf(false) }
+    val label =
+        when (selected) {
+            SurgicalRole.Cirujano -> R.string.logbook_role_surgeon
+            SurgicalRole.Ayudante1 -> R.string.logbook_role_assistant1
+            SurgicalRole.Ayudante2 -> R.string.logbook_role_assistant2
+            SurgicalRole.Observador -> R.string.logbook_role_observer
+        }
     Box {
         OutlinedTextField(
-            value = selected?.nameEs ?: "",
-            onValueChange = { /* read-only */ },
-            label = { Text(stringResource(R.string.logbook_field_procedure)) },
+            value = stringResource(label),
+            onValueChange = {},
+            label = { Text(stringResource(R.string.logbook_field_role)) },
             readOnly = true,
-            enabled = !isLoading,
             trailingIcon = {
-                if (isLoading) {
-                    CircularProgressIndicator(
-                        strokeWidth = 2.dp,
-                        modifier = Modifier.padding(8.dp),
-                    )
-                } else {
-                    IconButton(onClick = { expanded = true }) {
-                        Icon(Icons.Filled.ArrowDropDown, contentDescription = null)
-                    }
+                IconButton(onClick = { expanded = true }) {
+                    Icon(Icons.Filled.ArrowDropDown, contentDescription = null)
                 }
             },
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable(enabled = !isLoading) { expanded = true },
+            modifier = Modifier.fillMaxWidth().clickable { expanded = true },
         )
         DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
-            procedures.forEach { p ->
+            SurgicalRole.entries.forEach { role ->
                 DropdownMenuItem(
-                    text = { Text("${p.nameEs} · ${p.category}") },
+                    text = {
+                        Text(
+                            stringResource(
+                                when (role) {
+                                    SurgicalRole.Cirujano -> R.string.logbook_role_surgeon
+                                    SurgicalRole.Ayudante1 -> R.string.logbook_role_assistant1
+                                    SurgicalRole.Ayudante2 -> R.string.logbook_role_assistant2
+                                    SurgicalRole.Observador -> R.string.logbook_role_observer
+                                },
+                            ),
+                        )
+                    },
                     onClick = {
                         expanded = false
-                        onSelect(p)
+                        onSelect(role)
                     },
                 )
             }
@@ -190,11 +216,15 @@ private fun ProcedureDropdown(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun DateField(date: LocalDate, onChange: (LocalDate) -> Unit) {
+private fun dateField(
+    date: LocalDate,
+    onChange: (LocalDate) -> Unit,
+) {
     var showPicker by remember { mutableStateOf(false) }
-    val initialMillis = remember(date) {
-        date.atStartOfDayIn(TimeZone.UTC).toEpochMilliseconds()
-    }
+    val initialMillis =
+        remember(date) {
+            date.atStartOfDayIn(TimeZone.UTC).toEpochMilliseconds()
+        }
     val pickerState = rememberDatePickerState(initialSelectedDateMillis = initialMillis)
 
     OutlinedTextField(
@@ -202,9 +232,10 @@ private fun DateField(date: LocalDate, onChange: (LocalDate) -> Unit) {
         onValueChange = { /* read-only */ },
         label = { Text(stringResource(R.string.logbook_field_date)) },
         readOnly = true,
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable { showPicker = true },
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .clickable { showPicker = true },
     )
 
     if (showPicker) {
@@ -213,8 +244,9 @@ private fun DateField(date: LocalDate, onChange: (LocalDate) -> Unit) {
             confirmButton = {
                 TextButton(onClick = {
                     pickerState.selectedDateMillis?.let { millis ->
-                        val localDate = Instant.fromEpochMilliseconds(millis)
-                            .toLocalDateTime(TimeZone.UTC).date
+                        val localDate =
+                            Instant.fromEpochMilliseconds(millis)
+                                .toLocalDateTime(TimeZone.UTC).date
                         onChange(localDate)
                     }
                     showPicker = false
