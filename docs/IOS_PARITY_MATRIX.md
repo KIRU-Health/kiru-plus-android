@@ -80,7 +80,7 @@ Justificación técnica, no de preferencia:
 | `Features/Dashboard/` | `feature/home/HomeScreen.kt` | CORREGIR | — | Compose | P0 | Welcome + accesos rápidos. No es el hero, arena ni perlas del dashboard iOS. |
 | `Features/Navigation/MainTabView.swift` | `feature/main/`, `app/nav/KiruRoute.kt` | CORREGIR | — | Navigation Compose tipado | P0 | 5 tabs (Home, Academy, Logbook, Store, Profile). iOS reparte más destinos. ~30 rutas vs el grafo iOS. |
 | `Features/Academy/` | `feature/academy/` | CORREGIR | `content_items` | — | P1 | Lista y detalle. No es el currículo, cursos ni `ChapterExamView` de iOS. |
-| `Features/Quiz/` | `feature/quiz/` | CORREGIR | `content_items` `category=question` | — | P1 | iOS publica el banco desde bundle. Hay que unificar la fuente antes de dar por bueno el contenido. Sin repetición de fallos ni `record_quiz_evaluation`. |
+| `Features/Quiz/` | `feature/quiz/` | CORREGIR | Asset `preguntas/Questions.json`, copia byte a byte de `Data/preguntas/Questions.json` | — | P1 | Mismo banco publicado (1450). Falta repetición de fallos y `record_quiz_evaluation`. |
 | `Features/Exam/` + `Features/Academy/ChapterExamView.swift` | `feature/chapterexam/` | CORREGIR | Asset local de examen | — | P1 | No es `EvaluationViewModel` ni el examen de capítulo remoto. |
 | `Features/FlashCards/` | — | FALTA | Banco local / repetición espaciada | Room cuando se porte | P1 | Incluye adivina-diagnóstico. |
 | `Features/Resumenes/` | — | FALTA | RPC `kiru_resumen_payload`, vistas `vw_kiru_resumenes_*` | — | P1 | La biblioteca Android no lee esas vistas. |
