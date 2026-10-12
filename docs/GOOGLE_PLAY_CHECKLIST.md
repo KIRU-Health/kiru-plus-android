@@ -61,7 +61,7 @@ Estado: ☐ pendiente · ◐ en progreso · ☑ hecho · ⚠️ riesgo · n/a no
 | Item | Estado | Notas |
 |------|--------|-------|
 | Suscripciones digitales via Google Play Billing | ☐ | RevenueCat Android SDK encapsula Google Play Billing |
-| Subscription products definidos en Play Console | ☐ | `kiruplus_monthly`, `kiruplus_annual`, `elite_monthly`, `elite_annual` (espejo de iOS) |
+| Subscription products definidos en Play Console | ☐ | Los product id de Play deben ser exactamente los de iOS (`AccessProductCatalog` / `KIRUProductID`): `kiru_resident_elite_monthly`, `kiru_surgeon_pro_monthly`, `kiru_surgeon_max_annual`, `kiru_surgeon_mega_monthly`. En RevenueCat se ligan a `tier_resident`, `tier_pro`, `tier_max` y el legacy `KIRU+ App`. Offering `21875673`. Si el product id no coincide, `resolveCustomerInfo` cae a Free. |
 | Pricing por país | ☐ | Replicar tier pricing de iOS |
 | Subscription details correctos (período, free trial, intro pricing) | ☐ | Espejo de iOS |
 | Política de cancelación visible | ☐ | URL: medsurgery.academy/politica-de-suscripciones-kiru-app (igual que iOS) |

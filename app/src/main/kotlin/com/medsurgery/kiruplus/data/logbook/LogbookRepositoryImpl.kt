@@ -1,96 +1,138 @@
 package com.medsurgery.kiruplus.data.logbook
 
+import android.content.Context
 import com.medsurgery.kiruplus.domain.logbook.LogbookRepository
 import com.medsurgery.kiruplus.domain.logbook.NewLogInput
-import com.medsurgery.kiruplus.domain.logbook.Procedure
 import com.medsurgery.kiruplus.domain.logbook.SurgicalLog
+import com.medsurgery.kiruplus.domain.logbook.SurgicalRole
+import com.medsurgery.kiruplus.domain.logbook.sanitizedInitials
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import io.github.jan.supabase.SupabaseClient
-import io.github.jan.supabase.auth.auth
-import io.github.jan.supabase.postgrest.from
-import io.github.jan.supabase.postgrest.query.Order
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import timber.log.Timber
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
+import java.io.File
+import java.util.UUID
 import javax.inject.Inject
 import javax.inject.Singleton
 
-@Singleton
-class LogbookRepositoryImpl @Inject constructor(
-    private val supabase: SupabaseClient,
+internal class EncryptedLogbookStore(
+    private val file: File,
+    private val cipher: LogbookCipher,
+    private val json: Json = Json { ignoreUnknownKeys = true },
+) {
+    fun read(): List<SurgicalLog> {
+        if (!file.exists() || file.length() == 0L) return emptyList()
+        val plain = cipher.decrypt(file.readBytes())
+        val rows = json.decodeFromString<List<StoredLog>>(plain.decodeToString())
+        return rows.map { it.toDomain() }.sortedByDescending { it.dateIso }
+    }
+
+    fun write(logs: List<SurgicalLog>) {
+        val payload = json.encodeToString(logs.map { StoredLog.from(it) })
+        val sealedBytes = cipher.encrypt(payload.encodeToByteArray())
+        file.parentFile?.mkdirs()
+        val temporary = File(file.parentFile, "${file.name}.tmp")
+        temporary.writeBytes(sealedBytes)
+        if (!temporary.renameTo(file)) {
+            file.writeBytes(sealedBytes)
+            temporary.delete()
+        }
+    }
+}
+
+internal class LocalLogbookRepository(
+    private val store: EncryptedLogbookStore,
 ) : LogbookRepository {
-
-    override suspend fun fetchLogs(): Result<List<SurgicalLog>> =
-        runCatching {
-            withContext(Dispatchers.IO) {
-                supabase.from(LOGS).select {
-                    order(column = "procedure_date", order = Order.DESCENDING)
-                }.decodeList<SurgicalLog>()
-            }
-        }.onFailure { Timber.w(it, "fetchLogs failed") }
-
-    override suspend fun fetchProcedures(): Result<List<Procedure>> =
-        runCatching {
-            withContext(Dispatchers.IO) {
-                supabase.from(PROCEDURES).select {
-                    order(column = "name_es", order = Order.ASCENDING)
-                }.decodeList<Procedure>()
-            }
-        }.onFailure { Timber.w(it, "fetchProcedures failed") }
-
-    override suspend fun deleteLog(id: String): Result<Unit> =
-        runCatching {
-            withContext(Dispatchers.IO) {
-                supabase.from(LOGS).delete {
-                    filter { eq("id", id) }
-                }
-                Unit
-            }
-        }.onFailure { Timber.w(it, "deleteLog %s failed", id) }
+    override suspend fun fetchLogs(): Result<List<SurgicalLog>> = runIo { store.read() }
 
     override suspend fun createLog(input: NewLogInput): Result<Unit> =
-        runCatching {
-            withContext(Dispatchers.IO) {
-                val uid = supabase.auth.currentUserOrNull()?.id
-                    ?: error("No active session — login required to insert a surgical log.")
+        runIo {
+            val current = store.read().toMutableList()
+            current.add(input.toEntry())
+            store.write(current.sortedByDescending { it.dateIso })
+        }
 
-                supabase.from(LOGS).insert(
-                    InsertPayload(
-                        userId = uid,
-                        procedureId = input.procedureId,
-                        procedureDate = input.procedureDate.toString(),
-                        complexity = input.complexity?.takeIf { it.isNotBlank() },
-                        outcome = input.outcome?.takeIf { it.isNotBlank() },
-                        notes = input.notes?.takeIf { it.isNotBlank() },
-                    ),
-                )
-                Unit
-            }
-        }.onFailure { Timber.w(it, "createLog failed") }
+    override suspend fun deleteLog(id: String): Result<Unit> =
+        runIo {
+            store.write(store.read().filter { it.id != id })
+        }
 
-    /**
-     * DTO de inserción — coincide con columnas de `surgical_logs` excluyendo
-     * los que tienen DEFAULT (id, created_at). RLS valida que `user_id` matchee
-     * `auth.uid()` con el `with_check` de la policy "Surgeons manage own logs".
-     */
-    @Serializable
-    private data class InsertPayload(
-        @SerialName("user_id") val userId: String,
-        @SerialName("procedure_id") val procedureId: String,
-        @SerialName("procedure_date") val procedureDate: String,
-        val complexity: String? = null,
-        val outcome: String? = null,
-        val notes: String? = null,
+    private suspend fun <T> runIo(block: () -> T): Result<T> = runCatching { withContext(Dispatchers.IO) { block() } }
+}
+
+@Singleton
+class LogbookRepositoryImpl
+    @Inject
+    constructor(
+        @ApplicationContext context: Context,
+    ) : LogbookRepository by LocalLogbookRepository(
+        EncryptedLogbookStore(
+            file = File(context.filesDir, FILE_NAME),
+            cipher = AndroidKeystoreLogbookCipher(),
+        ),
+    ) {
+    private companion object {
+        const val FILE_NAME = "surgical_logbook.json"
+    }
+}
+
+internal fun NewLogInput.toEntry(id: String = UUID.randomUUID().toString()): SurgicalLog =
+    SurgicalLog(
+        id = id,
+        dateIso = procedureDate.toString(),
+        procedureName = procedureName.trim(),
+        patientInitials = sanitizedInitials(patientInitials),
+        medicalRecordNumber = medicalRecordNumber?.trim()?.ifBlank { null },
+        role = role,
+        supervisorName = supervisorName.trim(),
+        notes = notes.trim(),
+        durationMinutes = durationMinutes,
     )
 
-    private companion object {
-        const val LOGS = "surgical_logs"
-        const val PROCEDURES = "procedures"
+@Serializable
+private data class StoredLog(
+    val id: String,
+    val dateIso: String,
+    val procedureName: String,
+    val patientInitials: String,
+    val medicalRecordNumber: String? = null,
+    val role: String,
+    val supervisorName: String,
+    val notes: String,
+    val durationMinutes: Int,
+) {
+    fun toDomain(): SurgicalLog =
+        SurgicalLog(
+            id = id,
+            dateIso = dateIso,
+            procedureName = procedureName,
+            patientInitials = patientInitials,
+            medicalRecordNumber = medicalRecordNumber,
+            role = SurgicalRole.fromWire(role),
+            supervisorName = supervisorName,
+            notes = notes,
+            durationMinutes = durationMinutes,
+        )
+
+    companion object {
+        fun from(log: SurgicalLog): StoredLog =
+            StoredLog(
+                id = log.id,
+                dateIso = log.dateIso,
+                procedureName = log.procedureName,
+                patientInitials = log.patientInitials,
+                medicalRecordNumber = log.medicalRecordNumber,
+                role = log.role.wire,
+                supervisorName = log.supervisorName,
+                notes = log.notes,
+                durationMinutes = log.durationMinutes,
+            )
     }
 }
 

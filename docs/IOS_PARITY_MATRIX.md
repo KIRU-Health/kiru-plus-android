@@ -108,7 +108,7 @@ Justificación técnica, no de preferencia:
 | `Features/Kiru_Video_Plus/` | — | FALTA | Edge `video-catalog`, `video-playback` | Media3 ExoPlayer HLS | P1 | |
 | `Features/Calculators/` | `feature/ktools/`, `domain/ktools/KToolsCalculator.kt` | CORREGIR | Cálculo local | — | P1 | 10 de 12: faltan ISS y Trauma Score. Fórmulas no re-verificadas contra los ViewModels Swift en esta fase. |
 | `Features/NOM004/` | — | FALTA | `NOM004ClinicalNotesRepository` | PdfDocument + firma | P2 | |
-| `Features/Logbook/` | `feature/logbook/`, `data/logbook/` | CORREGIR | Tablas `surgical_logs`, `procedures` | Remoto vs archivo local iOS | P1 | El logbook del alumno en iOS es `surgical_logbook.json`. `ingest_surgical_log` sí se usa en `SurgicalSafetyLogger.swift` (seguridad quirúrgica, no el logbook). No se cambió el almacenamiento Android. |
+| `Features/Logbook/` | `feature/logbook/`, `data/logbook/` | CORREGIR | Archivo local cifrado `surgical_logbook.json` | Keystore AES-GCM. Sin `surgical_logs`. | P1 | Mismos campos que `SurgicalLogEntry`. `ingest_surgical_log` sigue fuera: es `SurgicalSafetyLogger`. |
 | `Store/` (WooCommerce) | `feature/store/`, `data/store/` | CORREGIR | Android: `store_products`. iOS: Edge `medsurgery-store` | Custom Tabs en iOS y en Android para el checkout web | P1 | Catálogo distinto. Sin carrito. |
 | `Features/QuirofanoAR/` | — | FALTA | Escenarios locales | ARCore, o degradación documentada | P3 | No marcar NO_PORTABLE hasta probar SceneView. |
 | `Features/AR/` | — | FALTA | — | ARCore | P3 | |

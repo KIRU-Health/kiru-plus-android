@@ -46,7 +46,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.medsurgery.kiruplus.R
-import com.medsurgery.kiruplus.domain.logbook.Procedure
 import com.medsurgery.kiruplus.domain.logbook.SurgicalLog
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -84,53 +83,56 @@ fun LogbookScreen(
     ) { padding ->
         Box(modifier = Modifier.fillMaxSize().padding(padding)) {
             when {
-                state.isLoading -> Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center,
-                ) { CircularProgressIndicator() }
+                state.isLoading ->
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center,
+                    ) { CircularProgressIndicator() }
 
-                state.errorRes != null -> Box(
-                    modifier = Modifier.fillMaxSize().padding(24.dp),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.spacedBy(12.dp),
+                state.errorRes != null ->
+                    Box(
+                        modifier = Modifier.fillMaxSize().padding(24.dp),
+                        contentAlignment = Alignment.Center,
                     ) {
-                        Text(
-                            text = state.errorRes?.let { stringResource(it) }.orEmpty(),
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.error,
-                        )
-                        TextButton(onClick = viewModel::load) {
-                            Text(stringResource(R.string.action_retry))
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.spacedBy(12.dp),
+                        ) {
+                            Text(
+                                text = state.errorRes?.let { stringResource(it) }.orEmpty(),
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.error,
+                            )
+                            TextButton(onClick = viewModel::load) {
+                                Text(stringResource(R.string.action_retry))
+                            }
                         }
                     }
-                }
 
-                state.logs.isEmpty() -> Box(
-                    modifier = Modifier.fillMaxSize().padding(24.dp),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        Text(
-                            text = stringResource(R.string.logbook_empty_title),
-                            style = MaterialTheme.typography.titleMedium,
-                        )
-                        Text(
-                            text = stringResource(R.string.logbook_empty_body),
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            modifier = Modifier.padding(top = 8.dp),
-                        )
+                state.logs.isEmpty() ->
+                    Box(
+                        modifier = Modifier.fillMaxSize().padding(24.dp),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                            Text(
+                                text = stringResource(R.string.logbook_empty_title),
+                                style = MaterialTheme.typography.titleMedium,
+                            )
+                            Text(
+                                text = stringResource(R.string.logbook_empty_body),
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                modifier = Modifier.padding(top = 8.dp),
+                            )
+                        }
                     }
-                }
 
-                else -> LogsList(
-                    logs = state.logs,
-                    procedureLookup = state.procedureLookup,
-                    onDelete = viewModel::deleteLog,
-                )
+                else ->
+                    logsList(
+                        logs = state.logs,
+                        onDelete = viewModel::deleteLog,
+                    )
             }
         }
     }
@@ -138,9 +140,8 @@ fun LogbookScreen(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun LogsList(
+private fun logsList(
     logs: List<SurgicalLog>,
-    procedureLookup: Map<String, Procedure>,
     onDelete: (String) -> Unit,
 ) {
     LazyColumn(
@@ -149,33 +150,38 @@ private fun LogsList(
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         items(logs, key = { it.id }) { log ->
-            val dismissState = rememberSwipeToDismissBoxState(
-                confirmValueChange = { value ->
-                    if (value == SwipeToDismissBoxValue.EndToStart) {
-                        onDelete(log.id)
-                        true
-                    } else false
-                },
-            )
+            val dismissState =
+                rememberSwipeToDismissBoxState(
+                    confirmValueChange = { value ->
+                        if (value == SwipeToDismissBoxValue.EndToStart) {
+                            onDelete(log.id)
+                            true
+                        } else {
+                            false
+                        }
+                    },
+                )
 
             SwipeToDismissBox(
                 state = dismissState,
                 enableDismissFromStartToEnd = false,
                 backgroundContent = {
                     val bgColor by animateColorAsState(
-                        targetValue = if (dismissState.targetValue == SwipeToDismissBoxValue.EndToStart) {
-                            MaterialTheme.colorScheme.errorContainer
-                        } else {
-                            Color.Transparent
-                        },
+                        targetValue =
+                            if (dismissState.targetValue == SwipeToDismissBoxValue.EndToStart) {
+                                MaterialTheme.colorScheme.errorContainer
+                            } else {
+                                Color.Transparent
+                            },
                         animationSpec = tween(200),
                         label = "swipe_bg",
                     )
                     Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(bgColor, RoundedCornerShape(16.dp))
-                            .padding(end = 20.dp),
+                        modifier =
+                            Modifier
+                                .fillMaxSize()
+                                .background(bgColor, RoundedCornerShape(16.dp))
+                                .padding(end = 20.dp),
                         contentAlignment = Alignment.CenterEnd,
                     ) {
                         Icon(
@@ -186,39 +192,38 @@ private fun LogsList(
                     }
                 },
             ) {
-                LogCard(log = log, procedure = procedureLookup[log.procedureId])
+                logCard(log = log)
             }
         }
     }
 }
 
 @Composable
-private fun LogCard(log: SurgicalLog, procedure: Procedure?) {
+private fun logCard(log: SurgicalLog) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceVariant,
-        ),
+        colors =
+            CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.surfaceVariant,
+            ),
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(
-                text = procedure?.nameEs ?: stringResource(R.string.logbook_unknown_procedure),
+                text = log.procedureName,
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.primary,
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
             )
             Text(
-                text = log.procedureDate,
+                text = "${log.dateIso} · ${log.patientInitials}",
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(top = 4.dp),
             )
-            log.outcome?.takeIf { it.isNotBlank() }?.let { outcome ->
-                OutcomeChip(outcome, modifier = Modifier.padding(top = 8.dp))
-            }
-            log.notes?.takeIf { it.isNotBlank() }?.let { notes ->
+            outcomeChip(log.role.wire, modifier = Modifier.padding(top = 8.dp))
+            log.notes.takeIf { it.isNotBlank() }?.let { notes ->
                 Text(
                     text = notes,
                     style = MaterialTheme.typography.bodySmall,
@@ -233,7 +238,10 @@ private fun LogCard(log: SurgicalLog, procedure: Procedure?) {
 }
 
 @Composable
-private fun OutcomeChip(outcome: String, modifier: Modifier = Modifier) {
+private fun outcomeChip(
+    outcome: String,
+    modifier: Modifier = Modifier,
+) {
     Surface(
         modifier = modifier,
         shape = RoundedCornerShape(50),
