@@ -5,20 +5,27 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.medsurgery.kiruplus.R
+import com.medsurgery.kiruplus.domain.quiz.LearningEvaluationReporting
+import com.medsurgery.kiruplus.domain.quiz.QuizEvaluationAttempt
 import com.medsurgery.kiruplus.domain.quiz.QuizQuestion
 import com.medsurgery.kiruplus.domain.quiz.QuizRepository
+import com.medsurgery.kiruplus.domain.quiz.QuizResponseStatus
+import com.medsurgery.kiruplus.domain.quiz.quizEvaluationAttempt
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
 class QuizPlayerViewModel @Inject constructor(
     private val repository: QuizRepository,
     savedStateHandle: SavedStateHandle,
+    private val learningEvaluation: LearningEvaluationReporting = QuietLearningEvaluation,
 ) : ViewModel() {
 
     // Read directly from SavedStateHandle to avoid Bundle serialization in unit tests.
@@ -61,7 +68,19 @@ class QuizPlayerViewModel @Inject constructor(
     fun selectAnswer(answer: String) {
         val s = _state.value
         if (s.selectedAnswer != null || s.finished) return
-        val isCorrect = answer == s.currentQuestion?.correctAnswer
+        val question = s.currentQuestion
+        val isCorrect = answer == question?.correctAnswer
+        if (question != null) {
+            val attempt =
+                quizEvaluationAttempt(
+                    question = question,
+                    selectedAnswer = answer,
+                    status = QuizResponseStatus.Answered,
+                    attemptId = UUID.randomUUID().toString(),
+                    occurredAtEpochMillis = System.currentTimeMillis(),
+                )
+            if (attempt != null) learningEvaluation.report(attempt)
+        }
         _state.update {
             it.copy(
                 selectedAnswer = answer,
@@ -106,4 +125,8 @@ data class QuizPlayerUiState(
     val currentQuestion: QuizQuestion? get() = questions.getOrNull(currentIndex)
     val totalCount: Int get() = questions.size
     val progress: Float get() = if (totalCount == 0) 0f else (currentIndex + 1).toFloat() / totalCount
+}
+
+private object QuietLearningEvaluation : LearningEvaluationReporting {
+    override fun report(attempt: QuizEvaluationAttempt): Job? = null
 }
