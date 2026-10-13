@@ -1,7 +1,13 @@
 package com.medsurgery.kiruplus.data.logbook
 
 import android.content.Context
+import com.medsurgery.kiruplus.core.premium.EntitlementState
+import com.medsurgery.kiruplus.core.premium.logbookQuota
+import com.medsurgery.kiruplus.domain.logbook.FeatureQuota
+import com.medsurgery.kiruplus.domain.logbook.LogbookCapacity
+import com.medsurgery.kiruplus.domain.logbook.LogbookCapacityRule
 import com.medsurgery.kiruplus.domain.logbook.LogbookRepository
+import com.medsurgery.kiruplus.domain.logbook.LogbookSaveOutcome
 import com.medsurgery.kiruplus.domain.logbook.NewLogInput
 import com.medsurgery.kiruplus.domain.logbook.SurgicalLog
 import com.medsurgery.kiruplus.domain.logbook.SurgicalRole
@@ -12,6 +18,9 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
@@ -20,6 +29,7 @@ import java.io.File
 import java.util.UUID
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.jvm.JvmSuppressWildcards
 
 internal class EncryptedLogbookStore(
     private val file: File,
@@ -48,22 +58,42 @@ internal class EncryptedLogbookStore(
 
 internal class LocalLogbookRepository(
     private val store: EncryptedLogbookStore,
+    private val quota: () -> FeatureQuota = { LogbookCapacityRule.defaultQuota },
 ) : LogbookRepository {
-    override suspend fun fetchLogs(): Result<List<SurgicalLog>> = runIo { store.read() }
+    private val lock = Mutex()
 
-    override suspend fun createLog(input: NewLogInput): Result<Unit> =
-        runIo {
-            val current = store.read().toMutableList()
-            current.add(input.toEntry())
-            store.write(current.sortedByDescending { it.dateIso })
+    override suspend fun fetchLogs(): Result<List<SurgicalLog>> {
+        return runIo { lock.withLock { store.read() } }
+    }
+
+    override suspend fun createLog(input: NewLogInput): Result<LogbookSaveOutcome> {
+        return runIo {
+            lock.withLock {
+                val current = store.read().toMutableList()
+                val before = LogbookCapacity(quota(), current.size)
+                if (!before.canCreate) {
+                    LogbookSaveOutcome.DeniedAtCapacity(before)
+                } else {
+                    current.add(input.toEntry())
+                    val sorted = current.sortedByDescending { it.dateIso }
+                    store.write(sorted)
+                    LogbookSaveOutcome.Created(LogbookCapacity(quota(), sorted.size))
+                }
+            }
         }
+    }
 
-    override suspend fun deleteLog(id: String): Result<Unit> =
-        runIo {
-            store.write(store.read().filter { it.id != id })
+    override suspend fun deleteLog(id: String): Result<Unit> {
+        return runIo {
+            lock.withLock {
+                store.write(store.read().filter { it.id != id })
+            }
         }
+    }
 
-    private suspend fun <T> runIo(block: () -> T): Result<T> = runCatching { withContext(Dispatchers.IO) { block() } }
+    private suspend fun <T> runIo(block: suspend () -> T): Result<T> {
+        return runCatching { withContext(Dispatchers.IO) { block() } }
+    }
 }
 
 @Singleton
@@ -71,16 +101,18 @@ class LogbookRepositoryImpl
     @Inject
     constructor(
         @ApplicationContext context: Context,
+        entitlement: StateFlow<@JvmSuppressWildcards EntitlementState>,
     ) : LogbookRepository by LocalLogbookRepository(
-        EncryptedLogbookStore(
-            file = File(context.filesDir, FILE_NAME),
-            cipher = AndroidKeystoreLogbookCipher(),
-        ),
-    ) {
-    private companion object {
-        const val FILE_NAME = "surgical_logbook.json"
+            EncryptedLogbookStore(
+                file = File(context.filesDir, FILE_NAME),
+                cipher = AndroidKeystoreLogbookCipher(),
+            ),
+            quota = { entitlement.value.logbookQuota() },
+        ) {
+        private companion object {
+            const val FILE_NAME = "surgical_logbook.json"
+        }
     }
-}
 
 internal fun NewLogInput.toEntry(id: String = UUID.randomUUID().toString()): SurgicalLog =
     SurgicalLog(
