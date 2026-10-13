@@ -140,6 +140,14 @@ fun NewSurgicalLogScreen(
                 modifier = Modifier.fillMaxWidth(),
             )
 
+            state.capacityMessage?.let { message ->
+                Text(
+                    text = message,
+                    color = MaterialTheme.colorScheme.error,
+                    style = MaterialTheme.typography.bodySmall,
+                )
+            }
+
             state.errorRes?.let { res ->
                 Text(
                     text = stringResource(res),

@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.medsurgery.kiruplus.R
 import com.medsurgery.kiruplus.domain.logbook.LogbookRepository
+import com.medsurgery.kiruplus.domain.logbook.LogbookSaveOutcome
 import com.medsurgery.kiruplus.domain.logbook.NewLogInput
 import com.medsurgery.kiruplus.domain.logbook.SurgicalRole
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -78,7 +79,7 @@ class NewSurgicalLogViewModel @Inject constructor(
             _state.update { it.copy(errorRes = R.string.logbook_error_incomplete) }
             return
         }
-        _state.update { it.copy(isSubmitting = true, errorRes = null) }
+        _state.update { it.copy(isSubmitting = true, errorRes = null, capacityMessage = null) }
         viewModelScope.launch {
             val input =
                 NewLogInput(
@@ -90,9 +91,22 @@ class NewSurgicalLogViewModel @Inject constructor(
                 supervisorName = current.supervisorName,
                 notes = current.notes,
                 durationMinutes = duration,
-            )
+                )
             repository.createLog(input)
-                .onSuccess { _state.update { it.copy(isSubmitting = false, saved = true) } }
+                .onSuccess { outcome ->
+                    when (outcome) {
+                        is LogbookSaveOutcome.Created,
+                        LogbookSaveOutcome.Updated,
+                        -> _state.update { it.copy(isSubmitting = false, saved = true) }
+                        is LogbookSaveOutcome.DeniedAtCapacity ->
+                            _state.update {
+                                it.copy(
+                                    isSubmitting = false,
+                                    capacityMessage = outcome.capacity.reachedMessage,
+                                )
+                            }
+                    }
+                }
                 .onFailure {
                     _state.update { it.copy(isSubmitting = false, errorRes = R.string.logbook_error_save) }
                 }
@@ -112,4 +126,5 @@ data class NewLogUiState(
     val isSubmitting: Boolean = false,
     val saved: Boolean = false,
     @StringRes val errorRes: Int? = null,
+    val capacityMessage: String? = null,
 )

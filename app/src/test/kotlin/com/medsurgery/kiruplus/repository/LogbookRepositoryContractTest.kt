@@ -1,6 +1,9 @@
 package com.medsurgery.kiruplus.repository
 
+import com.medsurgery.kiruplus.domain.logbook.FeatureQuota
+import com.medsurgery.kiruplus.domain.logbook.LogbookCapacity
 import com.medsurgery.kiruplus.domain.logbook.LogbookRepository
+import com.medsurgery.kiruplus.domain.logbook.LogbookSaveOutcome
 import com.medsurgery.kiruplus.domain.logbook.NewLogInput
 import com.medsurgery.kiruplus.domain.logbook.SurgicalLog
 import com.medsurgery.kiruplus.domain.logbook.SurgicalRole
@@ -76,7 +79,7 @@ private class FakeLogbookRepository(
         return Result.success(store.toList())
     }
 
-    override suspend fun createLog(input: NewLogInput): Result<Unit> {
+    override suspend fun createLog(input: NewLogInput): Result<LogbookSaveOutcome> {
         if (shouldFail) return Result.failure(RuntimeException("io error"))
         store.add(
             SurgicalLog(
@@ -91,7 +94,9 @@ private class FakeLogbookRepository(
                 durationMinutes = input.durationMinutes,
             ),
         )
-        return Result.success(Unit)
+        return Result.success(
+            LogbookSaveOutcome.Created(LogbookCapacity(FeatureQuota.Unmetered, store.size)),
+        )
     }
 
     override suspend fun deleteLog(id: String): Result<Unit> {

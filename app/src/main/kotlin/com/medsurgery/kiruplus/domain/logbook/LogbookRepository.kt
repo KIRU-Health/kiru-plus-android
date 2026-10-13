@@ -9,7 +9,7 @@ import kotlinx.datetime.LocalDate
 interface LogbookRepository {
     suspend fun fetchLogs(): Result<List<SurgicalLog>>
 
-    suspend fun createLog(input: NewLogInput): Result<Unit>
+    suspend fun createLog(input: NewLogInput): Result<LogbookSaveOutcome>
 
     suspend fun deleteLog(id: String): Result<Unit>
 }
